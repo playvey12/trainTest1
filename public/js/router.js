@@ -37,3 +37,39 @@ function getTokenFromUrl() {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get('token');
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  
+  let lastTouchEnd = 0;
+  document.addEventListener('touchend', function(event) {
+    const now = (new Date()).getTime();
+    if (now - lastTouchEnd <= 300) {
+      event.preventDefault();
+    }
+    lastTouchEnd = now;
+  }, false);
+
+
+  const weightButtons = document.querySelectorAll('.weight-btn, .nav-item');
+  weightButtons.forEach(button => {
+    button.addEventListener('touchstart', function() {
+      this.style.transform = 'scale(0.95)';
+    }, { passive: true });
+    
+    button.addEventListener('touchend', function() {
+      this.style.transform = '';
+    }, { passive: true });
+  });
+});

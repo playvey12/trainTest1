@@ -1174,3 +1174,82 @@ body.pink-theme .exercise-card.highlighted {
     box-shadow: 0 0 0 10px rgba(225, 139, 207, 0);
   }
 }
+
+/* Исправление футера */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 10px 15px;
+  background: var(--card-bg);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Для Safari */
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: space-around;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Исправление иконок в футере */
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  transform: rotate(0deg) !important; /* Убираем поворот для мобильных */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Специальные исправления для каждой иконки */
+.gym {
+  background-image: url(../img/traningPlanImg/gym.png);
+  transform: rotate(0deg) !important;
+}
+
+.user {
+  background-image: url(../img/traningPlanImg/user.png);
+  transform: rotate(0deg) !important;
+}
+
+.note {
+  background-image: url(../img/traningPlanImg/note.png);
+  transform: rotate(0deg) !important;
+}
+
+/* Увеличение тач-зоны для iOS */
+.nav-item {
+  padding: 12px 16px;
+  min-width: 60px;
+  text-align: center;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убираем синий фон при тапе на iOS */
+}
+
+.nav-label {
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Адаптация для очень маленьких экранов */
+@media (max-width: 375px) {
+  .nav-item {
+    padding: 10px 12px;
+    min-width: 50px;
+  }
+  
+  .nav-icon {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .nav-label {
+    font-size: 11px;
+  }
+}
