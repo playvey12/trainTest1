@@ -725,7 +725,7 @@ function showNotification(message, type = 'info') {
   }, 3000);
 }
 
-// ========== ФУНКЦИИ ДЛЯ МОДАЛЬНЫХ ОКОН ==========
+
 // ========== ФУНКЦИИ ДЛЯ МОДАЛЬНЫХ ОКОН ==========
 function initializeSettingsModal() {
   const settingsBtn = document.querySelector(".settings-btn");

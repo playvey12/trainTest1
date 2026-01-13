@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
-const jwtSecret = 'PLAYVEY123';
+const jwtSecret = process.env.JWT_SECRET || 'fallback';
+
 
 const isAuth = (req, res, next) => {
 

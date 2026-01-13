@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let activeRestTimers = new Map();
   let completedApproaches = new Map();
   let totalRestTime = 0;
-  const restTime = 120;
+  const restTime =5;
 
   // ========== ФУНКЦИИ ДЛЯ МОДАЛЬНЫХ ОКОН ==========
   if (selectDayBtn) {
@@ -136,17 +136,20 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function openConfirmModal() {
-    if (workoutDurationElement) {
-      workoutDurationElement.textContent = `Текущее время: ${formatTime(workoutSeconds)}`;
-    }
-
-    stopTimer();
-
-    if (confirmModal) {
-      confirmModal.classList.add("active");
-      document.body.style.overflow = "hidden";
-    }
+  if (workoutDurationElement) {
+    workoutDurationElement.textContent = `Текущее время: ${formatTime(workoutSeconds)}`;
   }
+  
+ 
+  const activeRestSeconds = Array.from(activeRestTimers.keys()).length * restTime;
+  
+  stopTimer();
+  
+  if (confirmModal) {
+    confirmModal.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+}
 
   function openResultsModal(totalTime, restTime, netTime) {
     if (totalTimeElement) totalTimeElement.textContent = formatTime(totalTime);
@@ -160,28 +163,33 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function closeConfirmModal() {
-    if (confirmModal) {
-      confirmModal.classList.remove("active");
-    }
-    document.body.style.overflow = "auto";
+  if (confirmModal) {
+    confirmModal.classList.remove("active");
+  }
+  document.body.style.overflow = "auto";
+  
+  if (isWorkoutStarted) {
+    startTimer();
 
-    if (isWorkoutStarted) {
-      startTimer();
-      if (isApproachActive && activeExerciseId) {
-        const activeBtn = document.querySelector(`[data-train*='"id":"${activeExerciseId}"']`);
-        if (activeBtn) {
+    if (isApproachActive && activeExerciseId) {
+      const activeBtn = document.querySelector(`[data-train*='"id":"${activeExerciseId}"']`);
+      if (activeBtn) {
+        const timer = activeRestTimers.get(activeExerciseId);
+        if (timer) {
+          activeBtn.disabled = true;
+          activeBtn.style.opacity = "0.7";
+          activeBtn.style.cursor = "not-allowed";
+        } else {
           activeBtn.disabled = false;
           activeBtn.style.opacity = "1";
           activeBtn.style.cursor = "pointer";
           activeBtn.textContent = "Подтвердить подход";
         }
-        resetAllBlockedButtons();
-        isApproachActive = false;
-        activeExerciseId = null;
       }
+      resetAllBlockedButtons();
     }
   }
-
+}
   // ========== ФУНКЦИИ ДЛЯ УПРАВЛЕНИЯ ТРЕНИРОВКОЙ ==========
   window.setSelectedDay = function (day) {
     selectedDay = day;
@@ -233,29 +241,31 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function showWorkoutResults() {
-    stopTimer();
-    isWorkoutStarted = false;
-
-    activeRestTimers.forEach((timer) => {
-      if (timer) clearInterval(timer);
-    });
-    activeRestTimers.clear();
-
-    resetAllBlockedButtons();
-    isApproachActive = false;
-    activeExerciseId = null;
-
-    const totalTime = workoutSeconds;
-    const restTime = totalRestTime;
-    const netTime = Math.max(0, totalTime - restTime);
-
-    openResultsModal(totalTime, restTime, netTime);
-    resetWorkoutButtons();
-    updateCompleteButtonsState();
-
-    console.log("Показаны результаты тренировки");
-  }
+ function showWorkoutResults() {
+  stopTimer();
+  isWorkoutStarted = false;
+  activeRestTimers.forEach((timer, exerciseId) => {
+    if (timer) clearInterval(timer);
+  });
+  activeRestTimers.clear();
+  
+  resetAllBlockedButtons();
+  isApproachActive = false;
+  activeExerciseId = null;
+  
+  const totalTime = workoutSeconds;
+  const restTime = totalRestTime;
+  const netTime = Math.max(0, totalTime - restTime);
+  
+  openResultsModal(totalTime, restTime, netTime);
+  resetWorkoutButtons();
+  updateCompleteButtonsState();
+  
+  console.log("Показаны результаты тренировки");
+  console.log("Общее время:", totalTime, "сек");
+  console.log("Время отдыха:", restTime, "сек");
+  console.log("Чистое время:", netTime, "сек");
+}
 
   function resetWorkoutButtons() {
     if (startWorkoutBtn) {
@@ -527,38 +537,45 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function startRestTimer(button, exerciseId) {
-    let timeLeft = restTime;
+ function startRestTimer(button, exerciseId) {
+  let timeLeft = restTime;
+  
+  button.disabled = true;
+  button.style.opacity = "0.7";
+  button.style.cursor = "not-allowed";
+  updateButtonTimerText(button, timeLeft);
+  
 
-    button.disabled = true;
-    button.style.opacity = "0.7";
-    button.style.cursor = "not-allowed";
-    updateButtonTimerText(button, timeLeft);
+  const startTime = Date.now();
+  
+  const timerId = setInterval(() => {
+    timeLeft--;
+    
+    if (timeLeft <= 0) {
+      clearInterval(timerId);
+      activeRestTimers.delete(exerciseId);
+      
 
-    const timerId = setInterval(() => {
-      timeLeft--;
-
-      if (timeLeft <= 0) {
-        clearInterval(timerId);
-        activeRestTimers.delete(exerciseId);
-
-        isApproachActive = false;
-        activeExerciseId = null;
-        blockAllOtherCompleteButtons(exerciseId, false);
-        
-        button.disabled = false;
-        button.style.opacity = "1";
-        button.style.cursor = "pointer";
-        button.textContent = "Подтвердить подход";
-
-        showNotification("Отдых завершен! Можно выполнять следующий подход", "success");
-      } else {
-        updateButtonTimerText(button, timeLeft);
-      }
-    }, 1000);
-
-    activeRestTimers.set(exerciseId, timerId);
-  }
+      const actualRestTime = Math.floor((Date.now() - startTime) / 1000);
+      totalRestTime += Math.min(actualRestTime, restTime);
+      
+      isApproachActive = false;
+      activeExerciseId = null;
+      blockAllOtherCompleteButtons(exerciseId, false);
+      
+      button.disabled = false;
+      button.style.opacity = "1";
+      button.style.cursor = "pointer";
+      button.textContent = "Подтвердить подход";
+      
+      showNotification("Отдых завершен! Можно выполнять следующий подход", "success");
+    } else {
+      updateButtonTimerText(button, timeLeft);
+    }
+  }, 1000);
+  
+  activeRestTimers.set(exerciseId, timerId);
+}
 
   function resetAllBlockedButtons() {
     isApproachActive = false;
@@ -654,10 +671,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // ========== ФУНКЦИИ ДЛЯ РЕДАКТИРОВАНИЯ УПРАЖНЕНИЙ ==========
-  window.openEditModal = function(id, weight, approaches) {
+  window.openEditModal = function(id, weight) {
     currentEditExerciseId = id;
     document.getElementById("edit-exercise-weight").value = weight || "";
-    document.getElementById("edit-exercise-approaches").value = approaches || "";
+  
     if (editModal) {
       editModal.classList.add("active");
       document.body.style.overflow = "hidden";
@@ -703,87 +720,79 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   window.editTask = async function() {
-    try {
-      if (!currentEditExerciseId) {
-        console.error("Нет ID для редактирования");
-        return;
-      }
-
-      const weight = document.getElementById("edit-exercise-weight").value;
-      const approaches = document.getElementById("edit-exercise-approaches").value;
-
-      const taskData = {
-        weight: weight ? parseInt(weight) : 0,
-        approaches: approaches ? parseInt(approaches) : 0,
-      };
-
-      const response = await authFetch(`/trainingPlan/edit/${currentEditExerciseId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(taskData),
-      });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log("Задание обновлено:", responseData);
-        
-        updateExerciseOnPage(currentEditExerciseId, taskData.weight, taskData.approaches);
-        
-        showNotification("Упражнение успешно обновлено", "success");
-        closeEditModal();
-      } else {
-        const errorData = await response.json();
-        console.error("Ошибка при обновлении:", errorData.error);
-        showNotification("Ошибка при обновлении упражнения", "error");
-      }
-    } catch (error) {
-      console.error("Ошибка сети:", error);
-      showNotification("Ошибка сети. Проверьте подключение к интернету", "error");
+  try {
+    if (!currentEditExerciseId) {
+      console.error("Нет ID для редактирования");
+      return;
     }
-  };
 
-  function updateExerciseOnPage(exerciseId, weight, approaches) {
-    const exerciseCard = document.querySelector(`[data-exercise-id="${exerciseId}"]`);
-    
-    if (exerciseCard) {
-      const weightElement = exerciseCard.querySelector(".weight-value");
-      if (weightElement) {
-        if (weight > 0) {
-          weightElement.textContent = `${weight} кг`;
-        } else {
-          weightElement.textContent = "Свободный";
-        }
-      }
+    const weight = document.getElementById("edit-exercise-weight").value;
+
+
+    const taskData = {
+      weight: weight ? parseInt(weight) : 0,
+     
+    };
+
+    const response = await authFetch(`/trainingPlan/edit/${currentEditExerciseId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(taskData),
+    });
+
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log("Задание обновлено:", responseData);
       
-      const approachesElement = exerciseCard.querySelector(".approaches-value");
-      if (approachesElement) {
-        if (approaches > 0) {
-          approachesElement.textContent = approaches;
-        } else {
-          approachesElement.textContent = "Свободное кол-во";
-        }
+      updateExerciseOnPage(currentEditExerciseId, taskData.weight);
+      
+      showNotification("Упражнение успешно обновлено", "success");
+      closeEditModal();
+    } else {
+      const errorData = await response.json();
+      console.error("Ошибка при обновлении:", errorData.error);
+      showNotification("Ошибка при обновлении упражнения", "error");
+    }
+  } catch (error) {
+    console.error("Ошибка сети:", error);
+    showNotification("Ошибка сети. Проверьте подключение к интернету", "error");
+  }
+};
+  function updateExerciseOnPage(exerciseId, weight) { 
+  const exerciseCard = document.querySelector(`[data-exercise-id="${exerciseId}"]`);
+  
+  if (exerciseCard) {
+    const weightElement = exerciseCard.querySelector(".weight-value");
+    if (weightElement) {
+      if (weight > 0) {
+        weightElement.textContent = `${weight} кг`;
+      } else {
+        weightElement.textContent = "Свободный";
       }
+    }
+    
+    
 
-      const completeBtn = exerciseCard.querySelector(".complete-btn");
-      if (completeBtn) {
-        const trainDataString = completeBtn.getAttribute("data-train");
-        if (trainDataString) {
-          try {
-            const trainData = JSON.parse(trainDataString);
-            trainData.weight = weight.toString();
-            trainData.approaches = approaches.toString();
-            completeBtn.setAttribute("data-train", JSON.stringify(trainData));
-            completeBtn.setAttribute("data-initial-approaches", approaches.toString());
-          } catch (error) {
-            console.error("Ошибка обновления data-train:", error);
-          }
+    const completeBtn = exerciseCard.querySelector(".complete-btn");
+    if (completeBtn) {
+      const trainDataString = completeBtn.getAttribute("data-train");
+      if (trainDataString) {
+        try {
+          const trainData = JSON.parse(trainDataString);
+          trainData.weight = weight.toString();
+          
+          
+          completeBtn.setAttribute("data-train", JSON.stringify(trainData));
+      
+        } catch (error) {
+          console.error("Ошибка обновления data-train:", error);
         }
       }
     }
   }
-
+}
   // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
   function reinitializeCompleteButtons() {
     console.log("Повторная инициализация кнопок подтверждения...");
