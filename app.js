@@ -17,7 +17,10 @@ const trainModeRouter = require("./routers/trainModeRouter");
 const trainPlanRouter = require("./routers/trainPlanRouter");
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 482129b6a0932ac4851c9e366cb99fcbb79013d0
 const jwtSecret = process.env.JWT_SECRET || 'fallback';
 
 
