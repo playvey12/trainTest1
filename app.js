@@ -7,7 +7,7 @@ const trainData = require("./data/trainData");
 
 const isAuth = require("./middleware/all.middleware");
 
-const port = 3333;
+const port = process.env.PORT || 3333;
 const app = express();
 const bcrypt=require('bcryptjs')
 const jwt=require('jsonwebtoken')
@@ -17,7 +17,7 @@ const trainModeRouter = require("./routers/trainModeRouter");
 const trainPlanRouter = require("./routers/trainPlanRouter");
 
 
-const jwtSecret='PLAYVEY123'
+const jwtSecret = process.env.JWT_SECRET || 'fallback';
 
 
 

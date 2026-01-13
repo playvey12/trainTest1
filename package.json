@@ -1,4 +1,8 @@
 {
+  "scripts": {
+  "start": "node app.js"
+},
+
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "express": "^5.2.1",
