@@ -1,0 +1,37 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/trainingPlan.css" />
+  <title>trainingPlan</title>
+</head>
+
+<body>
+  <div class="container">
+    {{>trainingPlanHeader}}
+
+
+    <div class="exercises-wrapper">
+      <div id="exercises-container" class="exercises-scroll-container">
+
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="btn-container">
+      <button class="add-btn">Добавить упражнение</button>
+    </div>
+
+    {{>editExerciseModal}}
+    {{>confirmDeleteModal}}
+    {{>addNewTask}}
+    {{>footer}}
+  </div>
+</body>
+<script src="./js/trainPlan.js"></script>
+<script src="./js/router.js"></script>
+<script src="./js/auth.js"></script>
+
+</html>

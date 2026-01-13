@@ -1,0 +1,23 @@
+<div class="weight-modal-overlay" id="weightModal">
+  <div class="weight-modal">
+    <div class="weight-modal-header">
+      <h2 class="weight-modal-title">Изменение веса</h2>
+      <button class="weight-close-btn" id="closeWeightModal">&times;</button>
+    </div>
+
+    <div class="weight-input-group">
+      <label class="weight-input-label" for="weightInput">
+        Введите ваш текущий вес
+      </label>
+      <div class="weight-input-wrapper">
+        <input type="number" id="weightInput" class="weight-input" step="0.1" placeholder="0.0" inputmode="decimal" />
+        <span class="weight-unit">кг</span>
+      </div>
+    </div>
+
+    <div class="weight-modal-actions">
+      <button class="weight-cancel-btn" id="cancelWeightChange">Отмена</button>
+      <button class="weight-save-btn" onclick="editWeight()" id="saveWeightChange">Сохранить</button>
+    </div>
+  </div>
+</div>

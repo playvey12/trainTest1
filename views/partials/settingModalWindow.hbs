@@ -1,0 +1,48 @@
+<!-- Модальное окно настроек -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="settings-modal">
+    <div class="modal-header">
+      <h2 class="modal-title">Настройки</h2>
+      <button class="close-btn" id="closeModal">&times;</button>
+    </div>
+
+    <div class="settings-group">
+      <label class="settings-label" for="userName">Имя пользователя</label>
+      <input type="text" id="userName" class="settings-input" placeholder="Введите ваше имя" />
+    </div>
+
+    <div class="settings-group">
+      <label class="settings-label" for="targetWeight">Стартовый вес (кг)</label>
+      <input type="number" id="startWeight" class="settings-input" placeholder="Укажите стартовый вес" value="70" />
+    </div>
+
+    <div class="settings-group">
+      <label class="settings-label" for="targetWeight">Целевой вес (кг)</label>
+      <input type="number" id="targetWeight" class="settings-input" placeholder="Укажите цель" value="70" />
+    </div>
+
+    <div class="settings-group">
+      <label class="settings-label">Тема приложения</label>
+      <div class="theme-selector">
+        <div class="theme-option theme-dark active" data-theme="dark">
+          Тёмная
+        </div>
+        <div class="theme-option theme-pink" data-theme="pink">
+          Розовая
+        </div>
+
+      </div>
+    </div>
+    <div class="settings-group">
+      <button class="logout-btn" id="logoutBtn" onclick="logout()">
+        <span class="logout-icon"></span>
+        Выйти из профиля
+      </button>
+    </div>
+    <div class="modal-actions">
+      <button class="cancel-btn" id="cancelSettings">Отмена</button>
+
+      <button class="save-btn" id="saveSettings">Сохранить</button>
+    </div>
+  </div>
+</div>

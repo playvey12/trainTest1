@@ -1,0 +1,18 @@
+
+<div id="deleteModal" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Подтверждение удаления</h3>
+      <button class="close-btn" onclick="closeDeleteModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <p style="color: var(--text-color); font-size: 16px; line-height: 1.5;">
+        Вы уверены, что хотите удалить это упражнение? Это действие нельзя будет отменить.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class="cancel-btn" onclick="closeDeleteModal()">Отмена</button>
+      <button class="save-btn" onclick="confirmDelete()" style="background: var(--gradient-button);">Удалить</button>
+    </div>
+  </div>
+</div>

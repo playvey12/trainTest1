@@ -1,0 +1,2497 @@
+:root {
+  /* Основные цвета */
+  --primary-color: #0d0d0d;
+  --secondary-color: #ff2d55;
+  --text-color: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.55);
+
+
+  /* Цвета карточек */
+  --card-bg: #1c1c1e;
+  --card-bg-hover: #2c2c2e;
+
+  /* Фоны */
+  --body-bg-start: #0b0b0c;
+  --body-bg-end: #111113;
+  --header-bg: rgba(255, 255, 255, 0.05);
+  --hover-bg: rgba(255, 255, 255, 0.08);
+  --active-nav-bg: rgba(255, 45, 85, 0.25);
+
+
+  --header-bg: rgba(255, 255, 255, 0.05);
+  --hover-bg: rgba(255, 255, 255, 0.08);
+  --active-nav-bg: rgba(255, 45, 85, 0.25);
+  /* Градиенты */
+  --gradient-body: linear-gradient(
+    180deg,
+    var(--body-bg-start) 0%,
+    var(--body-bg-end) 100%
+  );
+  --gradient-divider: linear-gradient(90deg, #ff2d55, #ff416c);
+  --gradient-button: linear-gradient(145deg, #ff2d55, #ff3b5c);
+  
+  
+  /* Эффекты */
+  --border-radius: 14px;
+  --shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+
+  /* Дополнительные цвета */
+  --white: #ffffff;
+  --divider-color: #ff2d55;
+  --divider-color-end: #ff416c;
+
+
+/* Новые переменные для розовой темы */
+  --pink-primary-color: #fcddf5;
+  --pink-secondary-color: #f2a2b1;
+  --pink-text-color: #333333;
+  --pink-text-muted: #666666;
+  --pink-card-bg: #ffffff;
+  --pink-body-bg: #f8d7de;
+  --pink-border-color: #e18bcf;
+
+
+}
+
+
+/* --------------------------------------------------- */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  background: var(--gradient-body);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+}
+
+/* --------------------------------------------------- */
+
+.container {
+  max-width: 820px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+header {
+  margin-bottom: 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  font-size: 34px;
+  margin-bottom: 0;
+  text-align: left;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.timer {
+  background: var(--card-bg);
+  padding: 12px 20px;
+  border-radius: var(--border-radius);
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: var(--shadow);
+}
+
+/* --------------------------------------------------- */
+/* СТИЛИ ДЛЯ КОНТЕЙНЕРА УПРАЖНЕНИЙ */
+
+.exercises-wrapper {
+  position: relative;
+  height: 550px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.exercises-scroll-container {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 100%;
+  padding-right: 8px;
+}
+
+/* Стили для скроллбара */
+.exercises-scroll-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.exercises-scroll-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.exercises-scroll-container::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 3px;
+}
+
+.exercises-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #ff416c;
+}
+
+/* --------------------------------------------------- */
+/* СТИЛИ ДЛЯ КАРТОЧЕК УПРАЖНЕНИЙ */
+
+.exercise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.exercise-card {
+  background: var(--card-bg);
+  padding: 15px;
+  border-radius: var(--border-radius);
+  display: flex;
+  cursor: pointer;
+  justify-content: space-between;
+  align-items: center;
+  transition: 0.25s;
+  box-shadow: var(--shadow);
+}
+
+.exercise-card:hover {
+  background: var(--card-bg-hover);
+  transform: translateY(-2px);
+}
+
+.exercise-info {
+  flex: 1;
+}
+
+.exercise-name {
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.exercise-details {
+  display: flex;
+  gap: 25px;
+  color: var(--text-muted);
+}
+
+.exercise-weight,
+.exercise-sets {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.detail-value {
+  color: var(--white);
+  font-weight: 500;
+}
+
+.button_conteiner {
+  display: flex;
+  gap: 10px;
+  margin-left: 15px;
+}
+
+/* --------------------------------------------------- */
+
+.exercise-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exercise-name {
+  font-size: 19px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.exercise-details {
+  display: flex;
+  gap: 25px;
+  color: var(--text-muted);
+  font-size: 16px;
+}
+
+.exercise-weight,
+.exercise-sets {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.detail-label {
+  color: var(--text-muted);
+}
+
+.detail-value {
+  color: var(--white);
+  font-weight: 500;
+  font-size: 16px;
+}
+
+/* --------------------------------------------------- */
+
+.exercise-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 180px;
+}
+
+.complete-btn,
+.edit-btn {
+  padding: 12px 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  box-shadow: var(--shadow);
+  font-size: 14px;
+  width: 100%;
+}
+
+.complete-btn {
+  background: var(--gradient-button);
+  color: var(--white);
+}
+
+.complete-btn:hover {
+  filter: brightness(1.15);
+}
+
+.complete-btn.completed {
+  background: #34c759;
+}
+
+.edit-btn {
+  background: var(--card-bg-hover);
+  color: var(--text-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.edit-btn:hover {
+  background: var(--hover-bg);
+}
+
+/* --------------------------------------------------- */
+/* ДЕЛИТЕР */
+
+.divider {
+  height: 2px;
+  background: var(--gradient-divider);
+  width: 100%;
+  margin: 30px 0;
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------- */
+/* КНОПКИ УПРАВЛЕНИЯ ТРЕНИРОВКОЙ */
+
+.controls-btn {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.start-exercise-btn,
+.finish-exercise-btn {
+  background: var(--gradient-button);
+  color: var(--white);
+  border: none;
+  padding: 16px 35px;
+  border-radius: var(--border-radius);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  box-shadow: var(--shadow);
+  min-width: 220px;
+}
+
+.start-exercise-btn:hover,
+.finish-exercise-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+}
+
+.finish-exercise-btn {
+  background: linear-gradient(145deg, #ff3b30, #ff453a);
+}
+
+/* --------------------------------------------------- */
+/* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
+
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+
+  header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  h1 {
+    font-size: 28px;
+  }
+
+  .exercise-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .exercise-actions {
+    width: 100%;
+    flex-direction: row;
+  }
+
+  .complete-btn,
+  .edit-btn {
+    flex: 1;
+  }
+
+  .controls-btn {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .start-exercise-btn,
+  .finish-exercise-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .exercise-details {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .exercise-actions {
+    flex-direction: column;
+  }
+}
+
+/* --------------------------------------------------- */
+/* АНИМАЦИИ */
+
+.exercise-list.fade-in {
+  animation: fadeInSlide 0.4s ease-out;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------- */
+/* ФУТЕР НАВИГАЦИЯ */
+
+footer {
+  margin-top: 40px;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: space-around;
+  background: var(--header-bg);
+  padding: 15px 10px;
+  border-radius: var(--border-radius);
+  backdrop-filter: blur(10px);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px 18px;
+  border-radius: var(--border-radius);
+  transition: 0.25s;
+}
+
+.nav-item:hover {
+  background: var(--hover-bg);
+}
+
+.nav-item.active {
+  background: var(--active-nav-bg);
+  box-shadow: var(--shadow);
+}
+
+.nav-label {
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+.gym {
+  background-image: url(../img/traningPlanImg/gym.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: rotate(90deg);
+  width: 40px;
+  height: 40px;
+}
+
+.user {
+  background-image: url(../img/traningPlanImg/user.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: rotate(90deg);
+  width: 40px;
+  height: 40px;
+}
+
+.note {
+  background-image: url(../img/traningPlanImg/note.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  transform: rotate(90deg);
+  width: 40px;
+  height: 40px;
+}
+
+/* modal.css */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  position: relative;
+  background: var(--gradient-body);
+  margin: 5% auto;
+  padding: 0;
+  width: 90%;
+  max-width: 600px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--white);
+  margin: 0;
+}
+
+.close-btn {
+  color: var(--text-muted);
+  font-size: 28px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: var(--white);
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+}
+
+.day-card {
+  background: var(--card-bg);
+  padding: 20px 15px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: 2px solid transparent;
+  box-shadow: var(--shadow);
+}
+
+.day-card:hover {
+  background: var(--card-bg-hover);
+  transform: translateY(-3px);
+}
+
+.day-card.selected {
+  background: var(--active-nav-bg);
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 20px rgba(255, 45, 85, 0.3);
+}
+
+.day-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.modal-footer {
+  padding: 20px 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: right;
+}
+
+.modal-confirm-btn {
+  background: var(--gradient-button);
+  color: var(--white);
+  border: none;
+  padding: 14px 30px;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow);
+  min-width: 200px;
+}
+
+.modal-confirm-btn:hover:not(:disabled) {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+}
+
+.modal-confirm-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--card-bg-hover);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .modal-content {
+    margin: 10% auto;
+    width: 95%;
+  }
+
+  .days-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .days-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-header {
+    padding: 15px 20px;
+  }
+
+  .modal-body {
+    padding: 15px;
+  }
+
+  .modal-footer {
+    padding: 15px 20px;
+    text-align: center;
+  }
+
+  .modal-confirm-btn {
+    width: 100%;
+  }
+}
+/* Добавьте в конец trainMode.css */
+/* Добавьте эти стили в конец файла */
+
+/* Стили для скрытия/показа */
+.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-in {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Важно добавить display: flex для упражнений */
+.exercise-list {
+  display: flex !important;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Дополнительные стили для отладки */
+.day-section {
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+}
+
+.week-label {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--secondary-color);
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgba(255, 45, 85, 0.3);
+}
+
+/* Стили для модального окна результатов */
+.results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow);
+}
+
+.result-item:hover {
+  background: var(--card-bg-hover);
+  transform: translateY(-2px);
+}
+
+.result-item.total {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 45, 85, 0.2),
+    rgba(255, 59, 92, 0.15)
+  );
+  border: 2px solid rgba(255, 45, 85, 0.3);
+  margin-top: 10px;
+}
+
+.result-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.result-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--secondary-color);
+  font-family: "Courier New", monospace;
+  letter-spacing: 1px;
+}
+
+.result-divider {
+  height: 1px;
+  background: var(--gradient-divider);
+  width: 100%;
+  margin: 10px 0;
+  border-radius: 2px;
+}
+
+.close-btn-results {
+  color: var(--text-muted);
+  font-size: 28px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.close-btn-results:hover {
+  color: var(--white);
+}
+
+/* Стили для модального окна подтверждения */
+.confirm-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.confirm-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+.confirm-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.confirm-details {
+  font-size: 16px;
+  color: var(--secondary-color);
+  font-weight: 500;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: rgba(255, 45, 85, 0.1);
+  border-radius: var(--border-radius);
+}
+
+.close-btn-confirm {
+  color: var(--text-muted);
+  font-size: 28px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.close-btn-confirm:hover {
+  color: var(--white);
+}
+
+.modal-cancel-btn {
+  background: var(--card-bg-hover);
+  color: var(--text-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 30px;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow);
+  min-width: 120px;
+  margin-right: 10px;
+}
+
+.modal-cancel-btn:hover {
+  background: var(--hover-bg);
+  transform: translateY(-2px);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 480px) {
+  .modal-footer {
+    flex-direction: column;
+  }
+
+  .modal-cancel-btn,
+  .modal-confirm-btn {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+
+/* ==== ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКН ==== */
+.modal-edit-overlay,
+.modal-confirm-overlay,
+.modal-day-overlay,
+.modal-results-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+}
+
+.modal-edit-overlay.active,
+.modal-confirm-overlay.active,
+.modal-day-overlay.active,
+.modal-results-overlay.active {
+  display: flex;
+}
+
+.modal-edit,
+.modal-confirm,
+.modal-day,
+.modal-results {
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  width: 90%;
+  max-width: 500px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  animation: modalAppear 0.3s ease-out;
+}
+
+@keyframes modalAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==== СТИЛИ ДЛЯ ЗАГОЛОВКОВ МОДАЛЬНЫХ ОКОН ==== */
+.modal-edit-header,
+.modal-confirm-header,
+.modal-day-header,
+.modal-results-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-edit-title,
+.modal-confirm-title,
+.modal-day-title,
+.modal-results-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--white);
+  margin: 0;
+}
+
+/* ==== КНОПКИ ЗАКРЫТИЯ ==== */
+.modal-edit-close-btn,
+.modal-confirm-close-btn,
+.modal-day-close-btn,
+.modal-results-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 28px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: color 0.2s;
+  line-height: 1;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.modal-edit-close-btn:hover,
+.modal-confirm-close-btn:hover,
+.modal-day-close-btn:hover,
+.modal-results-close-btn:hover {
+  background: var(--hover-bg);
+  color: var(--white);
+}
+
+/* ==== ТЕЛО МОДАЛЬНЫХ ОКОН ==== */
+.modal-edit-body,
+.modal-confirm-body,
+.modal-day-body,
+.modal-results-body {
+  padding: 20px;
+}
+
+/* ==== ФУТЕРЫ МОДАЛЬНЫХ ОКОН ==== */
+.modal-edit-footer,
+.modal-confirm-footer,
+.modal-day-footer,
+.modal-results-footer {
+  padding: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+/* ==== СПЕЦИФИЧЕСКИЕ СТИЛИ ДЛЯ ОКНА РЕДАКТИРОВАНИЯ ==== */
+.form-group-edit {
+  margin-bottom: 20px;
+}
+
+.form-label-edit {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.form-input-edit {
+  width: 100%;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.form-input-edit:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.form-input-edit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modal-edit-cancel-btn {
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 25px;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.25s;
+  flex: 1;
+}
+
+.modal-edit-cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.modal-edit-save-btn {
+  background: var(--gradient-button);
+  color: var(--white);
+  border: none;
+  padding: 12px 25px;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  box-shadow: var(--shadow);
+  flex: 1;
+}
+
+.modal-edit-save-btn:hover {
+  filter: brightness(1.15);
+}
+
+/* ==== СПЕЦИФИЧЕСКИЕ СТИЛИ ДЛЯ ОКНА ПОДТВЕРЖДЕНИЯ ==== */
+.confirm-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.confirm-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+.confirm-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-color);
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+.confirm-details {
+  font-size: 16px;
+  color: var(--secondary-color);
+  font-weight: 500;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: rgba(255, 45, 85, 0.1);
+  border-radius: var(--border-radius);
+}
+
+.modal-confirm-cancel-btn {
+  background: var(--card-bg-hover);
+  color: var(--text-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 30px;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow);
+  min-width: 120px;
+  margin-right: 10px;
+}
+
+.modal-confirm-cancel-btn:hover {
+  background: var(--hover-bg);
+  transform: translateY(-2px);
+}
+
+.modal-confirm-submit-btn {
+  background: var(--gradient-button);
+  color: var(--white);
+  border: none;
+  padding: 14px 30px;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow);
+  min-width: 120px;
+}
+
+.modal-confirm-submit-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+}
+
+/* ==== СПЕЦИФИЧЕСКИЕ СТИЛИ ДЛЯ ОКНА ВЫБОРА ДНЯ ==== */
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+}
+
+.day-card {
+  background: var(--card-bg);
+  padding: 20px 15px;
+  border-radius: var(--border-radius);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: 2px solid transparent;
+  box-shadow: var(--shadow);
+}
+
+.day-card:hover {
+  background: var(--card-bg-hover);
+  transform: translateY(-3px);
+}
+
+.day-card.selected {
+  background: var(--active-nav-bg);
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 20px rgba(255, 45, 85, 0.3);
+}
+
+.day-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.modal-day-confirm-btn {
+  background: var(--gradient-button);
+  color: var(--white);
+  border: none;
+  padding: 14px 30px;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow);
+  min-width: 200px;
+}
+
+.modal-day-confirm-btn:hover:not(:disabled) {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+}
+
+.modal-day-confirm-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: var(--card-bg-hover);
+}
+
+/* ==== СПЕЦИФИЧЕСКИЕ СТИЛИ ДЛЯ ОКНА РЕЗУЛЬТАТОВ ==== */
+.results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow);
+}
+
+.result-item:hover {
+  background: var(--card-bg-hover);
+  transform: translateY(-2px);
+}
+
+.result-item.total {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 45, 85, 0.2),
+    rgba(255, 59, 92, 0.15)
+  );
+  border: 2px solid rgba(255, 45, 85, 0.3);
+  margin-top: 10px;
+}
+
+.result-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.result-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--secondary-color);
+  font-family: "Courier New", monospace;
+  letter-spacing: 1px;
+}
+
+.result-divider {
+  height: 1px;
+  background: var(--gradient-divider);
+  width: 100%;
+  margin: 10px 0;
+  border-radius: 2px;
+}
+
+.modal-results-close-button {
+  background: var(--gradient-button);
+  color: var(--white);
+  border: none;
+  padding: 14px 30px;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow);
+  min-width: 200px;
+}
+
+.modal-results-close-button:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+}
+
+/* ==== АДАПТИВНОСТЬ ==== */
+@media (max-width: 768px) {
+  .modal-edit,
+  .modal-confirm,
+  .modal-day,
+  .modal-results {
+    width: 95%;
+    margin: 10px;
+  }
+
+  .days-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .modal-edit-footer,
+  .modal-confirm-footer,
+  .modal-day-footer,
+  .modal-results-footer {
+    flex-direction: column;
+  }
+
+  .modal-edit-cancel-btn,
+  .modal-edit-save-btn,
+  .modal-confirm-cancel-btn,
+  .modal-confirm-submit-btn,
+  .modal-day-confirm-btn,
+  .modal-results-close-button {
+    width: 100%;
+    margin: 5px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .days-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-edit-header,
+  .modal-confirm-header,
+  .modal-day-header,
+  .modal-results-header {
+    padding: 15px 20px;
+  }
+
+  .modal-edit-body,
+  .modal-confirm-body,
+  .modal-day-body,
+  .modal-results-body {
+    padding: 15px;
+  }
+
+  .modal-edit-footer,
+  .modal-confirm-footer,
+  .modal-day-footer,
+  .modal-results-footer {
+    padding: 15px 20px;
+  }
+}
+
+.exercise-list.updated {
+  animation: highlightUpdate 1s ease;
+}
+
+@keyframes highlightUpdate {
+  0% {
+    background-color: rgba(46, 125, 50, 0.1);
+    transform: translateY(0);
+  }
+  50% {
+    background-color: rgba(46, 125, 50, 0.3);
+    transform: translateY(-2px);
+  }
+  100% {
+    background-color: transparent;
+    transform: translateY(0);
+  }
+}
+
+.exercise-list {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+
+
+/* ===== ROOT ДЛЯ РОЗОВОЙ ТЕМЫ НА СТРАНИЦЕ TRAIN MODE ===== */
+body.pink-theme {
+  /* Основные цвета */
+  --primary-color: #fcddf5;
+  --secondary-color: #f2a2b1;
+  --text-color: #333333;
+  --text-muted: #666666;
+  
+  /* Цвета карточек */
+  --card-bg: #ffffff;
+  --card-bg-hover: #fef2fa;
+  
+  /* Фоны */
+  --body-bg-start: #ffeff7;
+  --body-bg-end: #f8d7de;
+  --header-bg: rgba(252, 221, 245, 0.7);
+  --hover-bg: rgba(225, 139, 207, 0.1);
+  --active-nav-bg: rgba(225, 139, 207, 0.25);
+  
+  /* Градиенты */
+  --gradient-body: linear-gradient(
+    180deg,
+    var(--body-bg-start) 0%,
+    var(--body-bg-end) 100%
+  );
+  --gradient-divider: linear-gradient(90deg, #e18bcf, #ffcce0);
+  --gradient-button: linear-gradient(145deg, #e18bcf, #ffcce0);
+  --gradient-success: linear-gradient(135deg, #4CAF50, #66BB6A);
+  --gradient-warning: linear-gradient(135deg, #FF9800, #FFB74D);
+  
+  /* Эффекты */
+  --border-radius: 14px;
+  --shadow: 0 8px 20px rgba(225, 139, 207, 0.2);
+  --shadow-hover: 0 12px 28px rgba(225, 139, 207, 0.3);
+  
+  /* Дополнительные цвета */
+  --white: #ffffff;
+  --divider-color: #e18bcf;
+  --divider-color-end: #ffcce0;
+  --success-color: #4CAF50;
+  --warning-color: #FF9800;
+  --danger-color: #f44336;
+}
+
+/* ===== БАЗОВЫЕ СТИЛИ ===== */
+body.pink-theme {
+  background: var(--gradient-body);
+  color: var(--text-color);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+}
+
+body.pink-theme .container {
+  background: transparent;
+  padding-bottom: 80px; /* Для футера */
+}
+
+/* ===== HEADER ===== */
+body.pink-theme header {
+  background: var(--header-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(225, 139, 207, 0.3);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.pink-theme header h1 {
+  color: var(--text-color);
+  font-size: 24px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0;
+}
+
+/* Таймер */
+body.pink-theme .timer {
+  background: rgba(225, 139, 207, 0.15);
+  border: 1px solid var(--pink-border-color);
+  border-radius: var(--border-radius);
+  padding: 10px 20px;
+  font-family: 'Courier New', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-color);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(225, 139, 207, 0.2);
+  transition: all 0.3s ease;
+}
+
+body.pink-theme .timer.running {
+  background: rgba(76, 175, 80, 0.15);
+  border-color: #4CAF50;
+  color: #2E7D32;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(76, 175, 80, 0.4);
+  }
+}
+
+/* ===== УПРАЖНЕНИЯ ===== */
+body.pink-theme .exercises-wrapper {
+  background: transparent;
+  padding: 20px;
+}
+
+body.pink-theme .exercises-scroll-container {
+  background: transparent;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+/* Секции дней */
+body.pink-theme .day-section {
+  background: transparent;
+  margin-bottom: 24px;
+}
+
+body.pink-theme .week-label {
+  color: var(--text-color);
+  background: rgba(225, 139, 207, 0.15);
+  border-left: 4px solid var(--primary-color);
+  padding: 12px 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  border-radius: 0 8px 8px 0;
+}
+
+/* Карточки упражнений */
+body.pink-theme .exercise-card {
+  background: var(--card-bg);
+  border: 1px solid var(--pink-border-color);
+  border-radius: var(--border-radius);
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.pink-theme .exercise-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+body.pink-theme .exercise-card.active {
+  border: 2px solid var(--primary-color);
+  background: rgba(225, 139, 207, 0.1);
+  box-shadow: 0 0 0 3px rgba(225, 139, 207, 0.2);
+}
+
+body.pink-theme .exercise-info {
+  padding: 20px;
+}
+
+body.pink-theme .exercise-name {
+  color: var(--text-color);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+body.pink-theme .exercise-details {
+  display: flex;
+  gap: 24px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+body.pink-theme .detail-label {
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+body.pink-theme .detail-value {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/* Кнопки действий в карточке */
+body.pink-theme .exercise-actions {
+  display: flex;
+  border-top: 1px solid rgba(225, 139, 207, 0.2);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+body.pink-theme .complete-btn,
+body.pink-theme .edit-btn {
+  flex: 1;
+  padding: 16px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+body.pink-theme .complete-btn {
+  color: var(--success-color);
+  border-right: 1px solid rgba(225, 139, 207, 0.2);
+}
+
+body.pink-theme .complete-btn:hover {
+  background: rgba(76, 175, 80, 0.1);
+}
+
+body.pink-theme .complete-btn.completed {
+  background: var(--gradient-success);
+  color: white;
+}
+
+body.pink-theme .edit-btn {
+  color: var(--text-color);
+}
+
+body.pink-theme .edit-btn:hover {
+  background: rgba(225, 139, 207, 0.1);
+  color: var(--primary-color);
+}
+
+/* ===== КОНТРОЛЬНЫЕ КНОПКИ ===== */
+body.pink-theme .controls-btn {
+  display: flex;
+
+  gap: 16px;
+  padding: 20px;
+  background: transparent;
+}
+
+body.pink-theme .start-exercise-btn {
+  background: var(--gradient-button);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 18px 24px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(225, 139, 207, 0.3);
+}
+
+body.pink-theme .start-exercise-btn:hover {
+  background: linear-gradient(145deg, #d47bc0, #f5b9d9);
+  box-shadow: 0 6px 20px rgba(225, 139, 207, 0.4);
+  transform: translateY(-2px);
+}
+
+body.pink-theme .start-exercise-btn:active {
+  transform: translateY(0);
+}
+
+body.pink-theme .start-exercise-btn:disabled {
+  background: rgba(225, 139, 207, 0.3);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ===== РАЗДЕЛИТЕЛЬ ===== */
+body.pink-theme .divider {
+  background: var(--gradient-divider);
+  height: 2px;
+  margin: 0 20px;
+  opacity: 0.6;
+  border-radius: 1px;
+}
+
+/* ===== МОДАЛЬНЫЕ ОКНА ===== */
+/* Окно результатов тренировки */
+body.pink-theme .modal-results-overlay {
+  background: rgba(255, 245, 247, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+body.pink-theme .modal-results {
+  background: var(--card-bg);
+  border: 1px solid var(--pink-border-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 20px 40px rgba(225, 139, 207, 0.25);
+  max-width: 500px;
+  width: 90%;
+  margin: 20px auto;
+}
+
+body.pink-theme .modal-results-header {
+  border-bottom: 1px solid rgba(225, 139, 207, 0.2);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.pink-theme .modal-results-title {
+  color: var(--text-color);
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+body.pink-theme .modal-results-close-btn {
+  background: rgba(225, 139, 207, 0.1);
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 24px;
+  line-height: 1;
+}
+
+body.pink-theme .modal-results-close-btn:hover {
+  background: rgba(225, 139, 207, 0.2);
+  border-color: var(--pink-border-color);
+  color: var(--text-color);
+}
+
+/* Тело модалки результатов */
+body.pink-theme .modal-results-body {
+  padding: 20px;
+}
+
+body.pink-theme .results-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+body.pink-theme .result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(225, 139, 207, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(225, 139, 207, 0.1);
+}
+
+body.pink-theme .result-item.total {
+  background: rgba(225, 139, 207, 0.15);
+  border: 1px solid var(--pink-border-color);
+  font-weight: 700;
+}
+
+body.pink-theme .result-label {
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+body.pink-theme .result-value {
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+body.pink-theme .result-divider {
+  height: 1px;
+  background: rgba(225, 139, 207, 0.2);
+  margin: 8px 0;
+}
+
+/* Футер модалки результатов */
+body.pink-theme .modal-results-footer {
+  padding: 20px;
+  border-top: 1px solid rgba(225, 139, 207, 0.2);
+}
+
+body.pink-theme .modal-results-close-button {
+  width: 100%;
+  background: var(--gradient-button);
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+body.pink-theme .modal-results-close-button:hover {
+  background: linear-gradient(145deg, #d47bc0, #f5b9d9);
+  box-shadow: 0 4px 15px rgba(225, 139, 207, 0.3);
+}
+
+/* Окно подтверждения остановки */
+body.pink-theme .modal-confirm-overlay {
+  background: rgba(255, 245, 247, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+body.pink-theme .modal-confirm {
+  background: var(--card-bg);
+  border: 1px solid var(--pink-border-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 20px 40px rgba(225, 139, 207, 0.25);
+  max-width: 400px;
+  width: 90%;
+  margin: 20px auto;
+}
+
+body.pink-theme .modal-confirm-header {
+  border-bottom: 1px solid rgba(225, 139, 207, 0.2);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.pink-theme .modal-confirm-title {
+  color: var(--text-color);
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+body.pink-theme .modal-confirm-close-btn {
+  background: rgba(225, 139, 207, 0.1);
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 24px;
+  line-height: 1;
+}
+
+body.pink-theme .modal-confirm-close-btn:hover {
+  background: rgba(225, 139, 207, 0.2);
+  border-color: var(--pink-border-color);
+  color: var(--text-color);
+}
+
+/* Тело модалки подтверждения */
+body.pink-theme .modal-confirm-body {
+  padding: 30px 20px;
+}
+
+body.pink-theme .confirm-message {
+  text-align: center;
+}
+
+body.pink-theme .confirm-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+body.pink-theme .confirm-text {
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+body.pink-theme .confirm-details {
+  color: var(--text-muted);
+  font-size: 14px;
+  font-family: 'Courier New', monospace;
+}
+
+/* Футер модалки подтверждения */
+body.pink-theme .modal-confirm-footer {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  border-top: 1px solid rgba(225, 139, 207, 0.2);
+}
+
+body.pink-theme .modal-confirm-cancel-btn {
+  flex: 1;
+  background: white;
+  border: 1px solid var(--pink-border-color);
+  border-radius: 8px;
+  padding: 14px;
+  color: var(--text-color);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+body.pink-theme .modal-confirm-cancel-btn:hover {
+  background: rgba(225, 139, 207, 0.1);
+  border-color: var(--primary-color);
+}
+
+body.pink-theme .modal-confirm-submit-btn {
+  flex: 1;
+  background: var(--gradient-warning);
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+body.pink-theme .modal-confirm-submit-btn:hover {
+  background: linear-gradient(135deg, #F57C00, #FFA726);
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+}
+
+/* Окно редактирования упражнения */
+body.pink-theme .modal-edit-overlay {
+  background: rgba(255, 245, 247, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+body.pink-theme .modal-edit {
+  background: var(--card-bg);
+  border: 1px solid var(--pink-border-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 20px 40px rgba(225, 139, 207, 0.25);
+  max-width: 400px;
+  width: 90%;
+  margin: 20px auto;
+}
+
+body.pink-theme .modal-edit-header {
+  border-bottom: 1px solid rgba(225, 139, 207, 0.2);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.pink-theme .modal-edit-title {
+  color: var(--text-color);
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+body.pink-theme .modal-edit-close-btn {
+  background: rgba(225, 139, 207, 0.1);
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 24px;
+  line-height: 1;
+}
+
+body.pink-theme .modal-edit-close-btn:hover {
+  background: rgba(225, 139, 207, 0.2);
+  border-color: var(--pink-border-color);
+  color: var(--text-color);
+}
+
+/* Тело модалки редактирования */
+body.pink-theme .modal-edit-body {
+  padding: 20px;
+}
+
+body.pink-theme .form-group-edit {
+  margin-bottom: 20px;
+}
+
+body.pink-theme .form-label-edit {
+  display: block;
+  color: var(--text-color);
+  font-weight: 500;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+body.pink-theme .form-input-edit {
+  width: 100%;
+  background: white;
+  border: 1px solid var(--pink-border-color);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: var(--text-color);
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+body.pink-theme .form-input-edit:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(225, 139, 207, 0.2);
+}
+
+/* Футер модалки редактирования */
+body.pink-theme .modal-edit-footer {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  border-top: 1px solid rgba(225, 139, 207, 0.2);
+}
+
+body.pink-theme .modal-edit-cancel-btn {
+  flex: 1;
+  background: white;
+  border: 1px solid var(--pink-border-color);
+  border-radius: 8px;
+  padding: 14px;
+  color: var(--text-color);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+body.pink-theme .modal-edit-cancel-btn:hover {
+  background: rgba(225, 139, 207, 0.1);
+  border-color: var(--primary-color);
+}
+
+body.pink-theme .modal-edit-save-btn {
+  flex: 1;
+  background: var(--gradient-button);
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+body.pink-theme .modal-edit-save-btn:hover {
+  background: linear-gradient(145deg, #d47bc0, #f5b9d9);
+  box-shadow: 0 4px 15px rgba(225, 139, 207, 0.3);
+}
+
+/* ===== ФУТЕР ===== */
+body.pink-theme footer {
+
+border-radius: 12px;
+  box-shadow: 0 -4px 20px rgba(225, 139, 207, 0.1);
+}
+
+body.pink-theme .nav-item {
+  color: var(--text-muted);
+  background: transparent;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+body.pink-theme .nav-item:hover {
+  color: var(--text-color);
+  background: rgba(225, 139, 207, 0.1);
+}
+
+body.pink-theme .nav-item.active {
+  color: var(--pink-primary-color);
+  background: rgba(225, 139, 207, 0.15);
+  font-weight: 500;
+}
+
+body.pink-theme .nav-label {
+  color: inherit;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+
+/* ===== СКРОЛЛБАР ===== */
+body.pink-theme ::-webkit-scrollbar {
+  width: 8px;
+}
+
+body.pink-theme ::-webkit-scrollbar-track {
+  background: rgba(225, 139, 207, 0.1);
+  border-radius: 4px;
+}
+
+body.pink-theme ::-webkit-scrollbar-thumb {
+  background: var(--pink-primary-color);
+  border-radius: 4px;
+}
+
+body.pink-theme ::-webkit-scrollbar-thumb:hover {
+  background: #d47bc0;
+}
+
+/* ===== СОСТОЯНИЯ УПРАЖНЕНИЙ ===== */
+body.pink-theme .exercise-card.completed {
+  border-color: #4CAF50;
+  background: rgba(76, 175, 80, 0.05);
+}
+
+body.pink-theme .exercise-card.completed .complete-btn {
+  background: var(--gradient-success);
+  color: white;
+}
+
+
+/* ===== МОДАЛЬНОЕ ОКНО ВЫБОРА ДНЯ ТРЕНИРОВКИ ===== */
+
+body.pink-theme .modal-day-overlay {
+  background: rgba(255, 245, 247, 0.95);
+  backdrop-filter: blur(8px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+body.pink-theme .modal-day-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.pink-theme .modal-day {
+  background: var(--card-bg);
+  border: 1px solid var(--pink-border-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 20px 40px rgba(225, 139, 207, 0.25);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+body.pink-theme .modal-day-overlay.active .modal-day {
+  transform: translateY(0);
+}
+
+/* Заголовок модалки */
+body.pink-theme .modal-day-header {
+  border-bottom: 1px solid rgba(225, 139, 207, 0.2);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.pink-theme .modal-day-title {
+  color: var(--text-color);
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+body.pink-theme .modal-day-close-btn {
+  background: rgba(225, 139, 207, 0.1);
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 24px;
+  line-height: 1;
+}
+
+body.pink-theme .modal-day-close-btn:hover {
+  background: rgba(225, 139, 207, 0.2);
+  border-color: var(--pink-border-color);
+  color: var(--text-color);
+}
+
+/* Тело модалки */
+body.pink-theme .modal-day-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+body.pink-theme .days-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 480px) {
+  body.pink-theme .days-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Карточки дней */
+body.pink-theme .day-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--pink-border-color);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 80px;
+}
+
+body.pink-theme .day-card:hover {
+  background: rgba(225, 139, 207, 0.1);
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(225, 139, 207, 0.2);
+}
+
+body.pink-theme .day-card.selected {
+  background: var(--gradient-button);
+  border-color: var(--primary-color);
+  color: white;
+  box-shadow: 0 4px 12px rgba(225, 139, 207, 0.3);
+}
+
+body.pink-theme .day-card.selected .day-name {
+  color: white;
+  font-weight: 600;
+}
+
+body.pink-theme .day-card:active {
+  transform: translateY(0);
+}
+
+body.pink-theme .day-name {
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* Футер модалки */
+body.pink-theme .modal-day-footer {
+  padding: 20px;
+  border-top: 1px solid rgba(225, 139, 207, 0.2);
+}
+
+body.pink-theme .modal-day-confirm-btn {
+  width: 100%;
+  background: var(--gradient-button);
+  border: none;
+  border-radius: 8px;
+  padding: 16px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+}
+
+body.pink-theme .modal-day-confirm-btn:not(:disabled) {
+  opacity: 1;
+  box-shadow: 0 4px 12px rgba(225, 139, 207, 0.3);
+}
+
+body.pink-theme .modal-day-confirm-btn:not(:disabled):hover {
+  background: linear-gradient(145deg, #d47bc0, #f5b9d9);
+  box-shadow: 0 6px 20px rgba(225, 139, 207, 0.4);
+  transform: translateY(-2px);
+}
+
+body.pink-theme .modal-day-confirm-btn:not(:disabled):active {
+  transform: translateY(0);
+}
+
+body.pink-theme .modal-day-confirm-btn:disabled {
+  cursor: not-allowed;
+}
+
+/* Анимация появления карточек */
+@keyframes cardAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body.pink-theme .day-card {
+  animation: cardAppear 0.4s ease-out;
+}
+
+body.pink-theme .day-card:nth-child(1) { animation-delay: 0.1s; }
+body.pink-theme .day-card:nth-child(2) { animation-delay: 0.15s; }
+body.pink-theme .day-card:nth-child(3) { animation-delay: 0.2s; }
+body.pink-theme .day-card:nth-child(4) { animation-delay: 0.25s; }
+body.pink-theme .day-card:nth-child(5) { animation-delay: 0.3s; }
+body.pink-theme .day-card:nth-child(6) { animation-delay: 0.35s; }
+body.pink-theme .day-card:nth-child(7) { animation-delay: 0.4s; }
+
+/* Эффект пульсации для выбранного дня */
+@keyframes pulseDay {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(225, 139, 207, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(225, 139, 207, 0.5);
+  }
+}
+
+body.pink-theme .day-card.selected {
+  animation: pulseDay 2s ease-in-out infinite;
+}
+
+/* ===== СКРОЛЛБАР ДЛЯ ТЕЛА МОДАЛКИ ===== */
+body.pink-theme .modal-day-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+body.pink-theme .modal-day-body::-webkit-scrollbar-track {
+  background: rgba(225, 139, 207, 0.1);
+  border-radius: 3px;
+}
+
+body.pink-theme .modal-day-body::-webkit-scrollbar-thumb {
+  background: var(--pink-primary-color);
+  border-radius: 3px;
+}
+
+body.pink-theme .modal-day-body::-webkit-scrollbar-thumb:hover {
+  background: #d47bc0;
+}
+
+/* ===== ПЛАНШЕТНАЯ ВЕРСИЯ ===== */
+@media (max-width: 768px) {
+  body.pink-theme .modal-day {
+    max-width: 90%;
+    margin: 20px;
+  }
+  
+  body.pink-theme .modal-day-header,
+  body.pink-theme .modal-day-footer {
+    padding: 16px;
+  }
+  
+  body.pink-theme .modal-day-body {
+    padding: 16px;
+  }
+  
+  body.pink-theme .day-card {
+    padding: 16px;
+    min-height: 70px;
+  }
+}
+
+/* ===== МОБИЛЬНАЯ ВЕРСИЯ ===== */
+@media (max-width: 480px) {
+  body.pink-theme .modal-day {
+    width: 95%;
+    margin: 10px;
+  }
+  
+  body.pink-theme .modal-day-title {
+    font-size: 18px;
+  }
+  
+  body.pink-theme .day-name {
+    font-size: 15px;
+  }
+  
+  body.pink-theme .modal-day-confirm-btn {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+/* ===== ТЕМНЫЙ ВАРИАНТ (дополнительно) ===== */
+body.pink-theme .modal-day-overlay.dark-variant {
+  background: rgba(28, 28, 30, 0.95);
+}
+
+body.pink-theme .modal-day-overlay.dark-variant .modal-day {
+  background: #1c1c1e;
+  border-color: #333;
+}
+
+body.pink-theme .modal-day-overlay.dark-variant .modal-day-header,
+body.pink-theme .modal-day-overlay.dark-variant .modal-day-footer {
+  border-color: #333;
+}
+
+body.pink-theme .modal-day-overlay.dark-variant .modal-day-title {
+  color: #fff;
+}
+
+body.pink-theme .modal-day-overlay.dark-variant .modal-day-close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #aaa;
+}
+
+body.pink-theme .modal-day-overlay.dark-variant .modal-day-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #555;
+  color: #fff;
+}
+
+body.pink-theme .modal-day-overlay.dark-variant .day-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #333;
+  color: #fff;
+}
+
+body.pink-theme .modal-day-overlay.dark-variant .day-card:hover {
+  background: rgba(225, 139, 207, 0.2);
+  border-color: var(--primary-color);
+}
+
+body.pink-theme .modal-day-overlay.dark-variant .day-card.selected {
+  background: var(--gradient-button);
+  color: white;
+}
+
+body.pink-theme .modal-day-overlay.dark-variant .modal-day-confirm-btn {
+  background: var(--gradient-button);
+}
+
+/* ===== ЭФФЕКТ НАВЕДЕНИЯ С ПОДСКАЗКОЙ ===== */
+body.pink-theme .day-card {
+  position: relative;
+  overflow: hidden;
+}
+
+body.pink-theme .day-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+body.pink-theme .day-card:hover::before {
+  left: 100%;
+}
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 768px) {
+  body.pink-theme header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  body.pink-theme .timer {
+    align-self: stretch;
+    text-align: center;
+  }
+  
+  body.pink-theme .exercise-actions {
+    flex-direction: column;
+  }
+  
+  body.pink-theme .complete-btn,
+  body.pink-theme .edit-btn {
+    border-right: none;
+    border-bottom: 1px solid rgba(225, 139, 207, 0.2);
+  }
+  
+  body.pink-theme .modal-confirm-footer,
+  body.pink-theme .modal-edit-footer {
+    flex-direction: column;
+  }
+  
+  body.pink-theme .exercises-scroll-container {
+    max-height: 60vh;
+  }
+}
+
+@media (max-width: 480px) {
+  body.pink-theme .exercises-wrapper {
+    padding: 12px;
+  }
+  
+  body.pink-theme .controls-btn {
+    padding: 12px;
+  }
+  
+  body.pink-theme .start-exercise-btn {
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+  
+  body.pink-theme .result-item {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+}
+
+/* ===== АНИМАЦИИ ===== */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body.pink-theme .exercise-card {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes highlight {
+  0%, 100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(225, 139, 207, 0.1);
+  }
+}
+
+body.pink-theme .exercise-card.active {
+  animation: highlight 2s ease-in-out infinite;
+}
+
+/* ===== ИНДИКАТОР ПРОГРЕССА ===== */
+body.pink-theme .progress-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--gradient-button);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+body.pink-theme .exercise-card .progress-indicator {
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}

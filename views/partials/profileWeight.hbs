@@ -1,0 +1,52 @@
+<div class="weight-section">
+  <div class="weight-title">Ваш вес</div>
+  <div class="weight-controls">
+    <button class="weight-btn" id="decrease-btn">-</button>
+    <div class="weight-display clickable" id="current-weight">
+      {{profileWeightList.userWeight}} кг
+    </div>
+    <button class="weight-btn" id="increase-btn">+</button>
+  </div>
+
+  <div class="scale-labels">
+    <span id="start-weight">{{profileWeightList.userStartWeight}} кг</span>
+    <span id="goal-weight">{{profileWeightList.userGoalWeight}} кг</span>
+  </div>
+  <div class="weight-scale">
+    <div class="scale-progress" id="scale-progress"></div>
+    <div class="current-marker" id="current-marker"></div>
+  </div>
+
+  <button class="confirm-btn" onclick="editWeight()" id="confirm-weight">Подтвердить вес</button>
+
+  <!-- Блок графика прогресса -->
+  <div class="progress-section rounded-section">
+    <div class="progress-header">
+      <h2 class="section-title">Прогресс изменения веса</h2>
+      <div class="progress-subtitle">Динамика вашего веса</div>
+    </div>
+
+    <div class="filters-section rounded-filters">
+      <div class="filter-card filter-rounded">
+        <div class="filter-header">
+          <div class="filter-title">Период</div>
+        </div>
+        <select id="time-period" class="rounded-select">
+          <option value="30days" selected>30 дней</option>
+          <option value="3months">3 месяца</option>
+          <option value="1year">1 год</option>
+          <option value="all">Все время</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="chart-container-wrapper">
+      <div class="chart-container rounded-chart">
+        <canvas id="weightChart"></canvas>
+      </div>
+      <div id="no-weight-data" class="no-data-message" style="display: none;">
+        <p>Нет данных о весе</p>
+        <p class="hint">Добавьте измерения веса, чтобы увидеть прогресс</p>
+      </div>
+    </div>
+  </div>

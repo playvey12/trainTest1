@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/register.css" />
+    <title>Регистрация</title>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">FITNESS</div>
+        </header>
+
+        <main class="main-content">
+            <div class="registration-card">
+                <h1 class="registration-title">Вход</h1>
+
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="email" placeholder="example@email.com" required>
+                        <div class="error-message" id="emailError">Пожалуйста, введите корректный email</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Пароль</label>
+                        <div class="password-wrapper">
+                            <input type="password" class="form-input" id="password" placeholder="Создайте пароль"
+                                required>
+                            <button type="button" class="toggle-password" id="togglePassword">
+                                👁
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" onclick="loginUser(event)" id="submitBtn">
+                        <span id="btnText">Войти</span>
+                        <div class="loader" id="loader"></div>
+                    </button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+</body>
+<script src="./js/register.js"></script>
+<script src="./js/auth.js"></script>
+<script src="./js/router.js"></script>
+
+</html>

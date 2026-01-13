@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/trainMode.css" />
+    <title>TrainMode</title>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Тренировка</h1>
+            <div class="timer" id="timer">00:00:00</div>
+        </header>
+
+        <main>
+            {{>trainForTrainMode}}
+            <div class="controls-btn">
+                <button class="start-exercise-btn" id="select-day-btn">
+                    Выбрать день
+                </button>
+
+                <button class="start-exercise-btn" id="start-workout-btn">
+                    Начать тренировку
+                </button>
+
+                <button class="start-exercise-btn" id="finish-workout-btn">
+                    Закончить тренировку
+                </button>
+            </div>
+        </main>
+        {{>modalWindowForTrainTime}}
+        {{>modalWindowForTrainMode}}
+        {{>modalWindowForConfirmStop}}
+        {{>editWindowforTrainMode}}
+
+        {{>footer}}
+    </div>
+
+    <script src="./js/trainMode.js"></script>
+
+    <script src="./js/router.js"></script>
+    <script src="./js/auth.js"></script>
+</body>
+
+</html>
