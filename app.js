@@ -17,7 +17,8 @@ const trainModeRouter = require("./routers/trainModeRouter");
 const trainPlanRouter = require("./routers/trainPlanRouter");
 
 
-const jwtSecret='PLAYVEY123'
+
+const jwtSecret = process.env.JWT_SECRET || 'fallback';
 
 
 
