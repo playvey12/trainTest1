@@ -379,7 +379,9 @@
   .registration-title {
     font-size: 20px !important;
   }
-  
+  .exercises-container{
+    height: 800px;
+  }
   /* PROFILE PAGE */
   .weight-display {
     font-size: 28px !important;
@@ -420,10 +422,12 @@
   /* Кнопки */
   .confirm-btn, .submit-btn, .save-btn, .start-exercise-btn, 
   .finish-exercise-btn, .add-btn, .edit-btn {
-    padding: 12px !important;
+    padding: 15px !important;
     font-size: 15px !important;
   }
-  
+  .controls-btn{
+    gap :20px
+  }
   /* Модальные окна */
   .settings-modal, .weight-modal, .modal {
     padding: 18px 12px !important;
