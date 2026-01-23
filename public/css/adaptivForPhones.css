@@ -426,6 +426,7 @@
     font-size: 15px !important;
   }
   .controls-btn{
+    flex-direction: column !important;
     gap :20px
   }
   /* Модальные окна */
