@@ -1922,20 +1922,7 @@ body.pink-theme .chart-error {
   }
 }
 
-@media (max-width: 480px) {
-  body.pink-theme .chart-container-wrapper {
-    padding: 12px;
-  }
-  body.pink-theme .chart-container {
-    height: 220px;
-  }
-  body.pink-theme .chart-card {
-    padding: 16px;
-  }
-  body.pink-theme .chart-card-body {
-    height: 180px;
-  }
-}
+
 
 option {
   background-color: #0d0d0d;
@@ -2011,145 +1998,34 @@ body.pink-theme .logout-icon {
   max-height: 400px;
 }
 
-/* Для мобильных устройств */
-@media (max-width: 768px) {
-  .chart-container {
-    min-height: 250px;
-  }
-  
-  .rounded-chart {
-    height: 250px !important;
-  }
-  
-  .chart-stats {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .stat-item {
-    margin-bottom: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .chart-container {
-    min-height: 200px;
-  }
-  
-  .rounded-chart {
-    height: 200px !important;
-  }
-  
-  .chart-container-wrapper {
-    padding: 15px;
-  }
-  
-  .progress-section {
-    padding: 15px !important;
-  }
-  
-  .section-title {
-    font-size: 20px !important;
-  }
-}
-
-/* Исправление футера */
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  padding: 10px 15px;
-  background: var(--card-bg);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* Для Safari */
-}
-
-.footer-nav {
-  display: flex;
-  justify-content: space-around;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 0;
-}
-
-/* Исправление иконок в футере */
-.nav-icon {
-  width: 24px;
-  height: 24px;
-  transform: rotate(0deg) !important; /* Убираем поворот для мобильных */
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-/* Специальные исправления для каждой иконки */
-.gym {
-  background-image: url(../img/traningPlanImg/gym.png);
-  transform: rotate(0deg) !important;
-}
-
-.user {
-  background-image: url(../img/traningPlanImg/user.png);
-  transform: rotate(0deg) !important;
-}
-
-.note {
-  background-image: url(../img/traningPlanImg/note.png);
-  transform: rotate(0deg) !important;
-}
-
-/* Увеличение тач-зоны для iOS */
-.nav-item {
-  padding: 12px 16px;
-  min-width: 60px;
-  text-align: center;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* Убираем синий фон при тапе на iOS */
-}
-
-.nav-label {
-  font-size: 12px;
-  margin-top: 4px;
-  font-weight: 500;
-}
-
-/* Адаптация для очень маленьких экранов */
-@media (max-width: 375px) {
-  .nav-item {
-    padding: 10px 12px;
-    min-width: 50px;
-  }
-  
-  .nav-icon {
-    width: 22px;
-    height: 22px;
-  }
-  
-  .nav-label {
-    font-size: 11px;
-  }
-}
 
 
-/* Исправление для Safari iOS */
-body {
-  padding-bottom: 70px !important; /* Добавляем отступ для фиксированного футера */
-  -webkit-text-size-adjust: 100%; /* Предотвращает увеличение текста на iOS */
-  -webkit-touch-callout: none; /* Отключаем меню при долгом тапе */
-  -webkit-user-select: none; /* Отключаем выделение текста */
-  user-select: none;
+/* Контейнер для графика */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Фиксированная высота для мобильных */
+    margin: 0 auto;
 }
 
-.container {
-  max-width: 100%;
-  padding: 20px 15px;
-  margin: 0 auto;
+/* Элементы управления (селекторы, кнопки) */
+.controls-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* Позволяет кнопкам переноситься на новую строку */
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
 }
 
-/* Исправление для прокрутки на iOS */
-.weight-section,
-.progress-section {
-  overflow: hidden; /* Предотвращает проблемы с прокруткой на iOS */
+/* Стили для селекторов и кнопок на мобильных */
+select, .btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ff2d55;
+    background: #1a1a1a;
+    color: white;
+    flex: 1 1 140px; /* Кнопки будут растягиваться и переноситься */
+    max-width: 100%;
 }
+

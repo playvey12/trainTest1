@@ -1,0 +1,360 @@
+/* ====================== АДАПТИВ ДЛЯ ТЕЛЕФОНОВ <400px ====================== */
+@media (max-width: 400px) {
+  /* Общие стили для всех страниц */
+  body {
+    padding: 10px !important;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  
+  .container {
+    max-width: 100% !important;
+    padding: 0 5px;
+  }
+  
+  /* Уменьшаем размер шрифтов */
+  h1 {
+    font-size: 24px !important;
+    margin-bottom: 15px !important;
+  }
+  
+  .registration-title {
+    font-size: 22px !important;
+    margin-bottom: 20px !important;
+  }
+  
+  /* Header для всех страниц */
+  header {
+    margin-bottom: 20px !important;
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+  
+  /* Кнопки настроек и темы */
+  .settings-btn, .theme-toggle {
+    width: 40px !important;
+    height: 40px !important;
+    align-self: flex-end;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  /* Карточки и контейнеры */
+  .filter-card, .weight-section, .rounded-section,
+  .registration-card, .modal, .settings-modal,
+  .weight-modal, .exercise-card {
+    padding: 15px !important;
+    border-radius: 12px !important;
+  }
+  
+  /* PROFILE PAGE */
+  .filters-section {
+    flex-direction: column !important;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .weight-display {
+    font-size: 32px !important;
+  }
+  
+  .weight-controls {
+    gap: 20px !important;
+    margin: 20px 0 !important;
+  }
+  
+  .weight-btn {
+    width: 45px !important;
+    height: 45px !important;
+    font-size: 20px !important;
+  }
+  
+  .weight-scale {
+    height: 16px !important;
+    margin: 20px 0 !important;
+  }
+  
+  .current-marker {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 10px !important;
+    top: -6px !important;
+  }
+  
+  /* Chart адаптация */
+  .chart-container {
+    min-height: 200px !important;
+    height: 200px !important;
+  }
+  
+  .rounded-chart {
+    height: 200px !important;
+  }
+  
+  .chart-stats {
+    flex-direction: column !important;
+    gap: 15px;
+    margin-top: 20px !important;
+    padding-top: 15px !important;
+  }
+  
+  .stat-item {
+    margin-bottom: 10px;
+  }
+  
+  .stat-value {
+    font-size: 18px !important;
+  }
+  
+  /* Модальные окна */
+  .modal-overlay.active {
+    padding: 10px;
+  }
+  
+  .settings-modal, .weight-modal, .modal {
+    width: 95% !important;
+    max-width: 100% !important;
+    padding: 20px 15px !important;
+    margin: 0 !important;
+  }
+  
+  .modal-title {
+    font-size: 20px !important;
+  }
+  
+  .modal-header {
+    margin-bottom: 20px !important;
+    padding-bottom: 15px !important;
+  }
+  
+  /* Тема селекторы */
+  .theme-selector {
+    flex-direction: column !important;
+    gap: 10px;
+  }
+  
+  .theme-option {
+    padding: 12px 10px !important;
+  }
+  
+  /* Кнопки в модальных окнах */
+  .modal-actions, .weight-modal-actions {
+    flex-direction: column !important;
+    gap: 10px;
+    margin-top: 20px !important;
+    padding-top: 15px !important;
+  }
+  
+  .save-btn, .cancel-btn, .weight-save-btn, .weight-cancel-btn {
+    width: 100% !important;
+    padding: 14px !important;
+  }
+  
+  /* Формы ввода */
+  .form-input, .settings-input, .weight-input, select {
+    padding: 12px 14px !important;
+    font-size: 15px !important;
+  }
+  
+  /* REGISTER PAGE */
+  .registration-card {
+    padding: 20px 15px !important;
+  }
+  
+  .social-login {
+    flex-direction: column !important;
+  }
+  
+  .form-group {
+    margin-bottom: 20px !important;
+  }
+  
+  .form-input {
+    padding: 14px 12px !important;
+  }
+  
+  .submit-btn {
+    padding: 16px !important;
+    font-size: 16px !important;
+  }
+  
+  /* TRAINING PLAN PAGE */
+  .week-navigation {
+    padding: 5px;
+    overflow-x: auto;
+    gap: 5px;
+  }
+  
+  .week-day {
+    padding: 10px 8px !important;
+    font-size: 13px;
+    min-width: 50px;
+    flex-shrink: 0;
+  }
+  
+  .week-label {
+    font-size: 18px !important;
+    margin: 20px 0 10px !important;
+  }
+  
+  .exercise-card {
+    flex-direction: column !important;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .button_conteiner {
+    margin-left: 0 !important;
+    align-self: stretch;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .btn-edit, .btn-delete {
+    width: 100% !important;
+    margin: 2px !important;
+  }
+  
+  .btn-container {
+    flex-direction: column !important;
+    gap: 15px !important;
+    margin: 20px auto !important;
+  }
+  
+  .edit-btn, .add-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 14px !important;
+  }
+  
+  .no-exercises {
+    font-size: 22px !important;
+    margin-top: 30% !important;
+  }
+  
+  /* TRAIN MODE PAGE */
+  .timer {
+    padding: 10px 15px !important;
+    font-size: 16px !important;
+    align-self: stretch;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .exercise-actions {
+    flex-direction: column !important;
+    width: 100%;
+    min-width: 100% !important;
+  }
+  
+  .complete-btn, .edit-btn {
+    width: 100% !important;
+    margin: 2px 0;
+  }
+  
+  .controls-btn {
+    flex-direction: column !important;
+    gap: 15px;
+    margin-top: 20px !important;
+  }
+  
+  .start-exercise-btn, .finish-exercise-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 14px !important;
+    min-width: auto !important;
+  }
+  
+  /* Модальные окна в Train Mode */
+  .days-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .day-card {
+    padding: 15px !important;
+    min-height: 60px !important;
+  }
+  
+  .result-item {
+    flex-direction: column !important;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .result-value {
+    font-size: 18px !important;
+  }
+  
+  /* Footer навигация для всех страниц */
+  .footer-nav {
+    padding: 10px 5px !important;
+    border-radius: 10px;
+  }
+  
+  .nav-item {
+    padding: 8px 10px !important;
+    min-width: 60px;
+  }
+  
+  .nav-label {
+    font-size: 12px !important;
+    margin-top: 3px;
+  }
+  
+  .gym, .user, .note {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  
+  /* Специальные адаптации для очень маленьких экранов */
+  @media (max-width: 350px) {
+    .exercise-details {
+      flex-direction: column !important;
+      gap: 8px;
+    }
+    
+    .weight-controls {
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .confirm-btn {
+      padding: 14px !important;
+      font-size: 15px !important;
+    }
+    
+    .modal-footer {
+      padding: 15px !important;
+    }
+  }
+  
+  /* Улучшение скролла на iOS */
+  .exercises-scroll-container {
+    -webkit-overflow-scrolling: touch;
+    padding-right: 5px;
+  }
+  
+  /* Убираем горизонтальный скролл */
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  /* Улучшение тач-целей (для лучшего UX на мобильных) */
+  button, 
+  .nav-item, 
+  .week-day, 
+  .exercise-card,
+  .day-card,
+  select {
+    min-height: 44px; /* Минимальная высота для удобного тапа */
+  }
+  
+  input, 
+  textarea, 
+  select {
+    font-size: 16px !important; /* Предотвращает зумирование в iOS */
+  }
+}
