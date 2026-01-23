@@ -602,7 +602,9 @@
     padding: 12px !important;
     min-height: 55px !important;
   }
-  
+  .exercises-wrapper{
+    max-height: 400px;
+  }
   /* Результаты и статистика */
   .result-item {
     padding: 12px 14px !important;

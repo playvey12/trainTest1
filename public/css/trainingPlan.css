@@ -5,7 +5,6 @@
   --text-color: #ffffff;
   --text-muted: rgba(255, 255, 255, 0.55);
 
-
   /* Цвета карточек */
   --card-bg: #1c1c1e;
   --card-bg-hover: #2c2c2e;
@@ -17,10 +16,6 @@
   --hover-bg: rgba(255, 255, 255, 0.08);
   --active-nav-bg: rgba(255, 45, 85, 0.25);
 
-
-  --header-bg: rgba(255, 255, 255, 0.05);
-  --hover-bg: rgba(255, 255, 255, 0.08);
-  --active-nav-bg: rgba(255, 45, 85, 0.25);
   /* Градиенты */
   --gradient-body: linear-gradient(
     180deg,
@@ -29,7 +24,6 @@
   );
   --gradient-divider: linear-gradient(90deg, #ff2d55, #ff416c);
   --gradient-button: linear-gradient(145deg, #ff2d55, #ff3b5c);
-  
   
   /* Эффекты */
   --border-radius: 14px;
@@ -40,8 +34,7 @@
   --divider-color: #ff2d55;
   --divider-color-end: #ff416c;
 
-
-/* Новые переменные для розовой темы */
+  /* Новые переменные для розовой темы */
   --pink-primary-color: #fcddf5;
   --pink-secondary-color: #f2a2b1;
   --pink-text-color: #333333;
@@ -49,10 +42,7 @@
   --pink-card-bg: #ffffff;
   --pink-body-bg: #f8d7de;
   --pink-border-color: #e18bcf;
-
-
 }
-
 
 /* --------------------------------------------------- */
 
@@ -674,31 +664,6 @@ footer {
   background: rgba(255, 255, 255, 0.05);
 }
 
-/* Адаптивность для мобильных */
-@media (max-width: 768px) {
-  .modal {
-    width: 95%;
-    margin: 10px;
-  }
-
-  .modal-footer {
-    flex-direction: column;
-  }
-
-  .exercise-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
-
-  .button_conteiner {
-    margin-left: 0;
-    align-self: flex-end;
-  }
-}
-
-
-
 /* ===== ROOT ДЛЯ РОЗОВОЙ ТЕМЫ ===== */
 body.pink-theme {
   /* Основные цвета */
@@ -1123,31 +1088,6 @@ body.pink-theme .exercise-card {
   animation: pinkSlideIn 0.4s ease-out;
 }
 
-/* ===== АДАПТИВНОСТЬ ===== */
-@media (max-width: 768px) {
-  body.pink-theme .week-day {
-    padding: 10px 8px;
-    font-size: 14px;
-    min-width: 44px;
-  }
-  
-  body.pink-theme .exercise-card {
-    padding: 16px;
-    margin: 0 12px 12px 12px;
-  }
-  
-  body.pink-theme .add-btn {
-    width: calc(100% - 24px);
-    margin: 0 12px;
-    padding: 14px 24px;
-  }
-  
-  body.pink-theme .modal {
-    margin: 0 16px;
-    width: calc(100% - 32px);
-  }
-}
-
 /* ===== СТИЛИ ДЛЯ ПУСТЫХ СОСТОЯНИЙ ===== */
 body.pink-theme .exercise-list:empty::after {
   content: "Нет упражнений на этот день";
@@ -1174,4 +1114,3 @@ body.pink-theme .exercise-card.highlighted {
     box-shadow: 0 0 0 10px rgba(225, 139, 207, 0);
   }
 }
-

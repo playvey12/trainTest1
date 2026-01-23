@@ -5,7 +5,6 @@
   --text-color: #ffffff;
   --text-muted: rgba(255, 255, 255, 0.55);
 
-
   /* Цвета карточек */
   --card-bg: #1c1c1e;
   --card-bg-hover: #2c2c2e;
@@ -17,10 +16,6 @@
   --hover-bg: rgba(255, 255, 255, 0.08);
   --active-nav-bg: rgba(255, 45, 85, 0.25);
 
-
-  --header-bg: rgba(255, 255, 255, 0.05);
-  --hover-bg: rgba(255, 255, 255, 0.08);
-  --active-nav-bg: rgba(255, 45, 85, 0.25);
   /* Градиенты */
   --gradient-body: linear-gradient(
     180deg,
@@ -29,7 +24,6 @@
   );
   --gradient-divider: linear-gradient(90deg, #ff2d55, #ff416c);
   --gradient-button: linear-gradient(145deg, #ff2d55, #ff3b5c);
-  
   
   /* Эффекты */
   --border-radius: 14px;
@@ -40,8 +34,7 @@
   --divider-color: #ff2d55;
   --divider-color-end: #ff416c;
 
-
-/* Новые переменные для розовой темы */
+  /* Новые переменные для розовой темы */
   --pink-primary-color: #fcddf5;
   --pink-secondary-color: #f2a2b1;
   --pink-text-color: #333333;
@@ -49,10 +42,7 @@
   --pink-card-bg: #ffffff;
   --pink-body-bg: #f8d7de;
   --pink-border-color: #e18bcf;
-
-
 }
-
 
 /* --------------------------------------------------- */
 
@@ -334,63 +324,6 @@ h1 {
 }
 
 /* --------------------------------------------------- */
-/* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ */
-
-@media (max-width: 768px) {
-  body {
-    padding: 15px;
-  }
-
-  header {
-    flex-direction: column;
-    gap: 15px;
-    align-items: flex-start;
-  }
-
-  h1 {
-    font-size: 28px;
-  }
-
-  .exercise-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
-
-  .exercise-actions {
-    width: 100%;
-    flex-direction: row;
-  }
-
-  .complete-btn,
-  .edit-btn {
-    flex: 1;
-  }
-
-  .controls-btn {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .start-exercise-btn,
-  .finish-exercise-btn {
-    width: 100%;
-    max-width: 280px;
-  }
-
-  .exercise-details {
-    flex-direction: column;
-    gap: 8px;
-  }
-}
-
-@media (max-width: 480px) {
-  .exercise-actions {
-    flex-direction: column;
-  }
-}
-
-/* --------------------------------------------------- */
 /* АНИМАЦИИ */
 
 .exercise-list.fade-in {
@@ -614,40 +547,6 @@ footer {
   background: var(--card-bg-hover);
 }
 
-/* Адаптивность для мобильных устройств */
-@media (max-width: 768px) {
-  .modal-content {
-    margin: 10% auto;
-    width: 95%;
-  }
-
-  .days-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .days-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .modal-header {
-    padding: 15px 20px;
-  }
-
-  .modal-body {
-    padding: 15px;
-  }
-
-  .modal-footer {
-    padding: 15px 20px;
-    text-align: center;
-  }
-
-  .modal-confirm-btn {
-    width: 100%;
-  }
-}
 /* Добавьте в конец trainMode.css */
 /* Добавьте эти стили в конец файла */
 
@@ -829,19 +728,7 @@ footer {
   gap: 10px;
 }
 
-@media (max-width: 480px) {
-  .modal-footer {
-    flex-direction: column;
-  }
-
-  .modal-cancel-btn,
-  .modal-confirm-btn {
-    width: 100%;
-    margin: 5px 0;
-  }
-}
-
-/* ==== ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКН ==== */
+/* ==== ОБЩИЕ СТИЛИ ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКОН ==== */
 .modal-edit-overlay,
 .modal-confirm-overlay,
 .modal-day-overlay,
@@ -1237,65 +1124,6 @@ footer {
   transform: translateY(-2px);
 }
 
-/* ==== АДАПТИВНОСТЬ ==== */
-@media (max-width: 768px) {
-  .modal-edit,
-  .modal-confirm,
-  .modal-day,
-  .modal-results {
-    width: 95%;
-    margin: 10px;
-  }
-
-  .days-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .modal-edit-footer,
-  .modal-confirm-footer,
-  .modal-day-footer,
-  .modal-results-footer {
-    flex-direction: column;
-  }
-
-  .modal-edit-cancel-btn,
-  .modal-edit-save-btn,
-  .modal-confirm-cancel-btn,
-  .modal-confirm-submit-btn,
-  .modal-day-confirm-btn,
-  .modal-results-close-button {
-    width: 100%;
-    margin: 5px 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .days-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .modal-edit-header,
-  .modal-confirm-header,
-  .modal-day-header,
-  .modal-results-header {
-    padding: 15px 20px;
-  }
-
-  .modal-edit-body,
-  .modal-confirm-body,
-  .modal-day-body,
-  .modal-results-body {
-    padding: 15px;
-  }
-
-  .modal-edit-footer,
-  .modal-confirm-footer,
-  .modal-day-footer,
-  .modal-results-footer {
-    padding: 15px 20px;
-  }
-}
-
 .exercise-list.updated {
   animation: highlightUpdate 1s ease;
 }
@@ -1318,8 +1146,6 @@ footer {
 .exercise-list {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
-
-
 
 /* ===== ROOT ДЛЯ РОЗОВОЙ ТЕМЫ НА СТРАНИЦЕ TRAIN MODE ===== */
 body.pink-theme {
@@ -2008,7 +1834,6 @@ body.pink-theme .nav-label {
   margin-top: 4px;
 }
 
-
 /* ===== СКРОЛЛБАР ===== */
 body.pink-theme ::-webkit-scrollbar {
   width: 8px;
@@ -2039,9 +1864,7 @@ body.pink-theme .exercise-card.completed .complete-btn {
   color: white;
 }
 
-
 /* ===== МОДАЛЬНОЕ ОКНО ВЫБОРА ДНЯ ТРЕНИРОВКИ ===== */
-
 body.pink-theme .modal-day-overlay {
   background: rgba(255, 245, 247, 0.95);
   backdrop-filter: blur(8px);
@@ -2131,12 +1954,6 @@ body.pink-theme .days-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-}
-
-@media (max-width: 480px) {
-  body.pink-theme .days-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* Карточки дней */
@@ -2280,49 +2097,6 @@ body.pink-theme .modal-day-body::-webkit-scrollbar-thumb:hover {
   background: #d47bc0;
 }
 
-/* ===== ПЛАНШЕТНАЯ ВЕРСИЯ ===== */
-@media (max-width: 768px) {
-  body.pink-theme .modal-day {
-    max-width: 90%;
-    margin: 20px;
-  }
-  
-  body.pink-theme .modal-day-header,
-  body.pink-theme .modal-day-footer {
-    padding: 16px;
-  }
-  
-  body.pink-theme .modal-day-body {
-    padding: 16px;
-  }
-  
-  body.pink-theme .day-card {
-    padding: 16px;
-    min-height: 70px;
-  }
-}
-
-/* ===== МОБИЛЬНАЯ ВЕРСИЯ ===== */
-@media (max-width: 480px) {
-  body.pink-theme .modal-day {
-    width: 95%;
-    margin: 10px;
-  }
-  
-  body.pink-theme .modal-day-title {
-    font-size: 18px;
-  }
-  
-  body.pink-theme .day-name {
-    font-size: 15px;
-  }
-  
-  body.pink-theme .modal-day-confirm-btn {
-    padding: 14px;
-    font-size: 15px;
-  }
-}
-
 /* ===== ТЕМНЫЙ ВАРИАНТ (дополнительно) ===== */
 body.pink-theme .modal-day-overlay.dark-variant {
   background: rgba(28, 28, 30, 0.95);
@@ -2398,59 +2172,6 @@ body.pink-theme .day-card::before {
 body.pink-theme .day-card:hover::before {
   left: 100%;
 }
-/* ===== АДАПТИВНОСТЬ ===== */
-@media (max-width: 768px) {
-  body.pink-theme header {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-  }
-  
-  body.pink-theme .timer {
-    align-self: stretch;
-    text-align: center;
-  }
-  
-  body.pink-theme .exercise-actions {
-    flex-direction: column;
-  }
-  
-  body.pink-theme .complete-btn,
-  body.pink-theme .edit-btn {
-    border-right: none;
-    border-bottom: 1px solid rgba(225, 139, 207, 0.2);
-  }
-  
-  body.pink-theme .modal-confirm-footer,
-  body.pink-theme .modal-edit-footer {
-    flex-direction: column;
-  }
-  
-  body.pink-theme .exercises-scroll-container {
-    max-height: 60vh;
-  }
-}
-
-@media (max-width: 480px) {
-  body.pink-theme .exercises-wrapper {
-    padding: 12px;
-  }
-  
-  body.pink-theme .controls-btn {
-    padding: 12px;
-  }
-  
-  body.pink-theme .start-exercise-btn {
-    padding: 14px 16px;
-    font-size: 14px;
-  }
-  
-  body.pink-theme .result-item {
-    flex-direction: column;
-    gap: 8px;
-    align-items: flex-start;
-  }
-}
 
 /* ===== АНИМАЦИИ ===== */
 @keyframes slideIn {
@@ -2495,4 +2216,3 @@ body.pink-theme .progress-indicator {
 body.pink-theme .exercise-card .progress-indicator {
   border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
-

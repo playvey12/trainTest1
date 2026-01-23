@@ -245,8 +245,11 @@ async function createOrUpdateWeightChart(period) {
       }
       
       sortedHistory.forEach(item => {
-        labels.push(item.formattedDate || item.date);
-        data.push(item.weight);
+        const dateStr = item.formattedDate || item.date;
+        // Сокращаем до ДД.ММ для экономии места
+        const shortDate = dateStr.split('.').slice(0, 2).join('.'); 
+        labels.push(shortDate);
+        data.push(item.weight); // Исправлено: было weights.push
       });
     }
     
@@ -256,8 +259,8 @@ async function createOrUpdateWeightChart(period) {
     }
     
     const allWeights = [...data, weightData.userGoalWeight, weightData.userStartWeight].filter(w => w > 0);
-    const minWeight = allWeights.length > 0 ? Math.min(...allWeights) * 0.9 : 50;
-    const maxWeight = allWeights.length > 0 ? Math.max(...allWeights) * 1.1 : 100;
+    const minWeight = allWeights.length > 0 ? Math.min(...allWeights) * 0.95 : 50;
+    const maxWeight = allWeights.length > 0 ? Math.max(...allWeights) * 1.05 : 100;
     const ctx = weightChartCanvas.getContext('2d');
     
     if (weightProgressChart) {
@@ -293,16 +296,12 @@ async function createOrUpdateWeightChart(period) {
             legend: {
               display: true,
               position: 'top',
-              labels: { color: '#ffffff', font: { size: 14, weight: 'bold' } }
+              labels: { color: '#ffffff', font: { size: 12, weight: 'bold' } }
             },
             tooltip: {
               mode: 'index',
               intersect: false,
               backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              titleColor: '#ffffff',
-              bodyColor: '#ffffff',
-              borderColor: '#ff2d55',
-              borderWidth: 1,
               callbacks: {
                 label: context => `Вес: ${context.parsed.y.toFixed(1)} кг`,
                 title: tooltipItems => `Дата: ${tooltipItems[0].label}`
@@ -311,27 +310,37 @@ async function createOrUpdateWeightChart(period) {
           },
           scales: {
             x: {
-              title: { display: true, text: 'Дата измерения', color: '#ffffff', font: { size: 14, weight: 'bold' } },
-              grid: { color: 'rgba(255, 255, 255, 0.1)' },
-              ticks: { color: '#ffffff' }
+              title: { 
+                display: window.innerWidth > 480, 
+                text: 'Дата', 
+                color: '#ffffff' 
+              },
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
+              ticks: { 
+                color: '#ffffff',
+                // На узких экранах ( < 350px) оставляем 3 метки, иначе 5
+                maxTicksLimit: window.innerWidth < 350 ? 3 : 5, 
+                maxRotation: 0,
+                font: { size: 10 }
+              }
             },
             y: {
               beginAtZero: false,
-              title: { display: true, text: 'Вес (кг)', color: '#ffffff', font: { size: 14, weight: 'bold' } },
-              grid: { color: 'rgba(255, 255, 255, 0.1)' },
-              ticks: { color: '#ffffff' },
+              ticks: { 
+                color: '#ffffff',
+                callback: value => value.toFixed(1)
+              },
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
               min: minWeight,
               max: maxWeight
             }
-          },
-          interaction: { intersect: false, mode: 'nearest' }
+          }
         }
       });
     }
-    
     updateChartColorsForTheme();
   } catch (error) {
-    if (weightChartCanvas) weightChartCanvas.innerHTML = '<div class="chart-error">Не удалось загрузить данные графика</div>';
+    console.error(error);
   }
 }
 
@@ -367,6 +376,7 @@ function generateData(labels) {
 function createOrUpdateChart(period) {
   const labels = generateLabels(period);
   const data = generateData(labels);
+  
   if (chart) {
     chart.data.labels = labels;
     chart.data.datasets[0].data = data;
@@ -374,20 +384,55 @@ function createOrUpdateChart(period) {
   } else {
     chart = new Chart(ctx, {
       type: 'line',
-      data: { labels: labels, datasets: [{
-        label: 'Прогресс',
-        data: data,
-        borderWidth: 2,
-        borderColor: '#ff2d55',
-        backgroundColor: 'rgba(255, 45, 85, 0.1)',
-        tension: 0.3,
-        fill: true
-      }]},
+      data: { 
+        labels: labels, 
+        datasets: [{
+          label: 'Прогресс',
+          data: data,
+          borderWidth: 2,
+          borderColor: '#ff2d55',
+          backgroundColor: 'rgba(255, 45, 85, 0.1)',
+          tension: 0.3,
+          fill: true,
+          pointRadius: 3 // Добавим точки для наглядности
+        }]
+      },
       options: {
         responsive: true,
+        maintainAspectRatio: false, // Позволяет графику лучше тянуться в контейнере
+        plugins: {
+          legend: {
+            labels: { color: '#ffffff' }
+          }
+        },
         scales: {
-          x: { title: { display: true, text: 'Дни' }, grid: { display: true } },
-          y: { beginAtZero: true, title: { display: true, text: 'Вес' }, grid: { display: true } }
+          x: { 
+            title: { 
+              display: window.innerWidth > 480, 
+              text: 'Дни',
+              color: '#ffffff' 
+            }, 
+            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+            ticks: {
+              color: '#ffffff',
+              maxTicksLimit: 6, // Не дает датам накладываться друг на друга
+              maxRotation: 0    // Держит текст ровно
+            }
+          },
+          y: { 
+            beginAtZero: false, // Для веса лучше false, чтобы видеть микродвижения
+            title: { 
+              display: true, 
+              text: 'Вес',
+              color: '#ffffff'
+            }, 
+            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+            ticks: {
+              color: '#ffffff',
+              // Исправляет длинные дробные числа (например, 70.00000000002)
+              callback: value => value.toFixed(1)
+            }
+          }
         }
       }
     });
@@ -425,16 +470,24 @@ async function createOrUpdateExerciseChart(exerciseName, period = '3months') {
     if (chartContainer) chartContainer.style.display = 'block';
     
     const labels = [];
-    const weights = [];
+    const weights = []; // Используем этот массив
+    
     const sortedHistory = [...chartData.history].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+    
     sortedHistory.forEach(item => {
-      labels.push(item.formattedDate || item.date);
-      weights.push(item.weight);
+      let dateStr = item.formattedDate || item.date;
+      // Сокращаем формат даты до ДД.ММ
+      if (dateStr && dateStr.includes('.') && dateStr.split('.').length === 3) {
+          dateStr = dateStr.split('.').slice(0, 2).join('.');
+      }
+      labels.push(dateStr);
+      weights.push(item.weight); // ИСПРАВЛЕНО: было data.push
     });
     
     const allWeights = weights.filter(w => w > 0);
-    const minWeight = allWeights.length > 0 ? Math.min(...allWeights) * 0.9 : 0;
-    const maxWeight = allWeights.length > 0 ? Math.max(...allWeights) * 1.1 : 100;
+    const minWeight = allWeights.length > 0 ? Math.min(...allWeights) * 0.95 : 0;
+    const maxWeight = allWeights.length > 0 ? Math.max(...allWeights) * 1.05 : 100;
+    
     const ctx = chartCanvas.getContext('2d');
     if (!ctx) return;
     
@@ -449,46 +502,63 @@ async function createOrUpdateExerciseChart(exerciseName, period = '3months') {
       if (window.myChart) window.myChart.destroy();
       exerciseChart = new Chart(ctx, {
         type: 'line',
-        data: { labels: labels, datasets: [{
-          label: `${exerciseName} (кг)`,
-          data: weights,
-          borderWidth: 2,
-          borderColor: '#ff2d55',
-          backgroundColor: 'rgba(255, 45, 85, 0.1)',
-          tension: 0.3,
-          fill: true,
-          pointBackgroundColor: '#ff2d55',
-          pointBorderColor: '#ffffff',
-          pointBorderWidth: 2,
-          pointRadius: 4,
-          pointHoverRadius: 6
-        }]},
+        data: { 
+          labels: labels, 
+          datasets: [{
+            label: `${exerciseName} (кг)`,
+            data: weights,
+            borderWidth: 2,
+            borderColor: '#ff2d55',
+            backgroundColor: 'rgba(255, 45, 85, 0.1)',
+            tension: 0.3,
+            fill: true,
+            pointBackgroundColor: '#ff2d55',
+            pointBorderColor: '#ffffff',
+            pointBorderWidth: 2,
+            pointRadius: 4
+          }]
+        },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { display: true, position: 'top', labels: { color: '#ffffff', font: { size: 14, weight: 'bold' } } },
+            legend: { 
+              display: true, 
+              position: 'top', 
+              labels: { color: '#ffffff', font: { size: 12, weight: 'bold' } } 
+            },
             tooltip: {
               mode: 'index',
               intersect: false,
               backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              titleColor: '#ffffff',
-              bodyColor: '#ffffff',
               callbacks: {
-                label: context => `${exerciseName}: ${context.parsed.y.toFixed(1)} кг`,
-                title: tooltipItems => `Дата: ${tooltipItems[0].label}`
+                label: context => `${exerciseName}: ${context.parsed.y.toFixed(1)} кг`
               }
             }
           },
           scales: {
             x: {
-              title: { display: true, text: 'Дата выполнения', color: '#ffffff', font: { size: 14, weight: 'bold' } },
-              ticks: { color: '#ffffff' }
+              title: { 
+                display: window.innerWidth > 480, 
+                text: 'Дата', 
+                color: '#ffffff' 
+              },
+              ticks: { 
+                color: '#ffffff',
+                maxTicksLimit: 6, // Предотвращает наложение дат на мобильных
+                maxRotation: 0,
+                font: { size: 10 }
+              },
+              grid: { color: 'rgba(255, 255, 255, 0.05)' }
             },
             y: {
               beginAtZero: false,
-              title: { display: true, text: 'Вес (кг)', color: '#ffffff', font: { size: 14, weight: 'bold' } },
-              ticks: { color: '#ffffff' },
+              title: { display: window.innerWidth > 480, text: 'кг', color: '#ffffff' },
+              ticks: { 
+                color: '#ffffff',
+                callback: (val) => val.toFixed(1) // Убирает баг с длинной дробью
+              },
+              grid: { color: 'rgba(255, 255, 255, 0.05)' },
               min: minWeight,
               max: maxWeight
             }
@@ -498,7 +568,9 @@ async function createOrUpdateExerciseChart(exerciseName, period = '3months') {
       });
       window.myChart = exerciseChart;
     }
-  } catch (error) {}
+  } catch (error) {
+    console.error("Chart error:", error);
+  }
 }
 
 async function initExerciseChart() {

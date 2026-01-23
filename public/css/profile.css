@@ -945,21 +945,6 @@ footer {
   color: #FF5252;
 }
 
-@media (max-width: 768px) {
-  .rounded-filters {
-    flex-direction: column;
-    gap: 15px;
-  }
-  .chart-stats {
-    flex-direction: column;
-    gap: 20px;
-  }
-  .rounded-section {
-    padding: 20px;
-    border-radius: 20px;
-  }
-}
-
 body.pink-theme {
   --primary-color: #fcddf5;
   --secondary-color: #f2a2b1;
@@ -1680,39 +1665,6 @@ body.pink-theme ::-webkit-scrollbar-thumb:hover {
   background: #d47bc0;
 }
 
-@media (max-width: 768px) {
-  body.pink-theme .filters-section {
-    flex-direction: column;
-  }
-  body.pink-theme .filter-card {
-    min-width: 100%;
-  }
-  body.pink-theme .weight-stats {
-    grid-template-columns: 1fr;
-  }
-  body.pink-theme .weight-controls {
-    flex-direction: column;
-  }
-  body.pink-theme .modal-actions,
-  body.pink-theme .weight-modal-actions {
-    flex-direction: column;
-  }
-  body.pink-theme .chart-container {
-    height: 250px;
-  }
-}
-
-@media (max-width: 480px) {
-  body.pink-theme .progress-section,
-  body.pink-theme .profile-weight-section {
-    margin: 12px;
-    padding: 16px;
-  }
-  body.pink-theme .current-weight-value {
-    font-size: 28px;
-  }
-}
-
 @keyframes pinkSlideIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -1844,8 +1796,6 @@ body.pink-theme .charts-grid {
   margin-top: 20px;
 }
 
-
-
 body.pink-theme .chart-card {
   background: white;
   border: 1px solid var(--pink-border-color);
@@ -1910,23 +1860,44 @@ body.pink-theme .chart-error {
   font-size: 14px;
 }
 
-@media (max-width: 768px) {
-  body.pink-theme .chart-container {
-    height: 250px;
-  }
-  body.pink-theme .chart-card-body {
-    height: 200px;
-  }
-  body.pink-theme .charts-grid {
-    grid-template-columns: 1fr;
-  }
+/* Исправление контейнера графика */
+.chart-container-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-
-
-option {
-  background-color: #0d0d0d;
+.chart-container {
+  position: relative;
+  min-height: 300px;
+  width: 100%;
+  min-width: 280px;
 }
+
+.chart-container canvas {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 400px;
+}
+
+/* Контейнер для графика */
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    margin: 0 auto;
+}
+
+/* Элементы управления (селекторы, кнопки) */
+.controls-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
 /* Стили для кнопки выхода */
 .logout-btn {
   width: 100%;
@@ -1957,7 +1928,6 @@ option {
   transform: translateY(0);
 }
 
-
 /* Стили для розовой темы */
 body.pink-theme .logout-btn {
   background: rgba(225, 139, 207, 0.1);
@@ -1975,60 +1945,6 @@ body.pink-theme .logout-icon {
   background: var(--secondary-color);
 }
 
-
-/* Исправление контейнера графика */
-.chart-container-wrapper {
-  width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch; /* Для плавной прокрутки на iOS */
+option {
+  background-color: #0d0d0d;
 }
-
-.chart-container {
-  position: relative;
-  min-height: 300px;
-  width: 100%;
-  min-width: 280px; /* Минимальная ширина для графика */
-}
-
-/* Исправление для самого canvas графика */
-.chart-container canvas {
-  width: 100% !important;
-  height: auto !important;
-  max-height: 400px;
-}
-
-
-
-/* Контейнер для графика */
-.chart-container {
-    position: relative;
-    width: 100%;
-    height: 300px; /* Фиксированная высота для мобильных */
-    margin: 0 auto;
-}
-
-/* Элементы управления (селекторы, кнопки) */
-.controls-wrapper {
-    display: flex;
-    flex-wrap: wrap; /* Позволяет кнопкам переноситься на новую строку */
-    gap: 10px;
-    margin-bottom: 15px;
-    justify-content: center;
-}
-
-<<<<<<< HEAD
-/* Стили для селекторов и кнопок на мобильных */
-select, .btn {
-    padding: 10px 15px;
-    font-size: 14px;
-    border-radius: 8px;
-    border: 1px solid #ff2d55;
-    background: #1a1a1a;
-    color: white;
-    flex: 1 1 140px; /* Кнопки будут растягиваться и переноситься */
-    max-width: 100%;
-}
-
-=======
->>>>>>> fd837a4209a25a329c1d1a12ec41b48352a6555e
