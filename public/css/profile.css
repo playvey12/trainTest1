@@ -2017,6 +2017,7 @@ body.pink-theme .logout-icon {
     justify-content: center;
 }
 
+<<<<<<< HEAD
 /* Стили для селекторов и кнопок на мобильных */
 select, .btn {
     padding: 10px 15px;
@@ -2029,3 +2030,5 @@ select, .btn {
     max-width: 100%;
 }
 
+=======
+>>>>>>> fd837a4209a25a329c1d1a12ec41b48352a6555e
