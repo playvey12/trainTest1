@@ -30,28 +30,29 @@ function showNotification(message, type = 'info') {
 
 // ========== СМЕНА ТЕМЫ ==========
 const bodyProf = document.querySelector('body');
-let savedTheme = localStorage.getItem('themeMode')
+let savedTheme = localStorage.getItem('themeMode');
 if (savedTheme){
     bodyProf.classList.remove('pink-theme', 'black-theme');
     bodyProf.classList.add(savedTheme + '-theme');
 } else {
     const defaultTheme = 'black'; 
-    body.classList.add(defaultTheme + '-theme');
+    bodyProf.classList.add(defaultTheme + '-theme');
     localStorage.setItem('themeMode', defaultTheme);
 }
 
 // ========== ФУНКЦИИ ДЛЯ ПАРОЛЕЙ ==========
 function togglePasswordVisibility() {
     const passwordInput = document.getElementById('password');
-    const repeatPasswordInput = document.getElementById('confirmPassword');
     const toggleButton = document.getElementById('togglePassword');
     
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleButton.textContent = '🔒';
-    } else {
-        passwordInput.type = 'password';
-        toggleButton.textContent = '👁'; 
+    if (passwordInput && toggleButton) {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleButton.textContent = '🔒';
+        } else {
+            passwordInput.type = 'password';
+            toggleButton.textContent = '👁'; 
+        }
     }
 }
 
@@ -59,27 +60,90 @@ function toggleConfirmPasswordVisibility() {
     const confirmPasswordInput = document.getElementById('confirmPassword');
     const toggleButton = document.getElementById('toggleConfirmPassword');
     
-    if (confirmPasswordInput.type === 'password') {
-        confirmPasswordInput.type = 'text';
-        toggleButton.textContent = '🔒';
-    } else {
-        confirmPasswordInput.type = 'password';
-        toggleButton.textContent = '👁'; 
+    if (confirmPasswordInput && toggleButton) {
+        if (confirmPasswordInput.type === 'password') {
+            confirmPasswordInput.type = 'text';
+            toggleButton.textContent = '🔒';
+        } else {
+            confirmPasswordInput.type = 'password';
+            toggleButton.textContent = '👁'; 
+        }
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const togglePasswordBtn = document.getElementById('togglePassword');
-    const toggleConfirmPasswordBtn = document.getElementById('toggleConfirmPassword');
+// ========== ВАЛИДАЦИЯ ФОРМЫ ==========
+function validateForm() {
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+    const privacyCheckbox = document.getElementById("privacyAgreement");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+    const confirmPasswordError = document.getElementById("confirmPasswordError");
     
-    if (togglePasswordBtn) {
-        togglePasswordBtn.addEventListener('click', togglePasswordVisibility);
+    let isValid = true;
+    
+    // Сбрасываем ошибки
+    [emailError, passwordError, confirmPasswordError].forEach(error => {
+        if (error) error.style.display = 'none';
+    });
+    
+    // Валидация email
+    if (emailInput) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailInput.value.trim())) {
+            if (emailError) emailError.style.display = 'block';
+            emailInput.classList.add('error');
+            isValid = false;
+        } else {
+            emailInput.classList.remove('error');
+        }
     }
     
-    if (toggleConfirmPasswordBtn) {
-        toggleConfirmPasswordBtn.addEventListener('click', toggleConfirmPasswordVisibility);
+    // Валидация пароля
+    if (passwordInput) {
+        if (passwordInput.value.length < 8) {
+            if (passwordError) passwordError.style.display = 'block';
+            passwordInput.classList.add('error');
+            isValid = false;
+        } else {
+            passwordInput.classList.remove('error');
+        }
     }
-});
+    
+    // Валидация подтверждения пароля
+    if (confirmPasswordInput && passwordInput) {
+        if (confirmPasswordInput.value !== passwordInput.value) {
+            if (confirmPasswordError) confirmPasswordError.style.display = 'block';
+            confirmPasswordInput.classList.add('error');
+            isValid = false;
+        } else {
+            confirmPasswordInput.classList.remove('error');
+        }
+    }
+    
+    // Валидация чекбокса
+    if (privacyCheckbox && !privacyCheckbox.checked) {
+        showNotification("Вы должны согласиться с политикой конфиденциальности", "error");
+        privacyCheckbox.focus();
+        const privacyCheckboxContainer = document.getElementById('privacyCheckbox');
+        if (privacyCheckboxContainer) {
+            privacyCheckboxContainer.style.animation = "shake 0.5s ease-in-out";
+            privacyCheckboxContainer.classList.add('error');
+            setTimeout(() => {
+                privacyCheckboxContainer.style.animation = "";
+            }, 500);
+        }
+        isValid = false;
+    } else {
+        const privacyCheckboxContainer = document.getElementById('privacyCheckbox');
+        if (privacyCheckboxContainer) {
+            privacyCheckboxContainer.classList.remove('error');
+        }
+    }
+    
+    return isValid;
+}
 
 // ========== API ФУНКЦИИ ==========
 const getToken = () => localStorage.getItem("token");
@@ -104,7 +168,7 @@ async function apiFetch(path, options = {}) {
     return data;
 }
 
-// ========== МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ ==========
+// ========== МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ EMAIL ==========
 class ConfirmationModal {
     constructor() {
         this.modal = document.getElementById('confirmationModal');
@@ -129,6 +193,8 @@ class ConfirmationModal {
     }
     
     init() {
+        if (!this.modal) return;
+        
         this.closeBtn.addEventListener('click', () => this.close());
         this.modal.addEventListener('click', (e) => {
             if (e.target === this.modal) this.close();
@@ -263,58 +329,58 @@ class ConfirmationModal {
     }
     
     async confirmCode(e) {
-    e.preventDefault();
-    
-    const code = this.getCode();
-    if (code.length !== 6) {
-        this.showError('Введите 6-значный код');
-        return;
-    }
-    
-    this.confirmBtn.disabled = true;
-    this.confirmBtnText.textContent = 'Проверка...';
-    this.confirmLoader.style.display = 'block';
-    this.hideError();
-    
-    try {
-        // Отправляем запрос на подтверждение
-        const response = await fetch('/confirm-registration', {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                userEmail: this.userEmail,
-                confirmationCode: code
-            }),
-        });
+        e.preventDefault();
         
-        const result = await response.json();
-        
-        if (response.ok) {
-            this.showSuccess();
-            showNotification("Регистрация успешно завершена!", "success");
-            
-            // Сохраняем токен
-            if (result.token) {
-                localStorage.setItem('token', result.token);
-            }
-            
-            setTimeout(() => {
-                this.close();
-                window.location.href = '/profileMain';
-            }, 2000);
-            
-        } else {
-            throw new Error(result.error || 'Ошибка подтверждения');
+        const code = this.getCode();
+        if (code.length !== 6) {
+            this.showError('Введите 6-значный код');
+            return;
         }
         
-    } catch (error) {
-        console.error('Ошибка подтверждения:', error);
-        this.showError(error.message || 'Ошибка подтверждения');
-        this.confirmBtn.disabled = false;
-        this.confirmBtnText.textContent = 'Подтвердить';
-        this.confirmLoader.style.display = 'none';
+        this.confirmBtn.disabled = true;
+        this.confirmBtnText.textContent = 'Проверка...';
+        this.confirmLoader.style.display = 'block';
+        this.hideError();
+        
+        try {
+            // Отправляем запрос на подтверждение
+            const response = await fetch('/confirm-registration', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    userEmail: this.userEmail,
+                    confirmationCode: code
+                }),
+            });
+            
+            const result = await response.json();
+            
+            if (response.ok) {
+                this.showSuccess();
+                showNotification("Регистрация успешно завершена!", "success");
+                
+                // Сохраняем токен
+                if (result.token) {
+                    localStorage.setItem('token', result.token);
+                }
+                
+                setTimeout(() => {
+                    this.close();
+                    window.location.href = '/profileMain';
+                }, 2000);
+                
+            } else {
+                throw new Error(result.error || 'Ошибка подтверждения');
+            }
+            
+        } catch (error) {
+            console.error('Ошибка подтверждения:', error);
+            this.showError(error.message || 'Ошибка подтверждения');
+            this.confirmBtn.disabled = false;
+            this.confirmBtnText.textContent = 'Подтвердить';
+            this.confirmLoader.style.display = 'none';
+        }
     }
-}
     
     showSuccess() {
         this.confirmBtnText.textContent = '✓ Успешно!';
@@ -396,21 +462,145 @@ class ConfirmationModal {
     }
 }
 
-// Инициализация модального окна при загрузке
-let confirmationModal;
-document.addEventListener('DOMContentLoaded', function() {
-    confirmationModal = new ConfirmationModal();
-    window.confirmationModal = confirmationModal;
-});
+// ========== МОДАЛЬНЫЕ ОКНА ПОЛИТИКИ И УСЛОВИЙ ==========
+class PrivacyPolicyModal {
+    constructor() {
+        this.privacyModal = document.getElementById('privacyPolicyModal');
+        this.termsModal = document.getElementById('termsModal');
+        this.closePrivacyBtn = document.getElementById('closePrivacyModal');
+        this.closeTermsBtn = document.getElementById('closeTermsModal');
+        this.showPrivacyLink = document.getElementById('showPrivacyPolicy');
+        this.showTermsLink = document.getElementById('showTermsOfService');
+        this.agreePrivacyBtn = document.getElementById('agreePrivacyBtn');
+        this.agreeTermsBtn = document.getElementById('agreeTermsBtn');
+        this.privacyCheckbox = document.getElementById('privacyAgreement');
+        
+        this.init();
+    }
+    
+    init() {
+        // Обработчики для открытия модальных окон
+        if (this.showPrivacyLink) {
+            this.showPrivacyLink.addEventListener('click', () => this.openPrivacyModal());
+        }
+        
+        if (this.showTermsLink) {
+            this.showTermsLink.addEventListener('click', () => this.openTermsModal());
+        }
+        
+        // Обработчики для закрытия
+        if (this.closePrivacyBtn) {
+            this.closePrivacyBtn.addEventListener('click', () => this.closePrivacyModal());
+        }
+        
+        if (this.closeTermsBtn) {
+            this.closeTermsBtn.addEventListener('click', () => this.closeTermsModal());
+        }
+        
+        // Закрытие по клику вне модального окна
+        if (this.privacyModal) {
+            this.privacyModal.addEventListener('click', (e) => {
+                if (e.target === this.privacyModal) this.closePrivacyModal();
+            });
+        }
+        
+        if (this.termsModal) {
+            this.termsModal.addEventListener('click', (e) => {
+                if (e.target === this.termsModal) this.closeTermsModal();
+            });
+        }
+        
+        // Кнопки согласия
+        if (this.agreePrivacyBtn) {
+            this.agreePrivacyBtn.addEventListener('click', () => {
+                this.closePrivacyModal();
+                this.markAsRead();
+            });
+        }
+        
+        if (this.agreeTermsBtn) {
+            this.agreeTermsBtn.addEventListener('click', () => {
+                this.closeTermsModal();
+                this.markAsRead();
+            });
+        }
+        
+        // Закрытие по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (this.privacyModal && this.privacyModal.classList.contains('active')) {
+                    this.closePrivacyModal();
+                }
+                if (this.termsModal && this.termsModal.classList.contains('active')) {
+                    this.closeTermsModal();
+                }
+            }
+        });
+    }
+    
+    openPrivacyModal() {
+        if (this.privacyModal) {
+            this.privacyModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Прокручиваем к началу
+            const modalContent = this.privacyModal.querySelector('.policy-content');
+            if (modalContent) {
+                modalContent.scrollTop = 0;
+            }
+        }
+    }
+    
+    openTermsModal() {
+        if (this.termsModal) {
+            this.termsModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Прокручиваем к началу
+            const modalContent = this.termsModal.querySelector('.policy-content');
+            if (modalContent) {
+                modalContent.scrollTop = 0;
+            }
+        }
+    }
+    
+    closePrivacyModal() {
+        if (this.privacyModal) {
+            this.privacyModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    }
+    
+    closeTermsModal() {
+        if (this.termsModal) {
+            this.termsModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    }
+    
+    markAsRead() {
+        // При закрытии модальных окон можно отслеживать, что пользователь прочитал документы
+        // Например, сохранять в localStorage или sessionStorage
+        try {
+            localStorage.setItem('privacyPolicyRead', 'true');
+        } catch (e) {
+            console.log('Не удалось сохранить статус прочтения');
+        }
+    }
+}
 
 // ========== РЕГИСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ ==========
 async function registerUser(event) {
     if (event) event.preventDefault();
     
+    // Сначала валидируем форму
+    if (!validateForm()) {
+        return false;
+    }
+    
     try {
         const userEmailInput = document.getElementById("email");
         const userPasswordInput = document.getElementById("password");
         const userRepeatPasswordInput = document.getElementById("confirmPassword");
+        const privacyCheckbox = document.getElementById("privacyAgreement");
         const submitBtn = document.getElementById("submitBtn");
         const btnText = document.getElementById("btnText");
         const loader = document.getElementById("loader");
@@ -418,29 +608,6 @@ async function registerUser(event) {
         const userRepeatPasswordValue = userRepeatPasswordInput.value;
         const userPasswordValue = userPasswordInput.value;
         const userEmailValue = userEmailInput ? userEmailInput.value.trim() : "";
-
-        // Валидация
-        if (userRepeatPasswordValue !== userPasswordValue) {
-            showNotification("Пароли не совпадают!", "error");
-            return false;
-        }
-        
-        if (!userEmailValue || !userPasswordValue) {
-            showNotification("Заполните все поля", "error");
-            return false;
-        }
-        
-        if (userPasswordValue.length < 8) {
-            showNotification("Пароль должен содержать минимум 8 символов", "error");
-            return false;
-        }
-        
-        // Проверяем email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(userEmailValue)) {
-            showNotification("Введите корректный email", "error");
-            return false;
-        }
 
         // Показываем загрузку
         submitBtn.disabled = true;
@@ -450,10 +617,12 @@ async function registerUser(event) {
         // Данные для регистрации
         const userData = { 
             userPassword: userPasswordValue,
-            userEmail: userEmailValue
+            userEmail: userEmailValue,
+            privacyAccepted: true, // Добавляем флаг согласия
+            acceptedAt: new Date().toISOString() // Время принятия
         };
 
-        // Отправляем запрос на регистрацию
+        // Отправляем запров на регистрацию
         const response = await fetch('/register', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -471,8 +640,8 @@ async function registerUser(event) {
             showNotification("Код подтверждения отправлен на email", "success");
             
             // Показываем модальное окно для ввода кода
-            if (confirmationModal) {
-                confirmationModal.open(userEmailValue, null); // Передаем только email
+            if (window.confirmationModal) {
+                window.confirmationModal.open(userEmailValue, userData);
             }
         } else {
             showNotification(`Ошибка: ${result.error || 'Неизвестная ошибка'}`, "error");
@@ -542,7 +711,146 @@ async function loginUser(event) {
     return false;
 }
 
+// ========== ИНИЦИАЛИЗАЦИЯ ==========
+document.addEventListener('DOMContentLoaded', function() {
+    // Инициализация переключателей паролей
+    const togglePasswordBtn = document.getElementById('togglePassword');
+    const toggleConfirmPasswordBtn = document.getElementById('toggleConfirmPassword');
+    
+    if (togglePasswordBtn) {
+        togglePasswordBtn.addEventListener('click', togglePasswordVisibility);
+    }
+    
+    if (toggleConfirmPasswordBtn) {
+        toggleConfirmPasswordBtn.addEventListener('click', toggleConfirmPasswordVisibility);
+    }
+    
+    // Валидация при вводе
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const privacyCheckbox = document.getElementById('privacyAgreement');
+    
+    if (emailInput) {
+        emailInput.addEventListener('input', function() {
+            const emailError = document.getElementById('emailError');
+            if (emailError) emailError.style.display = 'none';
+            this.classList.remove('error');
+        });
+    }
+    
+    if (passwordInput) {
+        passwordInput.addEventListener('input', function() {
+            const passwordError = document.getElementById('passwordError');
+            if (passwordError) passwordError.style.display = 'none';
+            this.classList.remove('error');
+            
+            // Синхронная проверка подтверждения пароля
+            if (confirmPasswordInput && confirmPasswordInput.value) {
+                const confirmPasswordError = document.getElementById('confirmPasswordError');
+                if (this.value === confirmPasswordInput.value) {
+                    if (confirmPasswordError) confirmPasswordError.style.display = 'none';
+                    confirmPasswordInput.classList.remove('error');
+                } else {
+                    if (confirmPasswordError) confirmPasswordError.style.display = 'block';
+                    confirmPasswordInput.classList.add('error');
+                }
+            }
+        });
+    }
+    
+    if (confirmPasswordInput) {
+        confirmPasswordInput.addEventListener('input', function() {
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+            if (passwordInput && passwordInput.value === this.value) {
+                if (confirmPasswordError) confirmPasswordError.style.display = 'none';
+                this.classList.remove('error');
+            } else {
+                if (confirmPasswordError) confirmPasswordError.style.display = 'block';
+                this.classList.add('error');
+            }
+        });
+    }
+    
+    if (privacyCheckbox) {
+        privacyCheckbox.addEventListener('change', function() {
+            const privacyCheckboxContainer = document.getElementById('privacyCheckbox');
+            if (this.checked) {
+                if (privacyCheckboxContainer) {
+                    privacyCheckboxContainer.classList.remove('error');
+                }
+            }
+        });
+    }
+    
+    // Инициализация формы регистрации
+    const registrationForm = document.getElementById('registrationForm');
+    if (registrationForm) {
+        registrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateForm()) {
+                registerUser(e);
+            }
+        });
+        
+        // Также привязываем функцию к кнопке
+        const submitBtn = document.getElementById('submitBtn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (validateForm()) {
+                    registerUser(e);
+                }
+            });
+        }
+    }
+    
+    // Инициализация формы входа (если есть на странице)
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            loginUser(e);
+        });
+    }
+    
+    // Инициализация всех модальных окон
+    window.confirmationModal = new ConfirmationModal();
+    window.privacyPolicyModal = new PrivacyPolicyModal();
+    
+    // Добавляем обработчик для кнопки "Я согласен" из модального окна политики
+    const agreePrivacyBtn = document.getElementById('agreePrivacyBtn');
+    if (agreePrivacyBtn) {
+        agreePrivacyBtn.addEventListener('click', function() {
+            // Автоматически ставим галочку согласия
+            const privacyCheckbox = document.getElementById('privacyAgreement');
+            if (privacyCheckbox) {
+                privacyCheckbox.checked = true;
+                const privacyCheckboxContainer = document.getElementById('privacyCheckbox');
+                if (privacyCheckboxContainer) {
+                    privacyCheckboxContainer.classList.remove('error');
+                }
+            }
+        });
+    }
+    
+    // Аналогично для условий использования
+    const agreeTermsBtn = document.getElementById('agreeTermsBtn');
+    if (agreeTermsBtn) {
+        agreeTermsBtn.addEventListener('click', function() {
+            const privacyCheckbox = document.getElementById('privacyAgreement');
+            if (privacyCheckbox) {
+                privacyCheckbox.checked = true;
+                const privacyCheckboxContainer = document.getElementById('privacyCheckbox');
+                if (privacyCheckboxContainer) {
+                    privacyCheckboxContainer.classList.remove('error');
+                }
+            }
+        });
+    }
+});
 
+// ========== СТИЛИ ДЛЯ АНИМАЦИЙ ==========
 const style = document.createElement('style');
 style.textContent = `
     @keyframes slideIn {
@@ -553,5 +861,28 @@ style.textContent = `
         from { transform: translateX(0); opacity: 1; }
         to { transform: translateX(100%); opacity: 0; }
     }
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+        20%, 40%, 60%, 80% { transform: translateX(5px); }
+    }
 `;
 document.head.appendChild(style);
+
+// Экспортируем функции для использования в других скриптах
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        showNotification,
+        togglePasswordVisibility,
+        toggleConfirmPasswordVisibility,
+        validateForm,
+        getToken,
+        setToken,
+        clearToken,
+        apiFetch,
+        ConfirmationModal,
+        PrivacyPolicyModal,
+        registerUser,
+        loginUser
+    };
+}

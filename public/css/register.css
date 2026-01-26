@@ -845,3 +845,43 @@ body.pink-theme .close-btn:hover {
         gap: 6px;
     }
 }
+
+
+    /* Стили для политики конфиденциальности */
+        .privacy-policy-container {
+            max-height: 300px;
+            overflow-y: auto;
+            background: var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        .privacy-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin: 25px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+        }
+
+        .privacy-checkbox.error {
+            border: 1px solid #ff2d55;
+            background: rgba(255, 45, 85, 0.1);
+        }
+
+        .checkbox-label a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }

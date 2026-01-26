@@ -1,4 +1,4 @@
-/* ====================== АДАПТИВ ДЛЯ ТЕЛЕФОНОВ <400px ====================== */
+убери повторки /* ====================== АДАПТИВ ДЛЯ ТЕЛЕФОНОВ <400px ====================== */
 @media (max-width: 400px) {
   /* Общие стили для всех страниц */
   body {
@@ -582,6 +582,7 @@
   /* Адаптация иконок */
   .settings-icon, .toggle-password, .control-icon {
     transform: scale(0.9);
+    top: 5%;
   }
   
   /* Уменьшение отступов в карточках */
@@ -644,3 +645,614 @@
   }
 }
 
+
+
+
+/* ========== АДАПТИВ ДЛЯ МОДАЛЬНЫХ ОКОН ПОЛИТИКИ ========== */
+
+/* Базовые стили для модальных окон политики */
+.policy-modal {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 40px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 85vh;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+}
+
+.policy-content {
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+.policy-content h2 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.policy-content h3 {
+    color: var(--text-color);
+    margin: 25px 0 15px 0;
+    font-size: 18px;
+}
+
+.policy-content p {
+    margin-bottom: 15px;
+}
+
+.policy-content ul {
+    padding-left: 25px;
+    margin-bottom: 20px;
+}
+
+.policy-content li {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.policy-content li:before {
+    content: "•";
+    color: var(--secondary-color);
+    position: absolute;
+    left: -15px;
+}
+
+.policy-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.agree-btn {
+    background: var(--gradient-button);
+    color: var(--white);
+    border: none;
+    padding: 15px 40px;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.agree-btn:hover {
+    filter: brightness(1.15);
+    transform: translateY(-2px);
+}
+
+/* Для розовой темы */
+body.pink-theme .policy-modal {
+    background: var(--card-bg);
+    border-color: var(--pink-border-color);
+}
+
+body.pink-theme .policy-content {
+    color: var(--pink-text-muted);
+}
+
+body.pink-theme .policy-content h2,
+body.pink-theme .policy-content h3 {
+    color: var(--pink-text-color);
+}
+
+/* ========== АДАПТИВ ДЛЯ 470px И МЕНЬШЕ ========== */
+@media (max-width: 470px) {
+    .policy-modal {
+        padding: 30px 25px;
+        margin: 15px;
+        width: calc(100% - 30px);
+        max-height: 80vh;
+    }
+    
+    .modal-header {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+    
+    .modal-title {
+        font-size: 20px;
+    }
+    
+    .policy-content h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .policy-content h3 {
+        font-size: 16px;
+        margin: 20px 0 12px 0;
+    }
+    
+    .policy-content p {
+        font-size: 14px;
+        margin-bottom: 12px;
+        line-height: 1.5;
+    }
+    
+    .policy-content ul {
+        padding-left: 20px;
+        margin-bottom: 15px;
+    }
+    
+    .policy-content li {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+    
+    .policy-content li:before {
+        left: -12px;
+    }
+    
+    .policy-actions {
+        margin-top: 25px;
+        padding-top: 15px;
+    }
+    
+    .agree-btn {
+        padding: 14px 35px;
+        font-size: 15px;
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    /* Уменьшаем шрифт для очень длинного текста */
+    .policy-content {
+        font-size: 14px;
+    }
+}
+
+/* ========== АДАПТИВ ДЛЯ 400px И МЕНЬШЕ ========== */
+@media (max-width: 400px) {
+    .policy-modal {
+        padding: 25px 20px;
+        margin: 10px;
+        width: calc(100% - 20px);
+        max-height: 75vh;
+        border-radius: 12px;
+    }
+    
+    .modal-header {
+        margin-bottom: 15px;
+        padding-bottom: 12px;
+    }
+    
+    .modal-title {
+        font-size: 18px;
+    }
+    
+    .close-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 24px;
+    }
+    
+    .policy-content h2 {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+    
+    .policy-content h3 {
+        font-size: 15px;
+        margin: 18px 0 10px 0;
+    }
+    
+    .policy-content p {
+        font-size: 13px;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+    
+    .policy-content ul {
+        padding-left: 18px;
+        margin-bottom: 12px;
+    }
+    
+    .policy-content li {
+        font-size: 13px;
+        margin-bottom: 6px;
+        line-height: 1.4;
+    }
+    
+    .policy-content li:before {
+        left: -10px;
+    }
+    
+    .policy-actions {
+        margin-top: 20px;
+        padding-top: 12px;
+    }
+    
+    .agree-btn {
+        padding: 12px 30px;
+        font-size: 14px;
+        max-width: 180px;
+    }
+    
+    /* Оптимизация прокрутки для очень маленьких экранов */
+    .policy-content {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    
+    /* Уменьшаем отступы для экономии места */
+    .policy-modal > * {
+        margin-bottom: 15px;
+    }
+    
+    .policy-modal > *:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* ========== ДОПОЛНИТЕЛЬНЫЙ АДАПТИВ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ВЫСОТ ========== */
+@media (max-height: 600px) {
+    .policy-modal {
+        max-height: 70vh;
+        padding: 20px 15px;
+    }
+    
+    .policy-content {
+        max-height: 50vh;
+        overflow-y: auto;
+    }
+    
+    .policy-actions {
+        position: sticky;
+        bottom: 0;
+        background: var(--card-bg);
+        padding-bottom: 10px;
+    }
+}
+
+/* ========== АДАПТИВ ДЛЯ ГОРИЗОНТАЛЬНОЙ ОРИЕНТАЦИИ ========== */
+@media (max-width: 768px) and (orientation: landscape) {
+    .policy-modal {
+        max-height: 90vh;
+        padding: 20px;
+    }
+    
+    .policy-content {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    
+    .modal-title {
+        font-size: 18px;
+    }
+    
+    .policy-content h2 {
+        font-size: 18px;
+    }
+    
+    .policy-content h3 {
+        font-size: 16px;
+        margin: 15px 0 10px 0;
+    }
+    
+    .policy-content p,
+    .policy-content li {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+}
+
+/* ========== АДАПТИВ ДЛЯ ОЧЕНЬ УЗКИХ ЭКРАНОВ ========== */
+@media (max-width: 350px) {
+    .policy-modal {
+        padding: 20px 15px;
+        margin: 8px;
+        width: calc(100% - 16px);
+        border-radius: 10px;
+    }
+    
+    .modal-title {
+        font-size: 16px;
+    }
+    
+    .policy-content h2 {
+        font-size: 16px;
+    }
+    
+    .policy-content h3 {
+        font-size: 14px;
+    }
+    
+    .policy-content p,
+    .policy-content li {
+        font-size: 12px;
+    }
+    
+    .agree-btn {
+        padding: 10px 25px;
+        font-size: 13px;
+        max-width: 150px;
+    }
+}
+
+/* ========== ОПТИМИЗАЦИЯ ПРОКРУТКИ ========== */
+.policy-modal::-webkit-scrollbar {
+    width: 6px;
+}
+
+.policy-modal::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.policy-modal::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 3px;
+}
+
+.policy-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.policy-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.policy-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
+/* Для розовой темы */
+body.pink-theme .policy-modal::-webkit-scrollbar-track {
+    background: rgba(225, 139, 207, 0.1);
+}
+
+body.pink-theme .policy-modal::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+}
+
+/* ========== АДАПТИВ ДЛЯ ЧЕКБОКСА ПОЛИТИКИ ========== */
+@media (max-width: 470px) {
+    .privacy-checkbox {
+        margin: 20px 0;
+        padding: 12px;
+        gap: 10px;
+    }
+    
+    .checkbox-label {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    
+    .privacy-link {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 400px) {
+    .privacy-checkbox {
+        margin: 15px 0;
+        padding: 10px;
+        gap: 8px;
+    }
+    
+    .checkbox-label {
+        font-size: 12px;
+        line-height: 1.3;
+    }
+    
+    .privacy-link {
+        font-size: 12px;
+    }
+    
+    .checkbox-input {
+        width: 18px;
+        height: 18px;
+        min-width: 18px;
+        margin-top: 2px;
+    }
+}
+
+/* ========== АДАПТИВ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ТЕКСТОВ ========== */
+@media (max-width: 350px) {
+    .checkbox-label {
+        font-size: 11px;
+    }
+    
+    .privacy-link {
+        font-size: 11px;
+    }
+    
+    .privacy-checkbox {
+        padding: 8px;
+    }
+}
+
+/* ========== УЛУЧШЕНИЕ ДОСТУПНОСТИ ========== */
+@media (prefers-reduced-motion: reduce) {
+    .policy-modal {
+        transition: none;
+    }
+    
+    .agree-btn:hover {
+        transform: none;
+    }
+}
+
+/* ========== ТЕМНАЯ ТЕМА ПО УМОЛЧАНИЮ ========== */
+@media (prefers-color-scheme: dark) {
+    .policy-modal {
+        background: var(--card-bg);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* ========== АДАПТИВ ДЛЯ ВЫСОКОЧАСТОТНЫХ ЭКРАНОВ ========== */
+@media (min-resolution: 192dpi) {
+    .policy-modal {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* ========================================================
+   ОБЩИЕ СТИЛИ АДАПТИВА (MOBILE FIRST / CLEANUP)
+   ======================================================== */
+
+/* Базовые сбросы для мобилок */
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    width: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Контейнер для центрирования карточки на мобильных */
+.registration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 15px;
+}
+
+/* ====================== АДАПТИВ 470px и ниже ====================== */
+@media (max-width: 470px) {
+    body {
+        padding: 10px !important;
+    }
+
+    .container {
+        padding: 0 5px;
+    }
+
+    /* Заголовки */
+    h1, .registration-title {
+        font-size: 22px !important;
+        margin-bottom: 20px !important;
+        text-align: center;
+    }
+
+    /* Карточка регистрации */
+    .registration-card {
+        padding: 24px 16px !important;
+        border-radius: 16px !important;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* Поля ввода */
+    .form-group {
+        margin-bottom: 16px !important;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+    .form-input, .settings-input, input[type="email"], input[type="password"] {
+        width: 100% !important;
+        padding: 14px 12px !important;
+        font-size: 16px !important; /* Важно для iOS чтобы не зумило */
+        border-radius: 8px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Блок с чекбоксом (Согласие) */
+    .privacy-checkbox {
+        display: flex !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+        margin: 20px 0 !important;
+        padding: 12px !important;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+    }
+
+    .checkbox-input {
+        width: 20px !important;
+        height: 20px !important;
+        min-width: 20px !important;
+        margin: 0 !important;
+        cursor: pointer;
+    }
+
+    .checkbox-label {
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        color: #ccc;
+    }
+
+    .checkbox-label a {
+        display: inline-block;
+        color: #ff2d55; /* Ваш акцентный цвет */
+        text-decoration: none;
+    }
+
+    /* Кнопка регистрации */
+    .submit-btn, .create-account-btn {
+        width: 100% !important;
+        padding: 16px !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        border-radius: 10px !important;
+        margin-top: 10px !important;
+    }
+
+    /* Ссылка "Войти" */
+    .login-link-container {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    /* Модальные окна */
+    .modal, .policy-modal {
+        width: 95% !important;
+        padding: 20px !important;
+        max-height: 85vh !important;
+    }
+}
+
+/* ====================== ОПТИМИЗАЦИЯ ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ (350px) ====================== */
+@media (max-width: 350px) {
+    .registration-title {
+        font-size: 19px !important;
+    }
+
+    .checkbox-label {
+        font-size: 12px !important;
+    }
+
+    .registration-card {
+        padding: 15px 12px !important;
+    }
+}
+
+/* ========== СТИЛИ МОДАЛЬНЫХ ОКОН (ПОЛИТИКА) ========== */
+.policy-modal {
+    background: var(--card-bg, #1a1a1a);
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 800px;
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.policy-content h2 { font-size: 20px; margin-bottom: 15px; }
+.policy-content p { font-size: 14px; line-height: 1.6; margin-bottom: 10px; }
+
+/* Кастомный скролл */
+.policy-modal::-webkit-scrollbar {
+    width: 4px;
+}
+.policy-modal::-webkit-scrollbar-thumb {
+    background: #ff2d55;
+    border-radius: 10px;
+}
