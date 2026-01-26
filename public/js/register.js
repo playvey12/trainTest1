@@ -793,16 +793,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Также привязываем функцию к кнопке
-        const submitBtn = document.getElementById('submitBtn');
-        if (submitBtn) {
-            submitBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (validateForm()) {
-                    registerUser(e);
-                }
-            });
-        }
+       
     }
     
     // Инициализация формы входа (если есть на странице)
