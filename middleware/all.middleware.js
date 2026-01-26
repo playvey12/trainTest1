@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET || 'fallback';
+const db = require("../data/bin/db");
 
 
 const isAuth = (req, res, next) => {
@@ -63,4 +64,24 @@ const isAuth = (req, res, next) => {
   }
 };
 
-module.exports = isAuth;  
+const requireVerified = (req, res, next) => {
+  db.get('SELECT is_verified FROM users WHERE id = ?', [req.user.id], (err, user) => {
+    if (err) {
+      return res.status(500).json({ error: 'Ошибка проверки статуса пользователя' });
+    }
+    
+    if (!user || !user.is_verified) {
+      return res.status(403).json({ 
+        error: 'Требуется подтверждение email',
+        redirectTo: '/verify-email'
+      });
+    }
+    
+    next();
+  });
+};
+
+module.exports = {
+  isAuth,
+  requireVerified
+};

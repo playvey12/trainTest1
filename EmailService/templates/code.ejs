@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .header {
+            background-color: #ff2d55;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .code {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            letter-spacing: 5px;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            color: #ff2d55;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Подтверждение регистрации PLANLIFT</h1>
+        </div>
+
+        <p>Здравствуйте!</p>
+
+        <p>Вы получили это письмо, потому что зарегистрировались в PLANLIFT. Для завершения регистрации, пожалуйста,
+            введите следующий код подтверждения:</p>
+
+        <div class="code">
+            <%= code %>
+        </div>
+
+        <p>Этот код будет действителен в течение 30 минут.</p>
+
+        <p>Если вы не регистрировались в PLANLIFT, просто проигнорируйте это письмо.</p>
+
+        <div class="footer">
+            <p>С уважением,<br>Команда PLANLIFT</p>
+            <p>Это письмо было отправлено автоматически. Пожалуйста, не отвечайте на него.</p>
+        </div>
+    </div>
+</body>
+
+</html>
