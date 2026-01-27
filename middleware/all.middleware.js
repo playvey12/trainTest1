@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET || 'fallback';
 const db = require("../data/bin/db");
-
+const templateMailer = require("../EmailService/templateMailer");
 
 const isAuth = (req, res, next) => {
 
@@ -80,8 +80,22 @@ const requireVerified = (req, res, next) => {
     next();
   });
 };
-
+async function sendVerificationCode(email, code) {
+  try {
+    templateMailer.sendHello({
+      to: email,
+      templateVar: {
+        code: code
+      }
+    });
+    return true;
+  } catch (error) {
+    console.error("Error sending verification code:", error);
+    return false;
+  }
+}
 module.exports = {
   isAuth,
-  requireVerified
+  requireVerified,
+  sendVerificationCode
 };

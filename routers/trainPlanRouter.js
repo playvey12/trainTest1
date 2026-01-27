@@ -5,7 +5,7 @@ const trainList = require("../data/trainData");
 
 const { getDays } = require("./getRouter");
 const deleteTaskById = require("./deleteRouter");
-const addTask = require("./postRouter");
+const {addTask} = require("./postRouter");
 const { editTask } = require("./putRouter");
 
 

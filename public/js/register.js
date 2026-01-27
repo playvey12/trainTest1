@@ -344,7 +344,7 @@ class ConfirmationModal {
         
         try {
             // Отправляем запрос на подтверждение
-            const response = await fetch('/confirm-registration', {
+            const response = await fetch('/user/confirm-registration', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -403,7 +403,7 @@ class ConfirmationModal {
         
         try {
             // Отправляем запрос на повторную отправку кода
-            const response = await fetch('/resend-confirmation-code', {
+            const response = await fetch('/user/resend-confirmation-code', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: this.userEmail }),
@@ -623,7 +623,7 @@ async function registerUser(event) {
         };
 
         // Отправляем запров на регистрацию
-        const response = await fetch('/register', {
+        const response = await fetch('/user/register', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userData),
@@ -686,7 +686,7 @@ async function loginUser(event) {
             userEmail: userEmailValue
         };
         
-        const response = await fetch(`/login`, {
+        const response = await fetch(`/user/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userData),
