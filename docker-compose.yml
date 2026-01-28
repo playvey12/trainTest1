@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .           
+      dockerfile: deploy/Dockerfile 
+    container_name: traning_prog
+    restart: always
+    ports:
+      - "80:3333" 
+    env_file:
+      - .env
+    volumes:
+     
+      - .:/usr/src/app
+      
+      - /usr/src/app/node_modules
+    
+      - ./data/bin:/usr/src/app/data/bin
