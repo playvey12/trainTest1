@@ -205,7 +205,31 @@ async function editTask(userId, id, data) {
   await saveUserDataDB(userId, "train_data", trainData);
   return { ...foundTask, day: foundDay };
 }
+async function editTaskForTrainMode(userId, id, data) {
+  const { exerciseName, weight } = data;
+  const { trainData } = await getUserDataDB(userId);
+  const searchId = String(id);
 
+  let foundTask = null;
+  let foundDay = null;
+
+  for (const day of daysOfWeek) {
+    const tasks = trainData[day] || [];
+    const task = tasks.find((t) => String(t.id) === searchId);
+    if (task) {
+      foundTask = task;
+      foundDay = day;
+      break;
+    }
+  }
+
+  if (!foundTask) return null;
+
+  if (exerciseName !== undefined) foundTask.exerciseName = exerciseName.trim();
+  if (weight !== undefined) foundTask.weight = parseInt(weight);
+  await saveUserDataDB(userId, "train_data", trainData);
+  return { ...foundTask, day: foundDay };
+}
 async function editUserWeight(userId, data) {
   const { userWeight } = data;
   if (userWeight === undefined || isNaN(userWeight)) {
@@ -432,7 +456,8 @@ module.exports = {
   addTask,
   editTask,
   deleteTaskById,
-  
+  editTaskForTrainMode,
+
   getProfileDataWithHistory,
   editUserWeight,
   editGoalWeight,

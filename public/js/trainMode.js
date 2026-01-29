@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
         initApproachesMap();
         startTimer();
 
-        console.log("Тренировка начата для дня:", selectedDay);
+        
       }
     });
   }
@@ -261,10 +261,7 @@ document.addEventListener("DOMContentLoaded", function () {
   resetWorkoutButtons();
   updateCompleteButtonsState();
   
-  console.log("Показаны результаты тренировки");
-  console.log("Общее время:", totalTime, "сек");
-  console.log("Время отдыха:", restTime, "сек");
-  console.log("Чистое время:", netTime, "сек");
+
 }
 
   function resetWorkoutButtons() {
@@ -306,8 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // ========== ФУНКЦИИ ДЛЯ УПРАВЛЕНИЯ КНОПКАМИ ==========
   function blockCompleteButtons(blocked) {
     const completeButtons = document.querySelectorAll(".complete-btn");
-    console.log(`blockCompleteButtons: blocked=${blocked}, найдено кнопок: ${completeButtons.length}`);
-    
+   
     completeButtons.forEach((button) => {
       if (button.classList.contains("other-blocked")) {
         return;
@@ -348,12 +344,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function initConfirmApproaches() {
-    console.log("Инициализация обработки кнопок подтверждения подходов");
+
 
     const exercisesContainer = document.getElementById("exercises-container");
     if (exercisesContainer) {
       exercisesContainer.addEventListener("click", handleCompleteClick);
-      console.log("Обработчик событий добавлен на exercises-container");
+     
     } else {
       console.error("Контейнер упражнений не найден");
     }
@@ -393,7 +389,7 @@ document.addEventListener("DOMContentLoaded", function () {
       button.addEventListener('click', handleCompleteClick);
     });
     
-    console.log('Кнопки подтверждения подхода инициализированы:', completeButtons.length);
+    
   }
 
   async function logExerciseProgress(exerciseName, weight) {
@@ -453,17 +449,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
           trainData.approaches = remainingApproaches.toString();
 
-          console.log("Обновление упражнения:", {
-            id: exerciseId,
-            name: exerciseName,
-            вес: weight,
-            осталось_подходов: remainingApproaches,
-          });
-
           if (weight > 0) {
             try {
               await logExerciseProgress(exerciseName, weight);
-              console.log("Прогресс упражнения сохранен:", { exerciseName, weight });
+        
             } catch (error) {
               console.error("Ошибка при сохранении прогресса упражнения:", error);
             }
@@ -478,7 +467,7 @@ document.addEventListener("DOMContentLoaded", function () {
           completedApproaches.set(exerciseId, completedCount + 1);
           totalRestTime += restTime;
         } catch (error) {
-          console.error("Ошибка парсинга data-train:", error);
+        
           showNotification("Ошибка обработки данных", "error");
           isApproachActive = false;
           activeExerciseId = null;
@@ -734,7 +723,7 @@ document.addEventListener("DOMContentLoaded", function () {
      
     };
 
-    const response = await authFetch(`/trainingPlan/edit/${currentEditExerciseId}`, {
+    const response = await authFetch(`/trainMode/edit/${currentEditExerciseId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -744,7 +733,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (response.ok) {
       const responseData = await response.json();
-      console.log("Задание обновлено:", responseData);
+   
       
       updateExerciseOnPage(currentEditExerciseId, taskData.weight);
       
@@ -752,11 +741,11 @@ document.addEventListener("DOMContentLoaded", function () {
       closeEditModal();
     } else {
       const errorData = await response.json();
-      console.error("Ошибка при обновлении:", errorData.error);
+   
       showNotification("Ошибка при обновлении упражнения", "error");
     }
   } catch (error) {
-    console.error("Ошибка сети:", error);
+  
     showNotification("Ошибка сети. Проверьте подключение к интернету", "error");
   }
 };
@@ -795,7 +784,7 @@ document.addEventListener("DOMContentLoaded", function () {
 }
   // ========== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==========
   function reinitializeCompleteButtons() {
-    console.log("Повторная инициализация кнопок подтверждения...");
+
     
     const exercisesContainer = document.getElementById("exercises-container");
     if (exercisesContainer) {
@@ -809,14 +798,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateCompleteButtonsState() {
     const completeButtons = document.querySelectorAll(".complete-btn");
-    console.log(`Обновление состояния кнопок: найдено ${completeButtons.length}`);
+
     
     if (completeButtons.length > 0) {
       if (isWorkoutStarted && !isApproachActive) {
-        console.log("Разблокируем кнопки: тренировка идет, нет активного подхода");
+     
         blockCompleteButtons(false);
       } else {
-        console.log("Блокируем кнопки: тренировка не идет или есть активный подход");
+  
         blockCompleteButtons(true);
       }
     } else {
@@ -918,7 +907,7 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   document.head.appendChild(style);
 
-  console.log("Инициализация завершена");
+
 });
 
 // ========== КЛАСС ДЛЯ LAZY LOADER ==========
@@ -1097,7 +1086,7 @@ class TrainingLazyLoader {
       this.setupScrollListener();
       this.scrollContainer.scrollTop = 0;
 
-      console.log(`Показаны упражнения для дня: ${dayEnglish}`);
+   
       
       setTimeout(() => {
         if (typeof initCompleteButtons === 'function') {

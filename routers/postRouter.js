@@ -2,14 +2,18 @@ const trainList = require("../data/trainData");
 const {sendVerificationCode} = require("../middleware/all.middleware");
 const db = require("../data/bin/db");
 const {getRandomInt} =require("../utils/random")
-const { notifyRegistration } = require('../servises/notifier');
+const { notifyRegistration } = require('../services/notifier');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET || 'fallback';
-
+const { body, validationResult } = require('express-validator');
 
 async function addTask(req, res) {
   try {
+     const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array()[0].msg });
+    }
     const dataFromClient = req.body;
     const userId = req.user.id;
 
@@ -30,10 +34,15 @@ async function addTask(req, res) {
   }
 }
 
-
-
 async function regNewUser(req, res) {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ 
+        error: 'Ошибка валидации', 
+        details: errors.array().map(err => err.msg) 
+      });
+    }
     const { userEmail, userPassword } = req.body;
 
     db.get('SELECT id FROM users WHERE email = ?', [userEmail], async (err, existingUser) => {
@@ -71,7 +80,7 @@ async function regNewUser(req, res) {
         });
       } else {
        
-        const hashPassword = bcrypt.hashSync(userPassword, 10);
+      const hashPassword = await bcrypt.hash(userPassword, 10);
         const verificationCode = getRandomInt(100000, 999999);
         const expiryTime = new Date(Date.now() + 30 * 60000);
 
@@ -220,20 +229,22 @@ async function resendCode(req,res) {
   });
 }
 async function userLogin(req,res){
+  const errors = validationResult(req);
  const { userEmail, userPassword } = req.body;
-  
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ error: 'Неверный формат данных', details: errors.array() });
+  }
   db.get('SELECT id, email, password, is_verified FROM users WHERE email = ?', [userEmail], (err, user) => {
     if (err) return res.status(500).json({ 
       error: 'Ошибка базы данных',
       details: err.message 
     });
-    
+  
     if (!user) return res.status(401).json({ error: "Неверный email или пароль" });
     
     const ok = bcrypt.compareSync(userPassword, user.password);
     if (!ok) return res.status(401).json({ error: "Неверный email или пароль" });
     
-
     if (!user.is_verified) {
       return res.status(403).json({ 
         error: "Email не подтвержден",
@@ -252,4 +263,31 @@ async function userLogin(req,res){
     });
   });
 }
-module.exports = {addTask,regNewUser,confirmReg,resendCode,userLogin};
+
+async function addLogExercise(req,res){
+ try {
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array()[0].msg });
+    }
+    const userId = req.user.id;
+    const { exerciseName, weight } = req.body;
+    
+    if (!exerciseName || weight === undefined) {
+      return res.status(400).json({ error: "Exercise name and weight are required" });
+    }
+    
+    const newEntry = await trainList.addExerciseToHistory(userId, exerciseName, weight);
+    
+    res.json({
+      success: true,
+      message: "Exercise progress logged successfully",
+      entry: newEntry
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server Error" });
+  }
+
+
+}
+module.exports = {addTask,regNewUser,confirmReg,resendCode,userLogin,addLogExercise};

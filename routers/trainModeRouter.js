@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const trainList = require("../data/trainData");
 const { getDaysForTrainMode } = require("./getRouter");
+const { idParamValidation, taskValidationTrainMode } = require("../middleware/validation/trainValidations");
+const {  editTaskForTrainMode } = require("./putRouter");
 
 
 router.get("/", async (req, res) => {
@@ -17,5 +19,6 @@ router.get("/", async (req, res) => {
 
 
 router.get("/day/:day", getDaysForTrainMode);
+router.put("/edit/:id",idParamValidation,taskValidationTrainMode, editTaskForTrainMode);
 
 module.exports = router;

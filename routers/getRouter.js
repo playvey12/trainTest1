@@ -32,5 +32,53 @@ async function getDaysForTrainMode(req, res) {
     res.status(500).send("Server Error");
   }
 }
+async function getUserData(req,res){
+try {
+    const userId = req.user.id;
+    const profileData = await trainList.getProfileDataWithHistory(userId, '30days');
+    res.json({
+      userTheme: profileData.userTheme || 'black',
+      userName: profileData.userName,
+      userWeight: profileData.userWeight
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server Error" });
+  }
+}
+async function getExerciseHistory(req,res){ try {
+    const userId = req.user.id;
+    const { exerciseName, period } = req.query;
+    
+    if (!exerciseName) {
+      return res.status(400).json({ error: "Exercise name is required" });
+    }
+    
+    const history = await trainList.getExerciseHistoryByExerciseAndPeriod(userId, exerciseName, period || '3months');
+    
+    res.json({
+      success: true,
+      exerciseName: exerciseName,
+      history: history,
+      period: period || '3months'
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server Error" });
+  }
+};
 
-module.exports = { getDays, getDaysForTrainMode };
+
+
+async function getUniqeExercises(req,res){
+  try {
+      const userId = req.user.id;
+      const uniqueExercises = await trainList.getUniqueExerciseNames(userId);
+      
+      res.json({
+        success: true,
+        exercises: uniqueExercises
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Server Error" });
+    }
+}
+module.exports = { getDays, getDaysForTrainMode,getUserData,getExerciseHistory,getUniqeExercises };

@@ -27,7 +27,7 @@ const isAuth = (req, res, next) => {
   }
   
   if (!token) {
-    console.log("Токен не предоставлен для пути:", req.path);
+
     
  
     if (req.path.startsWith('/api/') || req.xhr) {
