@@ -39,15 +39,19 @@ function getUserDataDB(userId) {
           defaultTrainData[day] = [];
         });
 
-        const defaultProfile = {
-          userName: "Пользователь",
-          userWeight: 0,
-          userStartWeight: 0,
-          userGoalWeight: 0,
-          userWeightChange: 0,
-          userWeightToGoal: 0,
-          userTheme: "black"
-        };
+     
+const defaultProfile = {
+    userName: "Пользователь",
+    avatarUrl: "/img/default-avatar.png",
+    userWeight: 0,
+    userStartWeight: 0,
+    userGoalWeight: 0,
+    userWeightChange: 0,
+    userWeightToGoal: 0,
+    userTheme: "black",
+    totalWorkouts: 0, 
+    totalHours: 0      
+};
 
         const defaultWeightHistory = [];
         const defaultExerciseHistory = [];
@@ -76,6 +80,7 @@ function getUserDataDB(userId) {
     });
   });
 }
+
 
 function saveUserDataDB(userId, columnName, data) {
   return new Promise((resolve, reject) => {
@@ -110,7 +115,18 @@ function updateCalculatedFields(profileWeightList) {
 
 
 // ФУНКЦИИ ТРЕНИРОВОЧНОГО ПЛАНА
-
+async function updateTrainingStats(userId, hoursToAdd) {
+    const { profileWeightList } = await getUserDataDB(userId);
+    profileWeightList.totalWorkouts = (profileWeightList.totalWorkouts || 0) + 1;
+    profileWeightList.totalHours = (profileWeightList.totalHours || 0) + parseFloat(hoursToAdd);
+    
+    await saveUserDataDB(userId, "profile_data", profileWeightList);
+    
+    return {
+        totalWorkouts: profileWeightList.totalWorkouts,
+        totalHours: profileWeightList.totalHours
+    };
+}
 
 async function getDaysForView(userId) {
   const { trainData } = await getUserDataDB(userId);
@@ -295,17 +311,20 @@ async function editStartWeight(userId, data) {
 }
 
 
-
+// В файле trainData.js
 async function editUserName(userId, data) {
   const { userName } = data;
   const trimmedName = userName ? userName.trim() : "";
   
   if (trimmedName.length < 2) return { error: "Имя слишком короткое" };
   
-  const { profileWeightList } = await getUserDataDB(userId);
-  profileWeightList.userName = trimmedName;
+  const allData = await getUserDataDB(userId);
+  const profileWeightList = allData.profileWeightList; 
 
-  await saveUserDataDB(userId, "profile_data", profileWeightList);
+  profileWeightList.userName = trimmedName; 
+
+  await saveUserDataDB(userId, "profile_data", profileWeightList); 
+  
   return { success: true, profileWeightList, message: "Имя обновлено" };
 }
 
@@ -352,7 +371,9 @@ async function deleteTaskById(userId, id) {
 
 async function getProfileDataWithHistory(userId, period = '30days') {
   const { profileWeightList, weightHistory } = await getUserDataDB(userId);
-
+if (!profileWeightList.avatarUrl) {
+    profileWeightList.avatarUrl = "/img/default-avatar.png";
+  }
   const now = new Date();
   let cutoffDate = new Date();
 
@@ -448,7 +469,7 @@ async function getUniqueExerciseNames(userId) {
 module.exports = {
   daysOfWeek,
   russianDays,
-  
+  saveUserDataDB,
   getUserDataDB,
   
   getDaysForView,
@@ -467,5 +488,6 @@ module.exports = {
   
   addExerciseToHistory,
   getExerciseHistoryByExerciseAndPeriod,
-  getUniqueExerciseNames
+  getUniqueExerciseNames,
+  
 };

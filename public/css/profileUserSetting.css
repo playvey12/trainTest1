@@ -1,0 +1,181 @@
+:root {
+    /* Цвета фона и панелей */
+    --modal-overlay: rgba(0, 0, 0, 0.85);
+    --modal-bg: #1c1c24;
+    --input-bg: #252530;
+    
+    /* Акценты (Красный) */
+    --accent-main: #ff3b5c;
+    --accent-hover: #ff4d6d;
+    --accent-shadow: rgba(255, 59, 92, 0.4);
+    
+    /* Текст */
+    --text-bright: #ffffff;
+    --text-muted: #8e8e93;
+    
+    /* Границы и разное */
+    --border-light: rgba(255, 255, 255, 0.1);
+    --blur-radius: 10px;
+}
+
+/* --- КОНТЕЙНЕР (ЗАТЕМНЕНИЕ) --- */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background-color: var(--modal-overlay);
+    backdrop-filter: blur(var(--blur-radius));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.modal.active {
+    display: flex !important;
+    opacity: 1;
+}
+
+/* --- ОКНО --- */
+.modal-content {
+    position: relative;
+    background: var(--modal-bg);
+    width: 90%;
+    max-width: 400px;
+    padding: 40px 25px 30px;
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal.active .modal-content {
+    transform: scale(1);
+}
+
+/* --- КРАСНЫЙ КРЕСТИК --- */
+.close-btn {
+    position: absolute;
+    top: 25px;
+    right: 15px;
+    width: 34px;
+    height: 34px;
+    background-color: var(--accent-main);
+    color: var(--text-bright);
+    border: none;
+    border-radius: 50%;
+    font-size: 26px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px var(--accent-shadow);
+    transition: transform 0.2s ease;
+    z-index: 10;
+    
+}
+
+.close-btn:hover {
+    transform: scale(1.1);
+    background-color: var(--accent-hover);
+}
+
+/* --- АВАТАР --- */
+.avatar-edit {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border-light);
+}
+
+.edit-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--accent-main);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--modal-bg);
+    color: var(--text-bright);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* --- ПОЛЯ ВВОДА --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    margin-left: 5px;
+}
+
+.modal-input {
+    width: 100%;
+    background: var(--input-bg);
+    border: 1px solid var(--border-light);
+    border-radius: 15px;
+    padding: 15px;
+    color: var(--text-bright);
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.modal-input:focus {
+    border-color: var(--accent-main);
+}
+
+/* --- КНОПКА СОХРАНЕНИЯ --- */
+.save-modal-btn {
+    width: 100%;
+    background: var(--accent-main);
+    border: none;
+    padding: 18px;
+    border-radius: 15px;
+    color: var(--text-bright);
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 10px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px var(--accent-shadow);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.save-modal-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+.save-modal-btn:active {
+    transform: scale(0.98);
+}

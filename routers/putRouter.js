@@ -105,23 +105,27 @@ async function editStartWeight(req, res) {
 
 async function editUserName(req, res) {
   try {
-     const errors = validationResult(req);
+    
+    const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ error: errors.array()[0].msg });
     }
+
     const userId = req.user.id;
+   
     const result = await trainList.editUserName(userId, req.body);
 
+ 
     if (result.error) {
       return res.status(400).json({ error: result.error });
     }
-    res.json(result);
+
+    res.status(200).json(result); 
   } catch (error) {
-    console.error("Error in editUserName:", error);
+    console.error("Error in editUserName controller:", error);
     res.status(500).json({ error: "Server error" });
   }
 }
-
 
 async function editUserTheme(req, res) {
   try {

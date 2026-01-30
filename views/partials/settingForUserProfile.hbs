@@ -1,0 +1,40 @@
+<div id="settingsModal" class="modal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeSettings()">&times;</button>
+
+        <header class="modal-header">
+            <h2 style="font-size: 22px; width: 100%; text-align: center;    padding-bottom: 20px;">
+                {{t.profile.menu.settings_title}}
+            </h2>
+        </header>
+
+        <div class="modal-body">
+            <div class="avatar-edit">
+                <div class="avatar-wrapper">
+                    <img src="{{profileWeightList.avatarUrl}}" alt="Avatar" class="avatar-img">
+
+                    <label for="modalAvatarInput" class="edit-badge">
+                        <i class="fas fa-camera"></i>
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label>{{t.profile.settings.name_label}}</label>
+                <input type="text" id="editName" value="{{user.name}}" class="modal-input" placeholder="Ваше имя">
+            </div>
+
+            <div class="form-group">
+                <label>{{t.profile.settings.telegram_label}}</label>
+                <input type="text" id="editTelegram" value="{{user.telegram}}" class="modal-input"
+                    placeholder="@username">
+            </div>
+
+            <button class="save-modal-btn" onclick="saveProfileSettings()">
+                {{t.profile.settings.save_button}}
+            </button>
+        </div>
+    </div>
+</div>

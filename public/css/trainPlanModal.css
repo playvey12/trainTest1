@@ -1,0 +1,224 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    width: 90%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    position: relative;
+    transform: translateY(30px);
+    transition: 0.4s;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.modal-header h2 { margin: 0; font-size: 20px; font-weight: 800; }
+.modal-header i { color: var(--accent-color); font-size: 24px; }
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.input-group { margin-bottom: 18px; }
+.input-group label {
+    display: block;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.input-group input {
+    width: 100%;
+    background: var(--icon-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    color: #fff;
+    font-size: 15px;
+    box-sizing: border-box;
+    outline: none;
+    transition: 0.2s;
+}
+
+.input-group input:focus {
+    border-color: var(--accent-color);
+    background: var(--card-hover);
+}
+
+.modal-footer {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.btn-confirm, .btn-cancel {
+    flex: 1;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-confirm {
+    background: var(--accent-color);
+    color: #fff;
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+.btn-cancel {
+    background: var(--icon-bg);
+    color: var(--text-main);
+}
+
+.btn-confirm:hover { transform: translateY(-2px); opacity: 0.9; }
+.btn-cancel:hover { background: #3a3a44; }
+
+
+
+
+/* Специфические стили для модалки удаления */
+.delete-confirmation {
+    text-align: center;
+}
+
+.delete-confirmation .modal-header {
+    flex-direction: column;
+    gap: 15px;
+}
+
+.delete-confirmation h2 {
+    margin-bottom: 10px;
+}
+
+.delete-confirmation .btn-confirm {
+    background: var(--accent-color) !important;
+    box-shadow: 0 4px 15px rgba(255, 59, 92, 0.3);
+}
+
+.delete-confirmation .btn-confirm:hover {
+    background: #e03550 !important;
+}
+
+/* Шапка модалки */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-main);
+}
+
+.modal-header h2 i {
+    color: var(--accent-color);
+}
+
+/* Кнопка закрытия (Крестик) */
+.close-btn {
+    width: 32px;
+    height: 32px;
+    background-color: var(--accent-color); /* Красный фон */
+    color: white; /* Белый крест */
+    border: none;
+    border-radius: 50%; /* Круглая форма */
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    padding: 0;
+    line-height: 1;
+    box-shadow: 0 4px 10px rgba(255, 59, 92, 0.3);
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
+    background-color: #ff5f7a; /* Чуть светлее при наведении */
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* Кнопка Сохранить (btn-primary) */
+.btn-primary {
+    width: 100%; /* Делаем на всю ширину для удобства */
+    background: var(--accent-color);
+    color: #fff;
+    border: none;
+    padding: 14px 20px;
+    border-radius: var(--radius-md);
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    box-shadow: 0 5px 15px var(--accent-glow);
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    background: #ff5f7a;
+    box-shadow: 0 8px 20px var(--accent-glow);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Дополнительно: стили для рядов ввода (Sets и Weight в одну линию) */
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}

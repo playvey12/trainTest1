@@ -1,0 +1,35 @@
+<div id="themeModal" class="modal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeTheme()">&times;</button>
+
+        <header class="modal-header">
+            <h2>{{t.profile.theme.title}}</h2>
+        </header>
+
+        <div class="modal-body">
+            <div class="theme-options">
+                <div class="theme-card active" onclick="setTheme('dark')">
+                    <div class="theme-preview dark-preview">
+                        <div class="preview-line"></div>
+                        <div class="preview-dot"></div>
+                    </div>
+                    <span>{{t.profile.theme.dark}}</span>
+                    <i class="fas fa-check-circle select-icon"></i>
+                </div>
+
+                <div class="theme-card" onclick="setTheme('light')">
+                    <div class="theme-preview light-preview">
+                        <div class="preview-line"></div>
+                        <div class="preview-dot"></div>
+                    </div>
+                    <span>{{t.profile.theme.light}}</span>
+                    <i class="fas fa-check-circle select-icon"></i>
+                </div>
+            </div>
+
+            <button class="save-modal-btn" onclick="closeTheme()" style="margin-top: 20px;">
+                {{t.profile.theme.save_btn}}
+            </button>
+        </div>
+    </div>
+</div>

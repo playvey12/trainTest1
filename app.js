@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const hbs = require("hbs");
+const fs = require("fs");
 const { isAuth, requireVerified } = require("./middleware/all.middleware");
 const { startCleanupTask } = require("./services/cleanDB");
 const favicon = require('serve-favicon');
@@ -13,7 +14,10 @@ const trainPlanRouter = require("./routers/trainPlanRouter");
 const port = process.env.PORT || 3333;
 const app = express();
 
-
+const translations = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "data", "languages", "ru.json"), "utf8")
+);
+app.locals.t = translations;
 app.set("view engine", "hbs");
 hbs.registerPartials(path.join(__dirname, "/views/partials"));
 

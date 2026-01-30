@@ -3,40 +3,74 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" href="./css/trainingPlan.css" />
-  <link rel="stylesheet" href="./css/adaptivForPhones.css" />
+  <link rel="stylesheet" href="./css/footer.css" />
+  <link rel="stylesheet" href="./css/trainPlanModal.css" />
 
   <title>trainingPlan</title>
 </head>
 
 <body>
-  <div class="container">
-    {{>trainingPlanHeader}}
+  {{>addNewTaskModal}}
+  {{>confirmDeleteModal}}
+  {{>editExerciseModal}}
 
 
-    <div class="exercises-wrapper">
-      <div id="exercises-container" class="exercises-scroll-container">
 
+
+  <div class="train-plan-container">
+    <header class="plan-header">
+      <div class="header-text">
+
+        <h1>{{t.profile.trainPlan.title}}</h1>
+        <p>{{t.profile.trainPlan.subtitle}}</p>
       </div>
+
+    </header>
+
+
+    <div class="calendar-scroll">
+      {{#each allDays}}
+      <div class="day-card {{#if isToday}}active{{/if}}" data-day="{{this.dayKey}}">
+        <span class="day-name">{{this.dayName}}</span>
+        <span class="day-number"><i class="fas fa-calendar-day"></i></span>
+      </div>
+      {{/each}}
     </div>
 
-    <div class="divider"></div>
+    <section class="routine-section">
+      <h2 class="section-title">{{t.profile.trainPlan.todayRoutine}}</h2>
 
-    <div class="btn-container">
-      <button class="add-btn">Добавить упражнение</button>
-    </div>
+      <div class="exercise-list">
+        {{#if exercises.length}}
+        {{#each exercises}}
+        {{> trainForTrainPlan this}}
+        {{/each}}
+        {{else}}
 
-    {{>editExerciseModal}}
-    {{>confirmDeleteModal}}
-    {{>addNewTask}}
-    {{>footer}}
+        <p class="empty-msg">{{t.profile.trainPlan.noExercises}}</p>
+        {{/if}}
+      </div>
+
+      <div class="action-buttons">
+        <button class="add-exercise-btn" onclick="openAddModal()">
+
+          <i class="fas fa-plus-circle"></i> {{t.profile.trainPlan.addExercise}}
+        </button>
+        <button class="generate-plan-btn">
+
+          <i class="fas fa-sparkles"></i> {{t.profile.trainPlan.generatePlan}}
+        </button>
+      </div>
+    </section>
+
+    {{> footer}}
   </div>
+
 </body>
 <script src="./js/trainPlan.js"></script>
-<script src="./js/router.js"></script>
 <script src="./js/auth.js"></script>
+<script src="./js/router.js"></script>
 
 </html>

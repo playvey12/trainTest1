@@ -1,38 +1,23 @@
-// router.js с поддержкой токена в URL
-function resetUrl() {
+// Универсальная функция навигации
+function navigateTo(path) {
   const token = localStorage.getItem('token') || getTokenFromUrl();
+  
   if (token) {
-    document.location = `./trainingPlan?token=${token}`;
+    // Сохраняем токен в localStorage на всякий случай, если он пришел только из URL
+    if (!localStorage.getItem('token') && getTokenFromUrl()) {
+        localStorage.setItem('token', getTokenFromUrl());
+    }
+    document.location = `./${path}?token=${token}`;
   } else {
+    // Если токена нет совсем — только тогда на логин
     document.location = "./login";
   }
 }
 
-function resetUrl1() {
-  const token = localStorage.getItem('token') || getTokenFromUrl();
-  if (token) {
-    document.location = `./trainMode?token=${token}`;
-  } else {
-    document.location = "./login";
-  }
-}
-
-function resetUrl2() {
-  const token = localStorage.getItem('token') || getTokenFromUrl();
-  if (token) {
-    document.location = `./profileMain?token=${token}`;
-  } else {
-    document.location = "./login";
-  }
-}
-function resetUrl3() {
-  const token = localStorage.getItem('token') || getTokenFromUrl();
-  if (token) {
-    document.location = `./register?token=${token}`;
-  } else {
-    document.location = "./login";
-  }
-}
+// Теперь старые функции можно переписать так (для совместимости):
+function resetUrl() { navigateTo('trainingPlan'); }
+function resetUrl1() { navigateTo('trainMode'); }
+function resetUrl2() { navigateTo('profileMain'); }
 function getTokenFromUrl() {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get('token');
@@ -46,9 +31,31 @@ function getTokenFromUrl() {
 
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    const currentPath = window.location.pathname;
+    const navItems = document.querySelectorAll('.nav-item');
 
+    navItems.forEach(item => {
+        item.classList.remove('active');
 
+        const onClickAttr = item.getAttribute('onclick') || "";
+        
+        // Массив всех возможных страниц
+        const pages = ['trainMode', 'statistics', 'trainingPlan', 'profileMain'];
 
+        pages.forEach(page => {
+            // Проверяем: содержит ли onclick имя страницы И есть ли это имя в URL
+            if (onClickAttr.includes(page) && currentPath.includes(page)) {
+                item.classList.add('active');
+            }
+        });
+        
+        // Дополнительная проверка для старых функций (для подстраховки)
+        if (onClickAttr.includes('resetUrl1') && currentPath.includes('trainMode')) item.classList.add('active');
+        if (onClickAttr.includes('resetUrl2') && currentPath.includes('profileMain')) item.classList.add('active');
+        if (onClickAttr.includes('resetUrl') && !onClickAttr.includes('resetUrl1') && currentPath.includes('trainingPlan')) item.classList.add('active');
+    });
+});
 
 document.addEventListener('DOMContentLoaded', function() {
   

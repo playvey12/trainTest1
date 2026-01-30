@@ -1,39 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="./css/profile.css" />
-    <link rel="stylesheet" href="./css/adaptivForPhones.css" />
-    <link rel="stylesheet" href="./css/adaptivChartsOnly.css" />
+    <link rel="stylesheet" href="./css/profileUserSetting.css" />
+    <link rel="stylesheet" href="./css/profilePrivacy.css" />
+    <link rel="stylesheet" href="./css/profileTheme.css" />
 
-    <title>Profile</title>
+
+
+
+    <title>{{t.profile.title}}</title>
 </head>
 
 <body>
+    {{>themeModal}}
+    {{>privacyModal}}
+    {{> settingForUserProfile}}
+    {{> helpModal}}
+
     <div class="container">
-        {{>headerForProfile}}
+        <header class="profile-header">
+            <div class="avatar-container">
+                <div class="avatar-ring">
+                    <img src="{{profileWeightList.avatarUrl}}" alt="Avatar" class="avatar-img">
+                    <span class="level-badge">{{t.profile.level}} {{user.level}}</span>
+                </div>
+            </div>
+            <h1 class="user-name">{{profileWeightList.userName}}</h1>
+        </header>
 
-        {{>progressGraphs}}
-        {{>profileWeight}}
-        {{>settingModalWindow}}
+        <section class="stats-card">
+            <div class="stat-item">
+                <span class="stat-label">{{t.profile.stats.workouts}}</span>
+                <span class="stat-value">{{profileWeightList.totalWorkouts}}</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">{{t.profile.stats.hours}}</span>
+                <span class="stat-value">{{profileWeightList.totalHours}}</span>
+            </div>
+        </section>
+        <nav class="menu-list">
+            <buttoon class="menu-item" onclick="openSettings()">
+                <div class="menu-icon"><i class="fas fa-user-circle"></i></div>
+                <div class="menu-content">
+                    <span class="menu-title">{{t.profile.menu.settings_title}}</span>
+                    <span class="menu-subtitle">{{t.profile.menu.settings_sub}}</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </buttoon>
 
-        {{>modalWindowForEditWeight}}
 
 
+            <buttoon class="menu-item" onclick="openPrivacy()">
+                <div class="menu-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="menu-content">
+                    <span class="menu-title">{{t.profile.menu.privacy_title}}</span>
+                    <span class="menu-subtitle">{{t.profile.menu.privacy_sub}}</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </buttoon>
+
+            <button class="menu-item" onclick="openSetTheme()">
+                <div class="menu-icon"><i class="fas fa-paint-brush"></i></div>
+                <div class="menu-content">
+                    <span class="menu-title">Внешний вид</span>
+                    <span class="menu-subtitle">Темная или светлая тема</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </button>
+
+            <buttoon class="menu-item" onclick="openHelp()">
+                <div class="menu-icon"><i class="fas fa-question-circle"></i></div>
+                <div class="menu-content">
+                    <span class="menu-title">{{t.profile.menu.help_title}}</span>
+                    <span class="menu-subtitle">{{t.profile.menu.help_sub}}</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </buttoon>
+        </nav>
+
+        {{>footer}}
 
     </div>
-    {{>footer}}
+
+    <script src="./js/profileMain.js"></script>
+    <script src="./js/routerForProfile.js"></script>
+    <script src="./js/auth.js"></script>
+
+    <script src="./js/router.js"></script>
 
 </body>
-
-<script src="./js/router.js"></script>
-<script src="./js/profile.js"></script>
-<script src="./js/auth.js"></script>
-
 
 </html>

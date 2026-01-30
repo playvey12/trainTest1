@@ -1,0 +1,26 @@
+<div class="exercise-card fade-in" data-id="{{this.id}}">
+  <div class="exercise-icon-wrapper">
+    <div class="exercise-icon">
+      <i class="fas fa-dumbbell"></i>
+    </div>
+  </div>
+
+  <div class="exercise-info">
+    <h3>{{this.exerciseName}}</h3>
+    <p>
+      {{!-- Добавляем .profile после t --}}
+      <i class="fas fa-redo"></i> {{this.approaches}} {{../t.profile.trainPlan.sets}}
+      <i class="fas fa-weight-hanging"></i> {{this.weight}} {{../t.profile.trainPlan.kg}}
+    </p>
+  </div>
+
+  <div class="exercise-actions">
+    <button class="edit-btn"
+      onclick="editExercise('{{this.id}}', '{{this.exerciseName}}', '{{this.weight}}', '{{this.approaches}}')">
+      <i class="fas fa-pencil-alt"></i>
+    </button>
+    <button class="delete-btn" onclick="deleteExercise('{{this.id}}')">
+      <i class="fas fa-trash-alt"></i>
+    </button>
+  </div>
+</div>

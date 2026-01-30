@@ -1,55 +1,28 @@
 <div id="editExerciseModal" class="modal-overlay">
-  <div class="modal">
+  <div class="modal-content">
     <div class="modal-header">
-      <h2 class="modal-title">Редактировать упражнение</h2>
-      <button class="close-btn" onclick="closeEditModal()">×</button>
+      <h2><i class="fas fa-edit"></i> {{t.profile.modal.edit_tittle}}</h2>
+      <button class="close-btn" onclick="closeModalWindow()">&times;</button>
     </div>
-
     <div class="modal-body">
-      <form id="editExerciseForm">
-        <div class="form-group">
-          <label class="form-label" for="edit-exercise-name">Название упражнения</label>
-          <input
-            type="text"
-            id="edit-exercise-name"
-            class="form-input"
-            placeholder="Введите название упражнения"
-            required
-          />
+      <div class="input-group">
+        <label>{{t.profile.trainPlan.name}}</label>
+        <input type="text" id="edit-exercise-name">
+      </div>
+      <div class="input-row">
+        <div class="input-group">
+          <label>{{t.profile.trainPlan.sets}}</label>
+          <input type="number" id="edit-exercise-approaches">
         </div>
-
-        <div class="form-group">
-          <label class="form-label" for="edit-exercise-weight">Вес (кг)</label>
-          <input
-            type="number"
-            id="edit-exercise-weight"
-            class="form-input"
-            placeholder="Введите вес"
-            min="0"
-            step="0.5"
-          />
+        <div class="input-group">
+          <label>{{t.profile.trainPlan.kg}}</label>
+          <input type="number" id="edit-exercise-weight">
         </div>
-
-        <div class="form-group">
-          <label
-            class="form-label"
-            for="edit-exercise-approaches"
-          >Подходы</label>
-          <input
-            type="number"
-            id="edit-exercise-approaches"
-            class="form-input"
-            placeholder="Введите количество подходов"
-            min="1"
-          />
-        </div>
-
-      </form>
+      </div>
     </div>
-
     <div class="modal-footer">
-      <button class="cancel-btn" onclick="closeEditModal()">Отмена</button>
-      <button class="save-btn" onclick="editTask()">Сохранить изменения</button>
+
+      <button id="confirmEditBtn" class="btn-primary">{{t.profile.modal.save_btn}}</button>
     </div>
   </div>
 </div>

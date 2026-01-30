@@ -1,18 +1,21 @@
-
 <div id="deleteModal" class="modal-overlay">
-  <div class="modal">
+  <div class="modal-content delete-confirmation">
+    <button class="close-modal" onclick="closeModalWindow()">&times;</button>
+
     <div class="modal-header">
-      <h3 class="modal-title">Подтверждение удаления</h3>
-      <button class="close-btn" onclick="closeDeleteModal()">×</button>
+      <i class="fas fa-exclamation-triangle" style="color: var(--accent-color);"></i>
+      <h2> {{t.profile.modal.delete_quation}}</h2>
     </div>
-    <div class="modal-body">
-      <p style="color: var(--text-color); font-size: 16px; line-height: 1.5;">
-        Вы уверены, что хотите удалить это упражнение? Это действие нельзя будет отменить.
-      </p>
-    </div>
+
+    <p style="color: var(--text-dim); margin-bottom: 25px;">
+      {{t.profile.modal.delete_deck}}
+    </p>
+
+
     <div class="modal-footer">
-      <button class="cancel-btn" onclick="closeDeleteModal()">Отмена</button>
-      <button class="save-btn" onclick="confirmDelete()" style="background: var(--gradient-button);">Удалить</button>
+      <button class="btn-cancel" onclick="closeModalWindow()">{{t.profile.modal.delete_close}}</button>
+      <button id="confirmDeleteBtn" class="btn-confirm"
+        style="background: #ff3b5c;">{{t.profile.modal.delete_delete}}</button>
     </div>
   </div>
 </div>

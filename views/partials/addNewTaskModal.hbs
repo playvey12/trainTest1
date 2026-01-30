@@ -1,0 +1,28 @@
+<div id="modalOverlay" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-plus-circle"></i> {{t.profile.trainPlan.addExercise}}</h2>
+            <button class="close-btn" onclick="closeModalWindow()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="input-group">
+                <label>{{t.profile.trainPlan.name}}</label>
+                <input type="text" id="exerciseName" placeholder="Например: Жим штанги">
+            </div>
+            <div class="input-row">
+                <div class="input-group">
+                    <label>{{t.profile.trainPlan.sets}}</label>
+                    <input type="number" id="exerciseSets" placeholder="4">
+                </div>
+                <div class="input-group">
+                    <label>{{t.profile.trainPlan.kg}}</label>
+                    <input type="number" id="exerciseWeight" placeholder="60">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+
+            <button id="saveBtn" class="btn-primary">{{t.profile.settings.save_button}}</button>
+        </div>
+    </div>
+</div>
