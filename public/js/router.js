@@ -3,14 +3,14 @@ function navigateTo(path) {
   const token = localStorage.getItem('token') || getTokenFromUrl();
   
   if (token) {
-    // Сохраняем токен в localStorage на всякий случай, если он пришел только из URL
     if (!localStorage.getItem('token') && getTokenFromUrl()) {
         localStorage.setItem('token', getTokenFromUrl());
     }
-    document.location = `./${path}?token=${token}`;
+    // Убираем точку! Теперь переход всегда идет от корня: localhost:3333/path
+    document.location = `/${path}?token=${token}`; 
   } else {
-    // Если токена нет совсем — только тогда на логин
-    document.location = "./login";
+    // Здесь тоже лучше использовать абсолютный путь
+    document.location = "/login";
   }
 }
 
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const onClickAttr = item.getAttribute('onclick') || "";
         
         // Массив всех возможных страниц
-        const pages = ['trainMode', 'statistics', 'trainingPlan', 'profileMain'];
+        const pages = ['trainMode', 'progressMain', 'trainingPlan', 'profileMain'];
 
         pages.forEach(page => {
             // Проверяем: содержит ли onclick имя страницы И есть ли это имя в URL

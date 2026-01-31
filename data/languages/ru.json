@@ -1,7 +1,7 @@
 {
   "profile": {
     "title": "Мой Профиль",
-    "level": "PLANLIFT MEMBER",
+    "level": "HUBSTAT MEMBER",
     "stats": {
       "workouts": "ТРЕНИРОВКИ",
       "hours": "ЧАСЫ"
@@ -61,13 +61,78 @@
       "sets": "подходов",
       "kg": "кг"
     },
-    "modal":{
-      "save_btn":"СОХРАНИТЬ",
-      "edit_tittle":"Редактирование",
-      "delete_deck":" Вы уверены, что хотите удалить это упражнение из плана? Это действие нельзя отменить.",
-"delete_quation":"Удалить упражнение?",
-"delete_close":"Отмена",
-"delete_delete":"Удалить"
+    "modal": {
+      "save_btn": "СОХРАНИТЬ",
+      "edit_tittle": "Редактирование",
+      "delete_deck": " Вы уверены, что хотите удалить это упражнение из плана? Это действие нельзя отменить.",
+      "delete_quation": "Удалить упражнение?",
+      "delete_close": "Отмена",
+      "delete_delete": "Удалить"
+    }
+  },
+  "progressPage": {
+    "header": {
+      "title": "Прогресс тренировок",
+      "subtitle": "Отслеживайте свои достижения и показатели"
+    },
+    "mainChart": {
+      "title": "Ваш прогресс",
+      "subtitle": "Динамика рабочего веса",
+      "exerciseLabel": "УПРАЖНЕНИЕ",
+      "periodLabel": "ПЕРИОД",
+      "currentExercise": "Жим штанги лежа",
+      "currentPeriod": "30 дней"
+    },
+    "weightInput": {
+      "title": "Ваш текущий вес",
+      "subtitle": "Зафиксируйте результат сегодня",
+      "currentValue": 74.5,
+      "min": 40.0,
+      "max": 150.0,
+      "button": "Подтвердить"
+    },
+    "weightHistory": {
+      "title": "История веса",
+      "subtitle": "Последние изменения",
+      "period": "30 ДНЕЙ",
+      "stats": {
+        "minLabel": "МИН",
+        "minValue": "73.5 кг",
+        "avgLabel": "СРЕДНИЙ",
+        "avgValue": "75.1 кг"
+      }
+    },
+    "settingModalWindowProgress":{
+      "settingGoal":"Настройка целей",
+      "startWeight":"Начальный вес (кг)",
+      "goalWeight":"Целевой вес (кг)",
+      "saveSettings":"Сохранить изменения"
+    }
+   
+  },
+  "workoutSession": {  
+    "labels": {
+      "duration": "SESSION DURATION",
+      "noDaySelected": "Нет выбранного дня",
+      "instruction": "Пожалуйста, выберите день тренировки..."
+    },
+    "buttons": {
+      "start": "Начать тренировку",
+      "selectDay": "Выбрать день",
+      "finish": "Завершить"
+    },
+    "status": {
+      "date": "Monday, Oct 23",
+      "setInfo": "Set 3 of 4"
+    },
+    "selectDays":{
+      "monday":"Понедельник",
+      "tuesday":"Вторник",
+      "wednesday":"Среда",
+      "thursday":"Четверг",
+      "friday":"Пятница",
+      "saturday":"Суббота",
+      "sunday":"Воскресенье"    
     }
   }
 }

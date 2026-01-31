@@ -1,0 +1,15 @@
+<div class="session-actions">
+    {{#if isDaySelected}}
+    <button class="btn-primary-large" id="start-workout-btn">
+        {{t.workoutSession.buttons.start}}
+    </button>
+
+    <button class="btn-secondary-large" id="finish-workout-btn" disabled style="opacity: 0.7;">
+        {{t.workoutSession.buttons.finish}}
+    </button>
+    {{else}}
+    <button class="btn-secondary-large" id="select-day-btn">
+        {{t.workoutSession.buttons.selectDay}}
+    </button>
+    {{/if}}
+</div>

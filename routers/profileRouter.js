@@ -2,14 +2,12 @@ const express = require("express");
 const router = express.Router();
 const trainList = require("../data/trainData");
 const { 
-  editStartWeight,
   editUserWeight,
-  editGoalWeight,
   editUserName,
   editUserTheme} = require("./putRouter"); 
-const { weightValidation, themeValidation, userNameValidation,logExerciseValidation } = require("../middleware/validation/userValidations");
-const { getUserData,getExerciseHistory,getUniqeExercises } = require("./getRouter");
-const { addLogExercise } = require("./postRouter");
+const { weightValidation, themeValidation, userNameValidation } = require("../middleware/validation/userValidations");
+const { getUserData,getUniqeExercises } = require("./getRouter");
+
 router.get("/", async (req, res) => {
   try {
     const userId = req.user.id;
@@ -37,13 +35,30 @@ router.get("/", async (req, res) => {
 
 
 router.put("/edit",weightValidation, editUserWeight);
-router.put("/goalWeight/edit",weightValidation, editGoalWeight);
-router.put("/startWeight/edit",weightValidation, editStartWeight);
 router.put("/userTheme/edit",themeValidation, editUserTheme);
 router.put("/userName/edit",userNameValidation, editUserName);
 router.get("/userData",getUserData)
-router.get("/exercise-history", getExerciseHistory )
 router.get("/unique-exercises",  getUniqeExercises) 
-router.post("/log-exercise",logExerciseValidation, addLogExercise )
 
+// Примерный код для твоего контроллера на сервере
+router.post('/updateStats', async (req, res) => {
+    const { addWorkout, hoursToAdd } = req.body;
+    const userId = req.user.id; 
+
+    try {
+        // Вызываем функцию, которую создали выше
+        const updatedStats = await trainList.updateProfileStats(userId, {
+            addWorkout,
+            hoursToAdd
+        });
+
+        res.json({ 
+            success: true, 
+            stats: updatedStats 
+        });
+    } catch (e) {
+        console.error("Ошибка при обновлении статистики:", e);
+        res.status(500).json({ error: "Ошибка сервера при сохранении статистики" });
+    }
+});
 module.exports = router;

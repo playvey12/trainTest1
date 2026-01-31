@@ -1,0 +1,20 @@
+<div class="modal-overlay" id="settingsModal">
+    <div class="modal-content card">
+        <div class="modal-header">
+            <h2>{{t.progressPage.settingModalWindowProgress.settingGoal}}</h2>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="input-group">
+                <label>{{t.progressPage.settingModalWindowProgress.startWeight}}</label>
+                <input type="number" id="startWeight" placeholder="Например: 85" step="0.1">
+            </div>
+            <div class="input-group">
+                <label>{{t.progressPage.settingModalWindowProgress.goalWeight}}</label>
+                <input type="number" id="targetWeight" placeholder="Например: 75" step="0.1">
+            </div>
+            <button class="btn-primary"
+                id="saveSettings">{{t.progressPage.settingModalWindowProgress.saveSettings}}</button>
+        </div>
+    </div>
+</div>

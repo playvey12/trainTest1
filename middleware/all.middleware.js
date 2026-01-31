@@ -4,7 +4,9 @@ const db = require("../data/bin/db");
 const templateMailer = require("../EmailService/templateMailer");
 
 const isAuth = (req, res, next) => {
-
+if (req.path.startsWith('/css/') || req.path.startsWith('/js/') || req.path.startsWith('/img/')) {
+    return next();
+  }
   const publicPaths = [
     '/', '/login', '/register', 
     '/verify-token', 
@@ -27,20 +29,15 @@ const isAuth = (req, res, next) => {
   }
   
   if (!token) {
-
-    
- 
-    if (req.path.startsWith('/api/') || req.xhr) {
-      return res.status(401).json({
-        isAuthenticated: false,
-        message: "Токен не предоставлен",
-        path: req.path
-      });
+    // Если запрос ожидает JSON (наш случай с fetch)
+    if (req.headers.accept && req.headers.accept.includes('application/json') || req.path.includes('userData')) {
+        return res.status(401).json({
+            isAuthenticated: false,
+            message: "Токен не предоставлен"
+        });
     }
-    
-
     return res.redirect('/login');
-  }
+}
   
   try {
    
@@ -56,12 +53,11 @@ const isAuth = (req, res, next) => {
     
     next();
   } catch (error) {
-    console.error("Ошибка верификации токена:", error.message);
- 
-  
-
+    if (req.headers.accept && req.headers.accept.includes('application/json')) {
+        return res.status(401).json({ error: "Невалидный токен" });
+    }
     return res.redirect('/login');
-  }
+}
 };
 
 const requireVerified = (req, res, next) => {

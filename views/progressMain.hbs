@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/footer.css" />
+    <link rel="stylesheet" href="./css/progressMain.css" />
+    <link rel="stylesheet" href="./css/settingProgressModal.css" />
+    <link rel="stylesheet" href="/css/variables.css" />
+
+    <title>Progress</title>
+</head>
+
+<body>
+    {{>settingProgressModal}}
+    <div class="progress-container">
+        <header class="progress-header">
+            <div class="header-info">
+                <h1>{{t.progressPage.header.title}}</h1>
+                <p>{{t.progressPage.header.subtitle}}</p>
+            </div>
+            <button class="settings-btn">
+                <i class="fa-solid fa-pen"></i>
+            </button>
+        </header>
+
+        {{>exerciseGraphs}}
+
+        <div class="progress-grid">
+
+            {{> userWeightInput}}
+            {{> userWeightHistory}}
+        </div>
+
+        {{> footer}}
+    </div>
+
+</body>
+<script src="./js/auth.js"></script>
+<script src="./js/progressMain.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="./js/router.js"></script>
+<script src="/js/themeManager.js"></script>
+
+
+</html>

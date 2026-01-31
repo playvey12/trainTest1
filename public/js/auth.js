@@ -80,7 +80,7 @@ function showNotification(message, type = 'info') {
 // auth-check.js
 function checkAuth() {
   const token = getToken();
-  const protectedPaths = ['/profileMain', '/trainingPlan', '/trainMode'];
+  const protectedPaths = ['/profileMain', '/trainingPlan', '/trainMode','/progressMain'];
   const currentPath = window.location.pathname;
   
   if (protectedPaths.includes(currentPath) && !token) {

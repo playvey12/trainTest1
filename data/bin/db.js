@@ -23,8 +23,10 @@ db.serialize(() => {
             weight_history TEXT DEFAULT '[]',
             exercise_history TEXT DEFAULT '[]',
             FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+           
         )
     `);
+    
     
     db.run(`
         CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)

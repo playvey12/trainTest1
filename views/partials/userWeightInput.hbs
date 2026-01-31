@@ -1,0 +1,23 @@
+<section class="card weight-card">
+    <h2>{{t.progressPage.weightInput.title}}</h2>
+    <p class="subtitle">{{t.progressPage.weightInput.subtitle}}</p>
+
+    <div class="weight-selector">
+        <button class="weight-btn minus">-</button>
+        <div class="weight-display">
+            <span class="weight-value">{{t.progressPage.weightInput.currentValue}}</span>
+            <span class="weight-unit">кг</span>
+        </div>
+        <button class="weight-btn plus">+</button>
+    </div>
+
+    <input type="range" class="weight-slider" min="{{t.progressPage.weightInput.min}}"
+        max="{{t.progressPage.weightInput.max}}" step="0.1" value="{{t.progressPage.weightInput.currentValue}}">
+
+    <div class="slider-labels">
+        <span id="label-start-weight">{{profileWeightList.userStartWeight}} кг</span>
+        <span id="label-goal-weight">{{profileWeightList.userGoalWeight}} кг</span>
+    </div>
+
+    <button class="btn-primary confirm-weight-btn">{{t.progressPage.weightInput.button}}</button>
+</section>

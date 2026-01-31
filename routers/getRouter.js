@@ -1,4 +1,5 @@
 const trainList = require("../data/trainData");
+const db = require("../data/bin/db");
 
 async function getDays(req, res) {
   try {
@@ -21,11 +22,14 @@ async function getDaysForTrainMode(req, res) {
     const allData = await trainList.getDaysForView(userId);
     const dayData = await trainList.getDayData(userId, day);
 
+
+    console.log(`Загрузка дня: ${day}. Найдено упражнений:`, dayData.exercises?.length);
+
     res.render("trainMode.hbs", {
       ...allData,
       selectedDay: day,
-      showAllDays: false,
-      dayExercises: dayData.exercises,
+      isDaySelected: true, 
+      dayExercises: dayData.exercises || [], // Гарантируем массив
     });
   } catch (error) {
     console.error("Error in getDaysForTrainMode:", error);
@@ -81,4 +85,50 @@ async function getUniqeExercises(req,res){
       res.status(500).json({ error: "Server Error" });
     }
 }
-module.exports = { getDays, getDaysForTrainMode,getUserData,getExerciseHistory,getUniqeExercises };
+async function getUserDataForProgress(req, res) {
+  try {
+    const userId = req.user.id;
+    const profileData = await trainList.getProfileDataWithHistory(userId, '30days');
+    res.json({
+      userWeight: profileData.userWeight,
+      userStartWeight: profileData.userStartWeight, 
+      userGoalWeight: profileData.userGoalWeight,   
+      profileWeightList: profileData, 
+      weightHistory: profileData.weightHistory || []
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Server Error" });
+  }
+}
+
+
+
+const getUniqueExercises = async (req, res) => {
+    try {
+        const userId = req.user.id; 
+
+      
+        db.get("SELECT exercise_history FROM user_data WHERE user_id = ?", [userId], (err, row) => {
+            if (err) {
+                return res.status(500).json({ success: false, error: "Ошибка БД" });
+            }
+
+    
+            const history = row && row.exercise_history ? JSON.parse(row.exercise_history) : [];
+            
+       
+            const uniqueNames = [...new Set(history.map(item => item.exerciseName))].filter(Boolean);
+
+            res.json({
+                success: true,
+                exercises: uniqueNames.sort() 
+            });
+        });
+    } catch (error) {
+        console.error("Ошибка при получении упражнений:", error);
+        res.status(500).json({ success: false, error: "Ошибка сервера" });
+    }
+};
+
+
+module.exports = {getUniqueExercises, getDays, getDaysForTrainMode,getUserData,getExerciseHistory,getUniqeExercises,getUserDataForProgress };

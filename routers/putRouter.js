@@ -23,7 +23,7 @@ async function editTask(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-async function editTaskForTrainMode(req, res) {
+async function  editTaskForTrainMode(req, res) {
   try {
      const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -45,26 +45,24 @@ async function editTaskForTrainMode(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-
 async function editUserWeight(req, res) {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ error: errors.array()[0].msg });
-    }
     const userId = req.user.id;
-    const result = await trainList.editUserWeight(userId, req.body);
+    const { userWeight } = req.body;
 
+    if (userWeight === undefined || isNaN(userWeight)) {
+      return res.status(400).json({ error: "Неверное значение веса" });
+    }
+    const result = await trainList.editUserWeight(userId, { userWeight });
     if (result.error) {
       return res.status(400).json({ error: result.error });
     }
-    res.json(result);
+    res.json({ success: true, profileWeightList: result.profileWeightList });
   } catch (error) {
-    console.error("Error in editUserWeight:", error);
-    res.status(500).json({ error: "Server error" });
+    console.error("Ошибка в контроллере editUserWeight:", error);
+    res.status(500).json({ error: "Ошибка сервера при сохранении веса" });
   }
 }
-
 async function editGoalWeight(req, res) {
   try {
      const errors = validationResult(req);

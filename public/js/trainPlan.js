@@ -73,18 +73,18 @@ function renderExercises(exercises) {
         card.className = "exercise-card fade-in";
         card.setAttribute("data-id", ex.id);
 
-        // Используем структуру из твоего HBS
+    const weightDisplay = Array.isArray(ex.weight) ? ex.weight.join(' — ') : ex.weight;
         card.innerHTML = `
             <div class="exercise-icon-wrapper">
                 <div class="exercise-icon"><i class="fas fa-dumbbell"></i></div>
             </div>
-            <div class="exercise-info">
-                <h3>${ex.exerciseName}</h3>
-                <p>
-                    <i class="fas fa-redo"></i> ${ex.approaches} подх.
-                    <i class="fas fa-weight-hanging"></i> ${ex.weight} кг
-                </p>
-            </div>
+           <div class="exercise-info">
+        <h3>${ex.exerciseName}</h3>
+       <p>
+            <i class="fas fa-redo"></i> ${ex.approaches} подх.
+            <i class="fas fa-weight-hanging"></i> ${weightDisplay} кг
+        </p>
+    </div>
             <div class="exercise-actions">
                 <button class="edit-btn" title="Редактировать">
                     <i class="fas fa-pencil-alt"></i>
@@ -140,16 +140,29 @@ window.editExercise = function(id, name, weight, approaches) {
 
 // ========== API ЗАПРОСЫ ==========
 
+// --- ОБНОВЛЕННАЯ ФУНКЦИЯ ДОБАВЛЕНИЯ ---
 async function addNewTask() {
     const activeDayCard = document.querySelector(".day-card.active");
     if (!activeDayCard) return alert("Пожалуйста, выберите день недели");
 
     const selectedDay = activeDayCard.getAttribute("data-day");
+    
+    // 1. Получаем строку из инпута (например, "60, 65, 70")
+    const weightInputRaw = document.getElementById("exerciseWeight").value;
+    
+    // 2. Превращаем её в массив чисел
+    const weightArray = weightInputRaw.split(',')
+                                      .map(w => parseFloat(w.trim()))
+                                      .filter(w => !isNaN(w));
+
+    // 3. Формируем данные
     const taskData = {
         day: selectedDay,
         exerciseName: document.getElementById("exerciseName").value.trim(),
-        weight: parseInt(document.getElementById("exerciseWeight").value) || 0,
-        approaches: parseInt(document.getElementById("exerciseSets").value) || 0
+        // Сохраняем массив весов. Если пусто — [0]
+        weight: weightArray.length > 0 ? weightArray : [0],
+        // Количество подходов теперь равно количеству весов в массиве
+        approaches: weightArray.length > 0 ? weightArray.length : (parseInt(document.getElementById("exerciseSets").value) || 0)
     };
 
     if (!taskData.exerciseName) return alert("Введите название");
@@ -164,7 +177,6 @@ async function addNewTask() {
         if (response.ok) {
             window.closeModalWindow();
             await loadExercisesForDay(selectedDay);
-            // Очистка полей
             document.getElementById("exerciseName").value = "";
             document.getElementById("exerciseWeight").value = "";
             document.getElementById("exerciseSets").value = "";
@@ -174,16 +186,21 @@ async function addNewTask() {
     }
 }
 
+// --- ОБНОВЛЕННАЯ ФУНКЦИЯ РЕДАКТИРОВАНИЯ ---
 async function submitEditTask() {
     if (!currentEditExerciseId) return;
 
+    const weightInputRaw = document.getElementById("edit-exercise-weight").value;
+    // Если в строке есть запятая — парсим массив, если просто число — массив из одного элемента
+    const weightArray = String(weightInputRaw).split(',')
+                                      .map(w => parseFloat(w.trim()))
+                                      .filter(w => !isNaN(w));
+
     const taskData = {
         exerciseName: document.getElementById("edit-exercise-name").value.trim(),
-        weight: parseInt(document.getElementById("edit-exercise-weight").value) || 0,
-        approaches: parseInt(document.getElementById("edit-exercise-approaches").value) || 0
+        weight: weightArray, // Отправляем массив
+        approaches: weightArray.length // Обновляем кол-во подходов по факту весов
     };
-
-    if (!taskData.exerciseName) return alert("Введите название упражнения");
 
     try {
         const response = await authFetch(`/trainingPlan/edit/${currentEditExerciseId}`, {
@@ -194,11 +211,8 @@ async function submitEditTask() {
 
         if (response.ok) {
             window.closeModalWindow();
-      
             const activeDay = document.querySelector(".day-card.active")?.getAttribute("data-day");
-            if (activeDay) {
-                await loadExercisesForDay(activeDay);
-            }
+            if (activeDay) await loadExercisesForDay(activeDay);
         }
     } catch (err) {
         console.error("Ошибка при редактировании:", err);
@@ -252,8 +266,26 @@ function setupModalListeners() {
     if (confirmDeleteBtn) {
         confirmDeleteBtn.addEventListener("click", confirmDelete);
     }
+    const updateSetsCount = (weightInputId, setsInputId) => {
+    const weightInput = document.getElementById(weightInputId);
+    const setsInput = document.getElementById(setsInputId);
+
+    if (weightInput && setsInput) {
+        weightInput.addEventListener('input', (e) => {
+            const weights = e.target.value.split(',')
+                             .map(w => w.trim())
+                             .filter(w => w !== "");
+            
+            if (weights.length > 0) {
+                setsInput.value = weights.length;
+            }
+        });
+    }
+};
     // Кнопки действий
     document.getElementById("saveBtn")?.addEventListener("click", addNewTask);
     document.getElementById("confirmEditBtn")?.addEventListener("click", submitEditTask);
     document.getElementById("confirmDeleteBtn")?.addEventListener("click", confirmDelete);
+    updateSetsCount('exerciseWeight', 'exerciseSets');       // Для добавления
+updateSetsCount('edit-exercise-weight', 'edit-exercise-approaches');
 }

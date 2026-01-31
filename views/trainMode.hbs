@@ -4,50 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
-    <link rel="stylesheet" href="./css/trainMode.css" />
-    <link rel="stylesheet" href="./css/adaptivForPhones.css" />
+
+    <link rel="stylesheet" href="/css/trainMode.css" />
+    <link rel="stylesheet" href="/css/variables.css" />
+
+    <link rel="stylesheet" href="/css/saveRecord.css" />
+
+    <link rel="stylesheet" href="/css/footer.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
 
     <title>TrainMode</title>
+
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <h1>Тренировка</h1>
-            <div class="timer" id="timer">00:00:00</div>
-        </header>
+    {{>selectDayModal}}
+    {{>modalWindowForConfirmStop}}
+    {{>resultGraphsModalTrainMode}}
+    <div class="workout-screen-container">
+        <div class="workout-content">
+            {{> timerForTrainMode}}
 
-        <main>
-            {{>trainForTrainMode}}
-            <div class="controls-btn">
-                <button class="start-exercise-btn" id="select-day-btn">
-                    Выбрать день
-                </button>
-
-                <button class="start-exercise-btn" id="start-workout-btn">
-                    Начать тренировку
-                </button>
-
-                <button class="start-exercise-btn" id="finish-workout-btn">
-                    Закончить тренировку
-                </button>
+            <div class="main-spacer">
+                {{> mainBlockTrainMode}}
             </div>
-        </main>
-        {{>modalWindowForTrainTime}}
-        {{>modalWindowForTrainMode}}
-        {{>modalWindowForConfirmStop}}
-        {{>editWindowforTrainMode}}
 
-        {{>footer}}
+            {{> actionsForTrainMode}}
+        </div>
+
+
     </div>
+    {{>footer}}
+    <script src="/js/auth.js"></script>
+    <script src="/js/themeManager.js"></script>
 
-    <script src="./js/trainMode.js"></script>
-
-    <script src="./js/router.js"></script>
-    <script src="./js/auth.js"></script>
+    <script src="/js/router.js"></script>
+    <script src="/js/trainMode.js"></script>
 </body>
+
 
 </html>

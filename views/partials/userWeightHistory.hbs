@@ -1,0 +1,25 @@
+<section class="card history-card">
+    <div class="card-header">
+        <div class="card-title-group">
+            <h2>{{t.progressPage.weightHistory.title}}</h2>
+            <span class="subtitle">{{t.progressPage.weightHistory.subtitle}}</span>
+        </div>
+        <span class="period-badge">{{t.progressPage.weightHistory.period}}</span>
+    </div>
+
+    <div class="bar-chart" id="weightBarContainer">
+    </div>
+    <div class="bar-labels" id="weightBarLabels">
+    </div>
+
+    <div class="history-stats">
+        <div class="stat-item">
+            <span class="stat-label">{{t.progressPage.weightHistory.stats.minLabel}}</span>
+            <span class="stat-value" id="min-weight-display">{{t.progressPage.weightHistory.stats.minValue}}</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">{{t.progressPage.weightHistory.stats.avgLabel}}</span>
+            <span class="stat-value" id="avg-weight-display">{{t.progressPage.weightHistory.stats.avgValue}}</span>
+        </div>
+    </div>
+</section>

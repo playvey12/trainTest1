@@ -265,18 +265,8 @@ body {
     padding: 12px 0;
 }
 
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--text-dim);
-    font-size: 10px;
-    gap: 4px;
-    transition: color var(--transition-fast);
-}
 
-.nav-item.active { color: var(--accent-color); }
-.nav-item:active { animation: tapEffect 0.3s ease; }
+
 
 /* --- ANIMATIONS --- */
 @keyframes fadeInUp {

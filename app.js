@@ -10,6 +10,7 @@ const profileRouter = require("./routers/profileRouter");
 const trainModeRouter = require("./routers/trainModeRouter");
 const userRouter = require("./routers/userRouter");
 const trainPlanRouter = require("./routers/trainPlanRouter");
+const progressMainRouter = require("./routers/progressMainRouter");
 
 const port = process.env.PORT || 3333;
 const app = express();
@@ -20,7 +21,11 @@ const translations = JSON.parse(
 app.locals.t = translations;
 app.set("view engine", "hbs");
 hbs.registerPartials(path.join(__dirname, "/views/partials"));
-
+hbs.registerHelper('getFirstWeight', function(weight) {
+    if (!weight) return '0';
+    const weightStr = String(weight).split(',')[0].trim();
+    return weightStr;
+});
 startCleanupTask();
 
 app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon.ico')));
@@ -41,6 +46,7 @@ app.get('/verify-email', (req, res) => res.render("verify-email.hbs"));
 
 app.use("/user", userRouter);
 app.use("/profileMain", isAuth, requireVerified, profileRouter);
+app.use("/progressMain", isAuth, requireVerified, progressMainRouter);
 app.use("/trainingPlan", isAuth, requireVerified, trainPlanRouter);
 app.use("/trainMode", isAuth, requireVerified, trainModeRouter);
 

@@ -1,0 +1,94 @@
+<main class="main-content" id="exercises-container">
+    {{#if isDaySelected}}
+    <div id="exercises-wrapper" class="exercises-wrapper">
+
+        {{#with dayExercises.[0]}}
+        <div class="exercise-card-active fade-in" data-exercise-id="{{this.id}}">
+            <div class="card-header">
+                <span class="badge-active">ТЕКУЩЕЕ УПРАЖНЕНИЕ</span>
+                <i class="fas fa-dumbbell  red-icon"></i>
+            </div>
+
+            <h2 class="exercise-title">{{this.exerciseName}}</h2>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-label">ВЕС (КГ)</span>
+                    <div class="stat-value">
+                        <span class="weight-value">{{getFirstWeight this.weight}}</span>
+                        <span class="unit">КГ</span>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">ПОДХОДЫ</span>
+                    <div class="stat-value">
+                        <span class="approaches-value">{{this.approaches}}</span>
+                        <span class="unit">ОСТАЛОСЬ</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons-row">
+                <button class="btn-mini-action btn-mini-action-save"><i class="fas fa-chart-line"><span>Сохранить в
+                            гарфик</span></i></button>
+
+
+                <button class="btn-confirm complete-btn " data-id="{{this.id}}" data-weight="{{this.weight}}">
+                    <i class="fas fa-check-circle"></i>
+                </button>
+            </div>
+        </div>
+        {{/with}}
+
+        {{!-- ОЧЕРЕДЬ УПРАЖНЕНИЙ --}}
+        <div class="queue-section">
+            <div class="queue-header">
+                <span class="queue-title">ОЧЕРЕДЬ УПРАЖНЕНИЙ</span>
+
+            </div>
+
+            <div class="exercises-scroll-container">
+                {{#each dayExercises}}
+                {{#unless @first}}
+                <div class="exercise-card-mini" data-exercise-id="{{this.id}}" data-name="{{this.exerciseName}}"
+                    data-weight="{{#if this.weight}}{{this.weight}}{{else}}0{{/if}}"
+                    data-approaches="{{this.approaches}}">
+
+                    <div class="mini-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <span class="mini-title">{{this.exerciseName}}</span>
+                    <span class="mini-status">ОЖИДАНИЕ</span>
+                </div>
+                {{/unless}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="empty-state">
+        <div class="empty-icon-wrapper">
+            <div class="calendar-card">
+                <div class="card-dots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+                <svg class="icon-svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#3a3a4c"
+                    stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+            </div>
+            <div class="floating-badge">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                    <path d="M6.5 5h11v3h-11zM2 9h4v6H2zm18 0h4v6h-4zM6.5 16h11v3h-11z" />
+                </svg>
+            </div>
+        </div>
+        <h2 class="empty-title">{{t.workoutSession.labels.noDaySelected}}</h2>
+        <p class="empty-text">{{t.workoutSession.labels.instruction}}</p>
+    </div>
+    {{/if}}
+</main>
