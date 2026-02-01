@@ -4,129 +4,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
-    <link rel="stylesheet" href="./css/register.css" />
-    <link rel="stylesheet" href="/css/variables.css" />
-    <link rel="stylesheet" href="/css/adaptiv.css" />
-
-
-
-    <title>Регистрация</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/login.css" />
+    <title>{{t.reg.register_title}}</title>
 </head>
-
 
 <body>
     <div class="container">
-        <header>
-            <div class="logo">PLANLIFT</div>
-
+        <header class="hero-section">
+            <h1 class="main-title">{{t.reg.hero_title}}</h1>
+            <p class="subtitle">{{t.reg.hero_subtitle}}</p>
         </header>
 
         <main class="main-content">
             <div class="registration-card">
-                <h1 class="registration-title">Регистрация</h1>
+                <div class="card-header">
+                    <span class="step-text">{{t.auth.step_label}}</span>
+                    <span class="step-count">{{t.auth.step_1_of_3}}</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 33%;"></div>
+                </div>
 
                 <form id="registrationForm">
                     <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="email" placeholder="example@email.com" required>
-                        <div class="error-message" id="emailError">Пожалуйста, введите корректный email</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Пароль</label>
-                        <div class="password-wrapper">
-                            <input type="password" class="form-input" id="password" placeholder="Создайте пароль"
+                        <label class="form-label">{{t.auth.email_label}}</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon"><i class="fa-regular fa-envelope"></i></span>
+                            <input type="email" class="form-input" id="email" placeholder="{{t.auth.email_placeholder}}"
                                 required>
-                            <button type="button" class="toggle-password" id="togglePassword">👁</button>
                         </div>
-                        <div class="error-message" id="passwordError">Пароль должен содержать минимум 8 символов</div>
+                        <div class="error-message" id="emailError">{{t.auth.email_error}}</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Подтвердите пароль</label>
+                        <label class="form-label">{{t.auth.password_label}}</label>
                         <div class="password-wrapper">
-                            <input type="password" class="form-input" id="confirmPassword"
-                                placeholder="Повторите пароль" required>
-                            <button type="button" class="toggle-password" id="toggleConfirmPassword">👁</button>
+                            <span class="input-icon"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" class="form-input" id="password" placeholder="••••••••••••" required>
+                            <button type="button" class="toggle-password" id="togglePassword"><i
+                                    class="fa-regular fa-eye"></i></button>
                         </div>
-                        <div class="error-message" id="confirmPasswordError">Пароли не совпадают</div>
                     </div>
 
-                    <!-- Чекбокс согласия (без текста политики) -->
-                    <div class="privacy-checkbox" id="privacyCheckbox">
-                        <input type="checkbox" class="checkbox-input" id="privacyAgreement" required>
+                    <div class="form-group">
+                        <label class="form-label">{{t.reg.confirm_password_label}}</label>
+                        <div class="password-wrapper">
+                            <span class="input-icon"><i class="fa-solid fa-shield-halved"></i></span>
+                            <input type="password" class="form-input" id="confirmPassword" placeholder="••••••••••••"
+                                required>
+                            <button type="button" class="toggle-password" id="toggleConfirmPassword"><i
+                                    class="fa-regular fa-eye"></i></button>
+                        </div>
+                        <div class="error-message" id="confirmPasswordError">{{t.reg.confirm_password_error}}</div>
+                    </div>
+
+                    <div class="privacy-checkbox">
+                        <input type="checkbox" id="privacyAgreement" required>
                         <label for="privacyAgreement" class="checkbox-label">
-                            Я соглашаюсь с
-                            <a href="javascript:void(0)" class="privacy-link" id="showPrivacyPolicy">Политикой
-                                конфиденциальности</a>
-                            и
-                            <a href="javascript:void(0)" class="privacy-link" id="showTermsOfService">Условиями
-                                использования</a>
-                            сервиса PLANLIFT
+                            {{t.reg.agreement_text}}
+                            <a href="#" id="showPrivacyPolicy" class="privacy-link">{{t.reg.policy_link}}</a>
                         </label>
                     </div>
 
                     <button type="submit" class="submit-btn" onclick="registerUser(event)" id="submitBtn">
-                        <span id="btnText">Создать аккаунт</span>
+                        <span id="btnText">{{t.reg.register_btn}}</span>
                         <div class="loader" id="loader"></div>
                     </button>
 
+                    <div class="divider">
+                        <span>{{t.auth.social_divider}}</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button type="button" class="social-btn"><i class="fa-brands fa-google"></i> Google</button>
+                        <button type="button" class="social-btn"><i class="fa-brands fa-apple"></i> Apple</button>
+                    </div>
+
                     <div class="login-link">
-                        Уже есть аккаунт? <a href="/login">Войти</a>
+                        {{t.reg.already_have_acc_login}} <a href="/login"
+                            class="sign-in-link">{{t.reg.login_link_text}}</a>
                     </div>
                 </form>
             </div>
         </main>
-        <!-- Модальное окно подтверждения email -->
-        <div class="modal-overlay" id="confirmationModal">
-            <div class="modal">
-                <div class="modal-header">
-                    <h2 class="modal-title">Подтверждение email</h2>
-                    <button class="close-btn" id="closeModal">&times;</button>
+
+        <footer class="footer-info">
+            {{t.auth.footer_terms}}
+        </footer>
+    </div>
+    <div class="modal-overlay" id="confirmationModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Подтверждение email</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-text">Мы отправили 6-значный код подтверждения на адрес <span id="userEmail"></span>.
+                    Пожалуйста, введите его ниже:</p>
+
+                <div class="code-input-container">
+                    <div class="code-inputs">
+                        <input type="text" class="code-input" maxlength="1" data-index="0" autocomplete="off">
+                        <input type="text" class="code-input" maxlength="1" data-index="1" autocomplete="off">
+                        <input type="text" class="code-input" maxlength="1" data-index="2" autocomplete="off">
+                        <input type="text" class="code-input" maxlength="1" data-index="3" autocomplete="off">
+                        <input type="text" class="code-input" maxlength="1" data-index="4" autocomplete="off">
+                        <input type="text" class="code-input" maxlength="1" data-index="5" autocomplete="off">
+                    </div>
+                    <div class="error-message" id="codeError" style="display: none;">Неверный код подтверждения
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p class="modal-text">Мы отправили 6-значный код подтверждения на адрес <span
-                            id="userEmail"></span>.
-                        Пожалуйста, введите его ниже:</p>
 
-                    <div class="code-input-container">
-                        <div class="code-inputs">
-                            <input type="text" class="code-input" maxlength="1" data-index="0" autocomplete="off">
-                            <input type="text" class="code-input" maxlength="1" data-index="1" autocomplete="off">
-                            <input type="text" class="code-input" maxlength="1" data-index="2" autocomplete="off">
-                            <input type="text" class="code-input" maxlength="1" data-index="3" autocomplete="off">
-                            <input type="text" class="code-input" maxlength="1" data-index="4" autocomplete="off">
-                            <input type="text" class="code-input" maxlength="1" data-index="5" autocomplete="off">
-                        </div>
-                        <div class="error-message" id="codeError" style="display: none;">Неверный код подтверждения
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button class="resend-btn" id="resendCode" disabled>Отправить код повторно</button>
-                        <div class="timer" id="timer" style="display: none;">Отправить повторно через: <span
-                                id="countdown">60</span> сек.</div>
-                        <button class="submit-btn" id="confirmCodeBtn" disabled>
-                            <span id="confirmBtnText">Подтвердить</span>
-                            <div class="loader" id="confirmLoader" style="display: none;"></div>
-                        </button>
-                    </div>
+                <div class="modal-footer">
+                    <button class="resend-btn" id="resendCode" disabled>Отправить код повторно</button>
+                    <div class="timer" id="timer" style="display: none;">Отправить повторно через: <span
+                            id="countdown">60</span> сек.</div>
+                    <button class="submit-btn" id="confirmCodeBtn" disabled>
+                        <span id="confirmBtnText">Подтвердить</span>
+                        <div class="loader" id="confirmLoader" style="display: none;"></div>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-
-
     {{>confirmationModal}}
+
+    <script src="./js/register.js"></script>
+    <script src="./js/auth.js"></script>
 </body>
-<script src="./js/register.js"></script>
-<script src="./js/auth.js"></script>
-<script src="/js/themeManager.js"></script>
-
-<script src="./js/router.js"></script>
-
 
 </html>

@@ -287,7 +287,7 @@ body.light-theme .tg-link {
 body.light-theme .menu-icon,
 body.light-theme .exercise-icon-wrapper,
 body.light-theme .mini-icon,
-body.light-theme .avatar-ring,
+
 body.light-theme .level-badge {
     background: var(--icon-bg) !important;
     border-color: var(--border-color) !important;

@@ -30,10 +30,8 @@ startCleanupTask();
 
 app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, "./public")));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-
+app.use(express.json({ limit: '10mb' })); 
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.get('/', (req, res) => {
   res.redirect('/register');
 });
@@ -41,7 +39,7 @@ app.get('/', (req, res) => {
 
 app.get('/register', (req, res) => res.render("register.hbs"));
 app.get('/login', (req, res) => res.render("login.hbs"));
-app.get('/verify-email', (req, res) => res.render("verify-email.hbs"));
+
 
 
 app.use("/user", userRouter);

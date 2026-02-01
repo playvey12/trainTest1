@@ -6,12 +6,17 @@ const clearToken = () => localStorage.removeItem('token');
 
 // fetch.js
 async function authFetch(url, options = {}) {
+
   const token = getToken();
   
-  const headers = {
-    'Content-Type': 'application/json',
-    ...(options.headers || {})
-  };
+  // Создаем объект заголовков
+  const headers = { ...options.headers };
+  
+  // ВАЖНО: Если body это FormData, НЕ СТАВИМ Content-Type. 
+  // Браузер сделает это сам.
+  if (!(options.body instanceof FormData)) {
+    headers['Content-Type'] = headers['Content-Type'] || 'application/json';
+  }
   
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
@@ -20,7 +25,7 @@ async function authFetch(url, options = {}) {
   try {
     const response = await fetch(`${API_BASE}${url}`, {
       ...options,
-      headers,
+      headers, // используем наши обработанные заголовки
       credentials: 'same-origin'
     });
 

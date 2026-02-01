@@ -42,7 +42,8 @@ function getUserDataDB(userId) {
      
 const defaultProfile = {
     userName: "Пользователь",
-    avatarUrl: "/img/default-avatar.png",
+    avatarUrl: "",
+    tgUserName:"",
     userWeight: 0,
     userStartWeight: 0,
     userGoalWeight: 0,
@@ -350,6 +351,24 @@ async function editUserWeight(userId, data) {
   };
 }
 
+async function editUserAvatar(userId, avatarUrl) {
+    try {
+        const allData = await getUserDataDB(userId);
+        const profileWeightList = allData.profileWeightList;
+
+        
+        profileWeightList.avatarUrl = avatarUrl;
+
+        await saveUserDataDB(userId, "profile_data", profileWeightList);
+        return { success: true, profileWeightList };
+    } catch (e) {
+        console.error("DB Error in editUserAvatar:", e);
+        return { error: "Ошибка при сохранении в БД" };
+    }
+}
+
+// Не забудьте добавить в module.exports в конце файла:
+// editUserAvatar
 async function editGoalWeight(userId, data) {
   const { userGoalWeight } = data;
   if (userGoalWeight === undefined || isNaN(userGoalWeight)) {
@@ -394,9 +413,23 @@ async function editUserName(userId, data) {
 
   await saveUserDataDB(userId, "profile_data", profileWeightList); 
   
-  return { success: true, profileWeightList, message: "Имя обновлено" };
+  return { success: true, profileWeightList, message: "Юзернейм обновлен" };
 }
+async function editTgUserName(userId, data) {
+  const { tgUserName } = data;
+  const trimmedTgName = tgUserName ? tgUserName.trim() : "";
+  
+  if (trimmedTgName.length < 2) return { error: "Юзернейм слишком короткий" };
+  
+  const allData = await getUserDataDB(userId);
+  const profileWeightList = allData.profileWeightList; 
 
+  profileWeightList.tgUserName = trimmedTgName; 
+
+  await saveUserDataDB(userId, "profile_data", profileWeightList); 
+  
+  return { success: true, profileWeightList, message: "Юзернейм обновлен" };
+}
 async function editUserTheme(userId, data) {
   const { userTheme } = data;
   const { profileWeightList } = await getUserDataDB(userId);
@@ -556,7 +589,9 @@ module.exports = {
   editGoalWeight,
   editStartWeight,
   editUserName,
+  editUserAvatar,
   editUserTheme,
+  editTgUserName,
   
   addExerciseToHistory,
   getExerciseHistoryByExerciseAndPeriod,

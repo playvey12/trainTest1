@@ -69,7 +69,7 @@ const requireVerified = (req, res, next) => {
     if (!user || !user.is_verified) {
       return res.status(403).json({ 
         error: 'Требуется подтверждение email',
-        redirectTo: '/verify-email'
+        redirectTo: '/login'
       });
     }
     

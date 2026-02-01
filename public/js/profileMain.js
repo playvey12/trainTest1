@@ -117,11 +117,72 @@ async function saveProfileSettings() {
     } else {
         closeSettings();
     }
+    const tgUsernameInput=document.getElementById("editTelegram")
+    const newTgUsername=tgUsernameInput?tgUsernameInput.value.trim():"";
+    const currentTgUsername = document.querySelector('.user.telegram')?.textContent || "";
+    if (newTgUsername && newTgUsername !== currentTgUsername) {
+        try {
+            const response = await authFetch(`/profileMain/tgUserName/edit`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ tgUserName: newTgUsername }), 
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                showNotification('Юзернейм успешно обновлен!', 'success');
+          
+                setTimeout(() => {
+                    window.location.reload(); 
+                }, 800);
+            } else {
+                showNotification(result.error || 'Ошибка валидации', 'error');
+            }
+        } catch (e) {
+            console.error("Fetch error:", e);
+            showNotification('Ошибка сети.', 'error');
+        }
+    } else {
+        closeSettings();
+    }
+ const avatarInput = document.getElementById("modalAvatarInput");
+    const avatarFile = avatarInput.files[0]; 
+
+    if (avatarFile) {
+        const formData = new FormData();
+        formData.append('avatar', avatarFile); 
+
+        try {
+            // ИСПРАВЛЕНИЕ ЗДЕСЬ
+            const response = await authFetch(`/profileMain/avatar/edit`, {
+                method: "PUT", 
+                
+            
+                headers: {
+                   
+                },
+                body: formData 
+            });
+            
+        
+            const result = await response.json(); 
+
+            if (response.ok) {
+                showNotification('Фото обновлено!', 'success');
+                 setTimeout(() => {
+                    window.location.reload(); 
+                }, 800);
+            } else {
+                showNotification('Ошибка при загрузке фото', 'error');
+            }
+        } catch (e) {
+            console.error("Avatar upload error:", e);
+             showNotification('Ошибка при отправке.', 'error');
+        }
+    }
 }
 // ========== НОВЫЕ ФУНКЦИИ (ЗАГЛУШКИ) ==========
-function changeAvatar() {
-    showNotification("Загрузка фото будет доступна в следующем обновлении", "info");
-}
 
 function changePassword() {
     showNotification("Функция смены пароля в разработке", "info");

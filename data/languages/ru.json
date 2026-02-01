@@ -1,7 +1,7 @@
 {
   "profile": {
     "title": "Мой Профиль",
-    "level": "HUBSTAT MEMBER",
+    "level": "HEAVYLIFT MEMBER",
     "stats": {
       "workouts": "ТРЕНИРОВКИ",
       "hours": "ЧАСЫ"
@@ -58,9 +58,9 @@
       "noExercises": "На сегодня упражнений нет. Самое время добавить!",
       "addExercise": "Добавить упражнение",
       "generatePlan": "Сгенерировать план тренировок",
-      "sets": "подходов",
-      "kg": "Вес",
-      "name": "Название"
+      "sets": "Кол-во подходов",
+      "kg": "Рабочий вес",
+      "name": "Название упражнения"
 
     },
     "modal": {
@@ -136,5 +136,33 @@
       "saturday":"Суббота",
       "sunday":"Воскресенье"    
     }
-  }
+  },
+  "auth": {
+  "login_title": "Вход",
+  "hero_title": "JOIN THE HEAVYLIFT",
+  "hero_subtitle": "Начните свою профессиональную трансформацию сегодня.",
+  "step_label": "НАСТРОЙКА АККАУНТА",
+  "step_1_of_3": "Шаг 1 из 3",
+  "email_label": "Email адрес",
+  "email_placeholder": "john@example.com",
+  "email_error": "Пожалуйста, введите корректный email",
+  "password_label": "Создайте пароль",
+  "login_btn": "ВОЙТИ В АККАУНТ",
+  "social_divider": "ИЛИ ПРОДОЛЖИТЕ ЧЕРЕЗ",
+  "already_have_acc": "Еще нет аккаунта?",
+  "sign_in_link": "Регистация",
+  "footer_terms": "Нажимая «Создать аккаунт», вы соглашаетесь с Условиями обслуживания и Политикой конфиденциальности."
+},
+"reg": {
+  "register_title": "Регистрация | HEAVYLIFT",
+  "hero_title": "JOIN THE HEAVYLIFT",
+  "hero_subtitle": "Создайте аккаунт, чтобы отслеживать прогресс.",
+  "confirm_password_label": "Подтвердите пароль",
+  "confirm_password_error": "Пароли не совпадают",
+  "register_btn": "СОЗДАТЬ АККАУНТ",
+  "agreement_text": "Я согласен с",
+  "policy_link": "Политикой конфиденциальности",
+  "already_have_acc_login": "Уже есть аккаунт?",
+  "login_link_text": "Войти"
+}
 }

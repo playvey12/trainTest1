@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
+
 const trainList = require("../data/trainData");
 const { 
   editUserWeight,
   editUserName,
-  editUserTheme} = require("./putRouter"); 
+  editUserTheme,editTgUserName,avatarEdit} = require("./putRouter"); 
 const { weightValidation, themeValidation, userNameValidation } = require("../middleware/validation/userValidations");
 const { getUserData,getUniqeExercises } = require("./getRouter");
+const { upload } = require("../data/bin/FileMenager");
 
 router.get("/", async (req, res) => {
   try {
@@ -37,6 +39,10 @@ router.get("/", async (req, res) => {
 router.put("/edit",weightValidation, editUserWeight);
 router.put("/userTheme/edit",themeValidation, editUserTheme);
 router.put("/userName/edit",userNameValidation, editUserName);
+router.put("/tgUserName/edit", editTgUserName);
+router.put("/avatar/edit",upload.single('avatar'), avatarEdit);
+
+
 router.get("/userData",getUserData)
 router.get("/unique-exercises",  getUniqeExercises) 
 

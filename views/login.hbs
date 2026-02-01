@@ -2,69 +2,78 @@
 <html lang="ru">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
-    <link rel="stylesheet" href="./css/register.css" />
-    <link rel="stylesheet" href="/css/variables.css" />
-    <link rel="stylesheet" href="/css/adaptiv.css" />
-
-    <title>Регистрация</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/login.css" />
+    <title>{{t.auth.login_title}}</title>
 </head>
-
 
 <body>
     <div class="container">
-        <header>
-            <div class="logo">PLANLIFT</div>
+        <header class="hero-section">
+            <h1 class="main-title">{{t.auth.hero_title}}</h1>
+            <p class="subtitle">{{t.auth.hero_subtitle}}</p>
         </header>
 
         <main class="main-content">
             <div class="registration-card">
-                <h1 class="registration-title">Вход</h1>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 33%;"></div>
+                </div>
 
                 <form id="registrationForm">
                     <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-input" id="email" placeholder="example@email.com" required>
-                        <div class="error-message" id="emailError">Пожалуйста, введите корректный email</div>
+                        <label class="form-label">{{t.auth.email_label}}</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">✉️</span>
+                            <input type="email" class="form-input" id="email" placeholder="{{t.auth.email_placeholder}}"
+                                required>
+                        </div>
+                        <div class="error-message" id="emailError">{{t.auth.email_error}}</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">Пароль</label>
+                        <label class="form-label">{{t.auth.password_label}}</label>
                         <div class="password-wrapper">
-                            <input type="password" class="form-input" id="password" placeholder="Создайте пароль"
-                                required>
-                            <button type="button" class="toggle-password" id="togglePassword">
-                                👁
-                            </button>
+                            <span class="input-icon">🔒</span>
+                            <input type="password" class="form-input" id="password" placeholder="••••••••••••" required>
+                            <button type="button" class="toggle-password" id="togglePassword">👁</button>
                         </div>
                     </div>
 
                     <button type="submit" class="submit-btn" onclick="loginUser(event)" id="submitBtn">
-                        <span id="btnText">Войти</span>
+                        <span id="btnText">{{t.auth.login_btn}}</span>
                         <div class="loader" id="loader"></div>
                     </button>
 
+                    <div class="divider">
+                        <span>{{t.auth.social_divider}}</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button type="button" class="social-btn">
+                            <i class="fa-brands fa-google" style="color: #DB4437;"></i> Google
+                        </button>
+                        <button type="button" class="social-btn">
+                            <i class="fa-brands fa-apple" style="font-size: 1.2rem;"></i> Apple
+                        </button>
+                    </div>
+
                     <div class="login-link">
-
-                        <div class="login-link">
-
-                            Еще нет аккаунта? <a href="/register">Зарегестрироваться</a>
-                        </div>
+                        {{t.auth.already_have_acc}} <a href="/register" class="sign-in-link">{{t.auth.sign_in_link}}</a>
+                    </div>
                 </form>
             </div>
         </main>
+
+        <footer class="footer-info">
+            {{t.auth.footer_terms}}
+        </footer>
     </div>
 
+    <script src="./js/register.js"></script>
+    <script src="./js/auth.js"></script>
 </body>
-<script src="./js/register.js"></script>
-<script src="./js/auth.js"></script>
-<script src="./js/router.js"></script>
-
-<script src="/js/themeManager.js"></script>
 
 </html>

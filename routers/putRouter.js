@@ -1,6 +1,29 @@
 const { validationResult } = require("express-validator");
 const trainList = require("../data/trainData");
 
+async function avatarEdit(req, res) {
+try {
+        if (!req.file) {
+            return res.status(400).json({ error: "Файл не загружен" });
+        }
+
+        const userId = req.user.id;
+      
+        const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+
+        
+        const result = await trainList.editUserAvatar(userId, avatarUrl);
+
+        if (result.error) {
+            return res.status(400).json({ error: result.error });
+        }
+
+        res.status(200).json({ success: true, avatarUrl: avatarUrl });
+    } catch (error) {
+        console.error("Error in avatar upload:", error);
+        res.status(500).json({ error: "Server error" });
+    }
+}
 async function editTask(req, res) {
   try {
      const errors = validationResult(req);
@@ -124,7 +147,29 @@ async function editUserName(req, res) {
     res.status(500).json({ error: "Server error" });
   }
 }
+async function editTgUserName(req, res) {
+  try {
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array()[0].msg });
+    }
 
+    const userId = req.user.id;
+   
+    const result = await trainList.editTgUserName(userId, req.body);
+
+ 
+    if (result.error) {
+      return res.status(400).json({ error: result.error });
+    }
+
+    res.status(200).json(result); 
+  } catch (error) {
+    console.error("Error in editUserName controller:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+}
 async function editUserTheme(req, res) {
   try {
      const errors = validationResult(req);
@@ -150,6 +195,7 @@ module.exports = {
   editUserWeight,
   editTaskForTrainMode,
   editGoalWeight,
+  avatarEdit,
   editUserName,
-  editUserTheme
+  editUserTheme,editTgUserName
 };
