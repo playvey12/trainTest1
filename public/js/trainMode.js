@@ -150,6 +150,7 @@ if (exercisesContainer) {
     startWorkoutBtn.style.display = 'none'; 
     finishWorkoutBtn.disabled = false;
     finishWorkoutBtn.style.opacity = "1";
+    finishWorkoutBtn.style.width="100%"
     
     // Разблокируем ВСЕ кнопки действий (и галочку, и график)
     const actionBtns = document.querySelectorAll(".complete-btn, .btn-mini-action-save");

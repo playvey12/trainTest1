@@ -1,0 +1,407 @@
+/* ============================================
+   ИСПРАВЛЕННЫЙ АДАПТИВ (замените ваш блок)
+============================================ */
+
+@media screen and (max-width: 470px) {
+    /* 1. Общие правки контейнеров */
+    .container, .train-plan-container, .workout-content {
+        padding: 15px 15px 100px 15px !important; /* Увеличил отступ снизу для футера */
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+.workout-content {
+       
+}
+    /* 2. Исправление карточки активного упражнения (TrainMode) */
+    .exercise-card-active {
+        height: auto !important; /* Убираем фикс высоту, чтобы контент не вылезал */
+        max-height: none !important; 
+        padding: 20px 15px !important;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .stats-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important; /* Делаем 2 колонки */
+        gap: 10px !important;
+        margin: 10px 0 !important;
+    }
+
+    .stat-box {
+        padding: 10px !important;
+        height: auto !important;
+    }
+
+    /* 3. Исправление кнопок внизу (чтобы не слипались) */
+    .action-buttons-row {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        width: 100%;
+    }
+
+    .btn-confirm.complete-btn, 
+    .btn-mini-action-save,
+    .generate-plan-btn,
+    .add-exercise-btn {
+        width: 100% !important;
+        height: 54px !important; /* Оптимально для пальца */
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px !important;
+    }
+
+  
+
+    .modal-content {
+        width: 100% !important;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 25px 20px !important;
+    }
+
+    /* Исправление инпутов в модалке добавления */
+    .input-row {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+
+    /* 5. Календарь (Training Plan) */
+    .calendar-scroll {
+        display: flex !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 10px !important;
+        gap: 8px !important;
+    }
+
+    .day-card {
+        min-width: 60px !important;
+        flex-shrink: 0;
+    }
+
+    /* 6. Список упражнений (чтобы не обрезался странно) */
+    .exercise-list {
+        max-height: none !important; /* Позволяем странице скроллиться целиком */
+        overflow: visible !important;
+    }
+
+    .exercise-card {
+        margin-bottom: 10px !important;
+    }
+
+    /* 7. Футер (Навигация) */
+    .bottom-nav {
+        width: calc(100% - 20px) !important;
+        bottom: 10px !important;
+       
+        border-radius: 20px !important;
+    }
+
+    .nav-item i {
+        font-size: 20px !important;
+    }
+    
+    /* Исправление для кнопки закрытия модалки */
+    .close-btn {
+        width: 30px !important;
+        height: 30px !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        font-size: 20px !important;
+    }
+    /* Внутри @media screen and (max-width: 470px) */
+
+.modal-content {
+    /* Делаем окно уже */
+    width: 90% !important;           /* Ширина 90% от экрана */
+    max-width: 380px !important;     /* Но не более 380px (чтобы на больших телефонах не было слишком широким) */
+    
+    /* Центрирование */
+    margin: auto !important;
+    
+    /* Внутренние отступы */
+    padding: 20px !important;
+    
+    /* Внешний вид */
+    border-radius: 24px !important;  /* Более мягкие скругления */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4) !important;
+    
+    /* Ограничение по высоте, если контента много */
+    max-height: 85vh !important;
+    overflow-y: auto !important;
+}
+
+/* Дополнительно поправим overlay, чтобы окно было точно по центру */
+
+.exercise-list {
+        /* Устанавливаем максимальную высоту примерно для 3-х карточек */
+        /* Если карточка ~80-90px, то 280px будет идеально */
+        max-height: 285px !important; 
+        
+        /* Включаем внутренний скролл */
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        
+        /* Плавность скролла на iOS */
+        -webkit-overflow-scrolling: touch !important;
+        
+        /* Небольшой отступ справа для эстетики при скролле */
+        padding-right: 5px !important;
+        margin-bottom: 20px !important;
+        
+        /* Чтобы список не «схлопывался», если упражнений мало */
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+
+    /* Настройка самой карточки, чтобы она имела четкую высоту */
+    .exercise-card {
+        flex-shrink: 0 !important; /* Важно: чтобы карточки не сжимались */
+        height: 85px !important;   /* Фиксируем высоту одной карточки */
+        display: flex !important;
+        align-items: center !important;
+        margin-bottom: 0 !important; /* Управляем отступом через gap в родителе */
+    }
+
+    /* Делаем полосу прокрутки тонкой и аккуратной */
+    .exercise-list::-webkit-scrollbar {
+        width: 4px !important;
+    }
+
+    .exercise-list::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2) !important;
+        border-radius: 10px !important;
+    }
+
+    /* Чтобы кнопки действий не перекрывали контент */
+    .action-buttons {
+        padding-top: 10px !important;
+    }
+    .delete-btn,.edit-btn{
+        width: 35px;
+        height: 55px;
+    }
+
+
+/* Состояние, когда модалка активна (нужен JS, который добавляет класс 'active' или 'show') */
+.modal-overlay.active, 
+.modal-overlay.show {
+    display: flex !important;
+    pointer-events: auto; /* Возвращаем клики, когда окно открыто */
+}
+
+@media screen and (max-width: 470px) {
+    /* 1. Оверлей — он должен стать флекс-контейнером на весь экран */
+    .modal-overlay {
+        display: none; /* По умолчанию скрыто, JS поменяет на flex */
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: rgba(0, 0, 0, 0.75) !important;
+        z-index: 9999 !important;
+        
+        /* Вот это центрирует содержимое */
+        align-items: center !important; 
+        justify-content: center !important;
+    }
+
+    /* 2. Контент модалки */
+    .modal-content {
+        /* Убираем лишние margin, которые могут толкать окно */
+        margin: 0 !important; 
+        
+        width: 85% !important;
+        max-width: 340px !important;
+        
+        /* Убеждаемся, что высота не распирает окно за пределы экрана */
+        max-height: 80vh !important;
+        overflow-y: auto !important;
+        
+        position: relative !important;
+        display: block !important; /* Внутри контент идет сверху вниз */
+        
+        background: #1a1a20 !important; /* Укажи свой цвет фона, если поплыл */
+        border-radius: 24px !important;
+        padding: 25px 20px !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+    }
+}
+/* === ОЧЕРЕДЬ В РЕЖИМЕ ТРЕНИРОВКИ === */
+
+/* Ограничиваем контейнер очереди */
+.exercises-scroll-container {
+    /* Высота одной мини-карточки (~60px) + небольшая подсказка скролла */
+    max-height: 75px !important; 
+    overflow-y: auto !important;
+    padding-right: 5px !important;
+    margin-bottom: 15px !important;
+    -webkit-overflow-scrolling: touch;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+/* Настройка мини-карточки в очереди */
+.exercise-card-mini {
+    flex-shrink: 0 !important; /* Чтобы не сжималась */
+    height: 55px !important;   /* Четкая высота */
+    padding: 8px 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    border-radius: 12px !important;
+}
+
+/* Заголовок очереди тоже можно сделать покомпактнее */
+.queue-header {
+    margin: 15px 0 8px !important;
+}
+
+.queue-title {
+    font-size: 11px !important;
+    letter-spacing: 1px;
+}
+
+/* Скрываем скроллбар, чтобы не загромождать интерфейс */
+.exercises-scroll-container::-webkit-scrollbar {
+    width: 3px !important;
+}
+.exercises-scroll-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+/* Если у вас JS просто меняет display напрямую, убедитесь, что в CSS нет конфликтов */
+.session-actions{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
+}
+#start-workout-btn,#finish-workout-btn{
+    width: 170px;
+    padding: 5px;
+}
+.exercise-card-mini{
+    font-size: 18px;
+}
+.progress-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+    }
+
+    /* 2. Карточка ввода веса */
+    .weight-selector {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        margin: 25px 0 !important;
+        gap: 10px !important;
+    }
+
+    .weight-value {
+        font-size: 42px !important; /* Делаем цифры веса крупнее */
+        font-weight: 800 !important;
+    }
+
+    .weight-btn {
+        width: 50px !important;
+        height: 50px !important;
+        border-radius: 15px !important;
+        font-size: 24px !important;
+    }
+
+    /* Слайдер веса */
+    .weight-slider {
+        width: 100% !important;
+        height: 8px !important;
+        margin: 15px 0 !important;
+    }
+
+    .slider-labels {
+        display: flex !important;
+        justify-content: space-between !important;
+        font-size: 12px !important;
+        color: #8e8e93 !important;
+    }
+
+    /* 3. Графики (Main Chart) */
+    .main-chart-card {
+        padding: 15px !important;
+    }
+
+    .card-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 15px !important;
+    }
+
+    /* Селекторы (выбор упражнения и периода) */
+    .card-controls {
+        display: flex !important;
+        flex-direction: column !important; /* Друг под другом на мобилке */
+        width: 100% !important;
+        gap: 10px !important;
+    }
+
+    .select-group {
+        width: 100% !important;
+    }
+
+    .custom-select {
+        width: 100% !important;
+        height: 45px !important;
+        font-size: 14px !important;
+        padding: 0 10px !important;
+        background-color: rgba(255,255,255,0.05) !important;
+        border-radius: 12px !important;
+    }
+
+    /* Высота холста графика, чтобы не был сплюснутым */
+    .chart-wrapper {
+        height: 250px !important;
+        margin-top: 15px !important;
+    }
+
+    /* 4. История веса (Bar Chart) */
+    .bar-chart {
+        height: 150px !important;
+        align-items: flex-end !important;
+        gap: 8px !important;
+    }
+
+    .history-stats {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        margin-top: 20px !important;
+        border-top: 1px solid rgba(255,255,255,0.1) !important;
+        padding-top: 15px !important;
+    }
+
+    .stat-item {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 4px !important;
+    }
+
+    /* Кнопка настроек в шапке */
+    .settings-btn {
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 16px !important;
+    }
+    
+}
