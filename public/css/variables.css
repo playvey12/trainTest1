@@ -1,0 +1,539 @@
+/* Светлая тема (как на скриншоте) */
+body.light-theme {
+    --bg-main: #f4f7f9;           /* Светлый серо-голубой фон */
+    --card-bg: #ffffff;           /* Чисто белые карточки [cite: 171] */
+    --text-main: #1c1c1e;         /* Почти черный текст */
+    --text-dim: #8e8e93;          /* Серый текст для подзаголовков [cite: 130] */
+    --accent-main: #ff3b5c;       /* Розово-красный акцент с фото  */
+    --input-bg: #f2f2f7;          /* Серый фон для инпутов [cite: 131] */
+    --border-light: #e5e5ea;      /* Тонкие разделители [cite: 155] */
+    --shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Мягкая тень для карточек */
+    --timer-bg: #8e8e93;          /* Цвет таймера на фото */
+}
+
+/* ============================================
+   СВЕТЛАЯ ТЕМА (LIGHT THEME)
+   Для активации добавьте class="light-theme" к тегу body
+============================================ */
+
+/* Основные переменные светлой темы */
+body.light-theme {
+    /* Основные цвета */
+    --bg-radial-start: #f8f9fa;
+    --bg-radial-end: #e9ecef;
+    --card-bg: #ffffff;
+    --card-hover: #f8f9fa;
+    
+    /* Акцентные цвета */
+    --accent-color: #ff3b5c;
+    --accent-glow: rgba(255, 59, 92, 0.2);
+    
+    /* Текст */
+    --text-main: #212529;
+    --text-dim: #6c757d;
+    --text-muted: #adb5bd;
+    
+    /* Элементы интерфейса */
+    --icon-bg: #f1f3f5;
+    --border-color: #dee2e6;
+    --border-light: #e9ecef;
+    --input-bg: #f8f9fa;
+    
+    /* Тень */
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+    
+    /* Таймер */
+    --timer-bg: linear-gradient(135deg, #495057, #6c757d);
+}
+
+/* ============================================
+   ОСНОВНЫЕ СТИЛИ
+============================================ */
+
+/* Фон приложения */
+body.light-theme {
+    background: linear-gradient(135deg, var(--bg-radial-start), var(--bg-radial-end));
+    background-attachment: fixed;
+    color: var(--text-main);
+}
+
+/* Карточки */
+body.light-theme .card,
+body.light-theme .exercise-card,
+body.light-theme .stats-card,
+body.light-theme .modal-content,
+body.light-theme .exercise-card-active,
+body.light-theme .exercise-card-mini {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow);
+    color: var(--text-main);
+}
+
+/* Ховер эффекты для карточек */
+body.light-theme .card:hover,
+body.light-theme .exercise-card:hover {
+    background: var(--card-hover) !important;
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-color) !important;
+}
+
+/* Активные карточки */
+body.light-theme .day-card.active {
+    background: var(--accent-color) !important;
+    color: white !important;
+    border-color: var(--accent-color) !important;
+}
+
+body.light-theme .day-card.active .day-name {
+    color: white !important;
+}
+
+/* ============================================
+   ТАЙМЕР (TIMER FOR TRAIN MODE)
+============================================ */
+
+body.light-theme .timer-display {
+    background: var(--timer-bg) !important;
+    color: white !important;
+    border: none !important;
+}
+
+body.light-theme .timer-value {
+    color: white !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+body.light-theme .timer-sub {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body.light-theme .timer-separator {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ============================================
+   КНОПКИ
+============================================ */
+
+/* Основные кнопки */
+body.light-theme .btn-primary,
+body.light-theme .btn-primary-large,
+body.light-theme .btn-confirm,
+body.light-theme .agree-btn,
+body.light-theme .save-modal-btn,
+body.light-theme .btn-confirm-modal {
+    background: var(--accent-color) !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 4px 15px var(--accent-glow) !important;
+}
+
+body.light-theme .btn-primary:hover,
+body.light-theme .btn-confirm:hover {
+    background: #e03550 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--accent-glow) !important;
+}
+
+/* Вторичные кнопки */
+body.light-theme .btn-secondary,
+body.light-theme .btn-secondary-large,
+body.light-theme .btn-cancel,
+body.light-theme .btn-outline {
+    background: var(--input-bg) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+body.light-theme .btn-secondary:hover,
+body.light-theme .btn-cancel:hover {
+    background: var(--border-light) !important;
+    border-color: var(--text-dim) !important;
+}
+
+/* Мини-кнопки */
+body.light-theme .btn-mini-action,
+body.light-theme .edit-btn,
+body.light-theme .delete-btn {
+    background: var(--input-bg) !important;
+    color: var(--text-dim) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+body.light-theme .btn-mini-action:hover {
+    background: var(--border-light) !important;
+    color: var(--text-main) !important;
+}
+
+/* Кнопка "Добавить +" */
+body.light-theme .btn-add-exercise {
+    color: var(--accent-color) !important;
+    background: transparent !important;
+}
+
+/* ============================================
+   ПОЛЯ ВВОДА
+============================================ */
+
+body.light-theme input,
+body.light-theme select,
+body.light-theme textarea,
+body.light-theme .modal-input,
+body.light-theme .custom-select {
+    background: var(--input-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-main) !important;
+}
+
+body.light-theme input:focus,
+body.light-theme select:focus,
+body.light-theme .modal-input:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 3px var(--accent-glow) !important;
+    outline: none;
+}
+
+/* Плейсхолдеры */
+body.light-theme input::placeholder,
+body.light-theme textarea::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.7;
+}
+
+/* ============================================
+   НАВИГАЦИЯ (FOOTER)
+============================================ */
+
+body.light-theme .bottom-nav {
+    background: var(--card-bg) !important;
+    border-top: 1px solid var(--border-color) !important;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .nav-item {
+    color: var(--text-dim) !important;
+}
+
+body.light-theme .nav-item:hover,
+body.light-theme .nav-item.active {
+    color: var(--accent-color) !important;
+}
+
+body.light-theme .nav-item i {
+    color: inherit !important;
+}
+
+/* Ховер эффект для навигации */
+body.light-theme .nav-item:hover i {
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* ============================================
+   МОДАЛЬНЫЕ ОКНА
+============================================ */
+
+/* Оверлей */
+body.light-theme .modal-overlay,
+body.light-theme .modal {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+}
+
+/* Контент модалок */
+body.light-theme .modal-content,
+body.light-theme .policy-modal {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Кнопка закрытия (крестик) */
+body.light-theme .close-btn,
+body.light-theme .close-modal {
+    background: var(--accent-color) !important;
+    color: white !important;
+}
+body.light-theme .close-modal {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+}
+body.light-theme .day-option{
+    background-color: #6c757d;
+}
+body.light-theme .close-btn:hover,
+body.light-theme .close-modal:hover {
+    background: #e03550 !important;
+}
+
+/* Помощь (help modal) */
+body.light-theme .help-item {
+    background: var(--input-bg) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+body.light-theme .tg-link {
+    background: #229ED9 !important;
+    color: white !important;
+}
+
+/* ============================================
+   ЭЛЕМЕНТЫ ИНТЕРФЕЙСА
+============================================ */
+
+/* Значки и иконки */
+body.light-theme .menu-icon,
+body.light-theme .exercise-icon-wrapper,
+body.light-theme .mini-icon,
+body.light-theme .avatar-ring,
+body.light-theme .level-badge {
+    background: var(--icon-bg) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* Красная иконка */
+body.light-theme .red-icon {
+    color: var(--accent-color) !important;
+}
+
+/* Разделители */
+body.light-theme hr {
+    border-color: var(--border-light) !important;
+}
+
+body.light-theme .menu-item {
+    border-bottom: 1px solid var(--border-light) !important;
+}
+
+/* Бейджи */
+body.light-theme .badge-active {
+    background: rgba(255, 59, 92, 0.1) !important;
+    color: var(--accent-color) !important;
+}
+
+body.light-theme .level-badge {
+    background: var(--accent-color) !important;
+    color: white !important;
+}
+
+body.light-theme .queue-title {
+    color: var(--text-dim) !important;
+}
+
+/* Статистика */
+body.light-theme .stat-box {
+    background: var(--input-bg) !important;
+    border: 1px solid var(--border-light) !important;
+}
+
+body.light-theme .stat-label {
+    color: var(--text-dim) !important;
+}
+
+body.light-theme .stat-value {
+    color: var(--text-main) !important;
+}
+
+body.light-theme .stat-value .unit {
+    color: var(--text-dim) !important;
+}
+
+/* Графики и прогресс */
+body.light-theme .chart-wrapper {
+    background: linear-gradient(180deg, rgba(255, 59, 92, 0.05) 0%, transparent 100%) !important;
+}
+
+body.light-theme .bar {
+    background: var(--icon-bg) !important;
+}
+
+body.light-theme .bar.active {
+    background: var(--accent-color) !important;
+}
+
+/* Слайдер веса */
+body.light-theme .weight-slider {
+    accent-color: var(--accent-color) !important;
+}
+
+body.light-theme .slider-labels {
+    color: var(--text-dim) !important;
+}
+
+/* Календарь */
+body.light-theme .calendar-scroll {
+    background: transparent !important;
+}
+
+body.light-theme .day-card {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+body.light-theme .day-card .day-name {
+    color: var(--text-dim) !important;
+}
+
+/* Пустое состояние */
+body.light-theme .empty-state .calendar-card {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+body.light-theme .empty-text {
+    color: var(--text-dim) !important;
+}
+
+/* Флоатинг бейдж */
+body.light-theme .floating-badge {
+    background: var(--accent-color) !important;
+}
+
+/* ============================================
+   ТЕКСТОВЫЕ ЭЛЕМЕНТЫ
+============================================ */
+
+/* Основной текст */
+body.light-theme h1,
+body.light-theme h2,
+body.light-theme h3,
+body.light-theme h4,
+body.light-theme h5,
+body.light-theme h6 {
+    color: var(--text-main) !important;
+}
+
+/* Подзаголовки и описание */
+body.light-theme .subtitle,
+body.light-theme .menu-subtitle,
+body.light-theme .session-info,
+body.light-theme .empty-text {
+    color: var(--text-dim) !important;
+}
+
+/* Мелкий текст */
+body.light-theme small,
+body.light-theme .mini-status {
+    color: var(--text-muted) !important;
+}
+
+/* Ссылки */
+body.light-theme a {
+    color: var(--accent-color) !important;
+}
+
+/* ============================================
+   СПЕЦИФИЧЕСКИЕ КОМПОНЕНТЫ
+============================================ */
+
+/* Аватар */
+body.light-theme .avatar-img {
+    border: 2px solid var(--border-color) !important;
+}
+
+body.light-theme .edit-badge {
+    background: var(--accent-color) !important;
+    color: white !important;
+    border: 3px solid var(--card-bg) !important;
+}
+
+/* Селекты */
+body.light-theme .custom-select {
+    background: var(--input-bg) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+body.light-theme .custom-select:focus {
+    border-color: var(--accent-color) !important;
+}
+
+/* Полоса прокрутки */
+body.light-theme ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+body.light-theme ::-webkit-scrollbar-track {
+    background: var(--input-bg);
+    border-radius: 10px;
+}
+
+body.light-theme ::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+
+body.light-theme ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-dim);
+}
+
+/* Политика и условия */
+body.light-theme .policy-content {
+    color: var(--text-main) !important;
+}
+
+body.light-theme .policy-content h3 {
+    color: var(--text-main) !important;
+}
+
+body.light-theme .policy-content ul li {
+    color: var(--text-dim) !important;
+}
+
+/* ============================================
+   АНИМАЦИИ И ПЕРЕХОДЫ
+============================================ */
+
+body.light-theme * {
+    transition: background-color 0.3s ease,
+                border-color 0.3s ease,
+                color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+/* Пульсация для акцентных элементов */
+@keyframes pulseGlowLight {
+    0%, 100% { 
+        box-shadow: 0 0 10px var(--accent-glow);
+    }
+    50% { 
+        box-shadow: 0 0 20px var(--accent-glow);
+    }
+}
+
+body.light-theme .avatar-ring {
+    animation: pulseGlowLight 3s infinite ease-in-out;
+}
+
+
+/* ============================================
+   УТИЛИТЫ
+============================================ */
+
+/* Цвета для статусов */
+body.light-theme .mini-status {
+    color: var(--text-muted) !important;
+}
+
+body.light-theme .badge-active {
+    background: rgba(255, 59, 92, 0.1) !important;
+}
+
+/* Цвета для иконок */
+body.light-theme i.fas,
+body.light-theme i.fab,
+body.light-theme i.far {
+    color: inherit !important;
+}
+
+/* Улучшение контрастности */
+body.light-theme .text-contrast {
+    color: var(--text-main) !important;
+}
+
+body.light-theme .bg-contrast {
+    background: var(--input-bg) !important;
+}
