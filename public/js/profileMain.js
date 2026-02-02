@@ -211,3 +211,90 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+// Копируйте это в JS файл, который подключен к profileMain
+
+
+
+
+async function apiFetch(path, options = {}) {
+    const token = getToken();
+    const headers = {
+        "Content-Type": "application/json",
+        ...(options.headers || {}),
+    };
+    if (token) headers.Authorization = `Bearer ${token}`;
+    const res = await fetch(path, { ...options, headers });
+    let data;
+    try {
+        data = await res.json();
+    } catch {
+        data = { status: res.status };
+    }
+    if (!res.ok) throw { status: res.status, data };
+    return data;
+}
+
+async function savePrivacySettings() {
+    const oldPassInput = document.getElementById('oldPassword');
+    const newPassInput = document.getElementById('newPassword');
+    const confirmPassInput = document.getElementById('confirmPasswordUser');
+
+    if (!oldPassInput || !newPassInput || !confirmPassInput) {
+        showNotification("Ошибка: Поля ввода не найдены", "error");
+        return;
+    }
+
+    const oldPassword = oldPassInput.value;
+    const newPassword = newPassInput.value;
+    const confirmPassword = confirmPassInput.value;
+
+    // Валидация на фронтенде
+    if (!oldPassword) {
+        showNotification("Введите текущий пароль", "error");
+        oldPassInput.focus();
+        return;
+    }
+
+    if (newPassword.length < 8) {
+        showNotification("Новый пароль должен быть не менее 8 символов", "error");
+        return;
+    }
+
+    if (newPassword === oldPassword) {
+        showNotification("Новый пароль не должен совпадать со старым", "error");
+        return;
+    }
+
+    if (newPassword !== confirmPassword) {
+        showNotification("Пароли не совпадают", "error");
+        return;
+    }
+
+    try {
+   
+        const result = await apiFetch('/user/change-password', {
+            method: 'POST',
+            body: JSON.stringify({ 
+                oldPassword: oldPassword, 
+                newPassword: newPassword 
+            })
+        });
+
+        showNotification("Пароль успешно изменен", "success");
+        
+
+        [oldPassInput, newPassInput, confirmPassInput].forEach(input => input.value = '');
+
+    } catch (err) {
+        console.error("Ошибка при смене пароля:", err);
+ 
+        const errorMsg = err.data?.error || "Не удалось изменить пароль";
+        showNotification(errorMsg, "error");
+    }
+}
+
+window.savePrivacySettings = savePrivacySettings;
+
+// Привязываем к глобальному окну для работы onclick
+window.savePrivacySettings = savePrivacySettings;

@@ -7,7 +7,6 @@ const { getExerciseHistory,getUserDataForProgress,getUniqueExercises } = require
 const { weightValidation, logExerciseValidation } = require("../middleware/validation/userValidations");
 
 router.get("/", (req, res) => {
-
     res.render("progressMain", { 
         title: "Прогресс"
     });

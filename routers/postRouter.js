@@ -7,6 +7,30 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET || 'fallback';
 const { body, validationResult } = require('express-validator');
+const templateMailer  = require('../EmailService/templateMailer');
+
+
+
+
+async function updateStats(req, res) {
+const { addWorkout, hoursToAdd } = req.body;
+    const userId = req.user.id; 
+
+    try {
+        const updatedStats = await trainList.updateProfileStats(userId, {
+            addWorkout,
+            hoursToAdd
+        });
+
+        res.json({ 
+            success: true, 
+            stats: updatedStats 
+        });
+    } catch (e) {
+        console.error("Ошибка при обновлении статистики:", e);
+        res.status(500).json({ error: "Ошибка сервера при сохранении статистики" });
+    }
+}
 
 async function addTask(req, res) {
   try {
@@ -124,61 +148,44 @@ async function regNewUser(req, res) {
     res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 }
-async function confirmReg(req,res) {
-   const { userEmail, confirmationCode } = req.body;
-  
-  // Находим пользователя
+async function confirmReg(req, res) {
+  const { userEmail, confirmationCode } = req.body;
+
   db.get(
     'SELECT id, verification_code, code_expires_at FROM users WHERE email = ?',
     [userEmail],
     (err, user) => {
-      if (err) {
-        return res.status(500).json({ error: 'Ошибка базы данных' });
-      }
-      
-      if (!user) {
-        return res.status(404).json({ error: 'Пользователь не найден' });
-      }
-      
-      // Проверяем срок действия кода
+      if (err) return res.status(500).json({ error: 'Ошибка базы данных' });
+      if (!user) return res.status(404).json({ error: 'Пользователь не найден' });
+
       const now = new Date();
       const expiryTime = new Date(user.code_expires_at);
-      
+
       if (now > expiryTime) {
         return res.status(400).json({ error: 'Срок действия кода истек' });
       }
+
       
-      // Проверяем код
-      if (user.verification_code !== confirmationCode) {
+      if (String(user.verification_code) !== String(confirmationCode)) {
         return res.status(400).json({ error: 'Неверный код подтверждения' });
       }
-      
-     
+
       db.run(
         'UPDATE users SET is_verified = 1, verification_code = NULL, code_expires_at = NULL WHERE id = ?',
         [user.id],
-        (err) => {
-          if (err) {
-            return res.status(500).json({ error: 'Ошибка активации пользователя' });
-          }
-          
-        
+        function(err) {
+          if (err) return res.status(500).json({ error: 'Ошибка активации пользователя' });
+
           const token = jwt.sign(
-            {
-              id: user.id,
-              email: userEmail
-            },
+            { id: user.id, email: userEmail },
             jwtSecret,
             { expiresIn: '7d' }
           );
-          
+
           res.json({
             message: "Email успешно подтвержден!",
             token: token,
-            user: {
-              id: user.id,
-              email: userEmail
-            }
+            user: { id: user.id, email: userEmail }
           });
         }
       );
@@ -290,4 +297,99 @@ async function addLogExercise(req,res){
 
 
 }
-module.exports = {addTask,regNewUser,confirmReg,resendCode,userLogin,addLogExercise};
+
+
+
+
+async function forgotPassword(req, res) {
+    const { email } = req.body;
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const expires = new Date(Date.now() + 3600000).toISOString(); // 1 час
+
+    db.run(
+        'UPDATE users SET verification_code = ?, code_expires_at = ? WHERE email = ?',
+        [code, expires, email],
+        function(err) {
+            if (err) return res.status(500).json({ error: "Ошибка БД" });
+            if (this.changes === 0) return res.status(404).json({ error: "Пользователь не найден" });
+
+            // Вызываем НОВУЮ функцию
+            templateMailer.sendResetPassword({ 
+                to: email, 
+                templateVar: { code: code } 
+            });
+
+            res.json({ message: "Код для восстановления отправлен!" });
+        }
+    );
+}
+
+async function resetPassword(req, res) {
+    const { email, code, newPassword } = req.body;
+
+    db.get('SELECT verification_code, code_expires_at FROM users WHERE email = ?', [email], async (err, user) => {
+        if (err) return res.status(500).json({ error: 'Ошибка базы данных' });
+        if (!user || String(user.verification_code) !== String(code)) {
+            return res.status(400).json({ error: 'Неверный код подтверждения' });
+        }
+
+        if (new Date() > new Date(user.code_expires_at)) {
+            return res.status(400).json({ error: 'Срок действия кода истек' });
+        }
+
+        const hashed = await bcrypt.hash(newPassword, 10);
+        db.run(
+            'UPDATE users SET password = ?, verification_code = NULL, code_expires_at = NULL WHERE email = ?',
+            [hashed, email],
+            (err) => {
+                if (err) return res.status(500).json({ error: 'Ошибка при сохранении пароля' });
+                res.json({ message: 'Пароль успешно изменен!' });
+            }
+        );
+    });
+}
+async function changePassword(req, res) {
+    try {
+        const { oldPassword, newPassword } = req.body;
+        const userId = req.user.id;
+
+  
+        if (!oldPassword || !newPassword || newPassword.length < 8) {
+            return res.status(400).json({ error: "Заполните все поля корректно" });
+        }
+
+    
+        db.get('SELECT password FROM users WHERE id = ?', [userId], async (err, user) => {
+            if (err) return res.status(500).json({ error: "Ошибка при обращении к БД" });
+            if (!user) return res.status(404).json({ error: "Пользователь не найден" });
+
+      
+            const isMatch = await bcrypt.compare(oldPassword, user.password);
+            
+            if (!isMatch) {
+                return res.status(400).json({ error: "Текущий пароль введен неверно" });
+            }
+
+           
+            if (oldPassword === newPassword) {
+                return res.status(400).json({ error: "Новый пароль не может совпадать со старым" });
+            }
+
+   
+            const hashPassword = await bcrypt.hash(newPassword, 10);
+
+            db.run(
+                'UPDATE users SET password = ? WHERE id = ?',
+                [hashPassword, userId],
+                function(updateErr) {
+                    if (updateErr) return res.status(500).json({ error: "Не удалось обновить пароль" });
+                    res.json({ success: true, message: "Пароль успешно изменен" });
+                }
+            );
+        });
+    } catch (error) {
+        console.error("Change Password Error:", error);
+        res.status(500).json({ error: "Внутренняя ошибка сервера" });
+    }
+}
+module.exports = {changePassword,resetPassword,forgotPassword,updateStats,addTask,regNewUser,confirmReg,resendCode,userLogin,addLogExercise};

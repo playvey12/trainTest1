@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="./css/login.css" />
     <title>{{t.auth.login_title}}</title>
+    {{> seo}}
 </head>
 
 <body>
@@ -18,15 +19,19 @@
 
         <main class="main-content">
             <div class="registration-card">
+                <div class="card-header">
+                    <span class="step-text">{{t.auth.step_label}}</span>
+                    <span class="step-count">{{t.auth.step_2_of_3}}</span>
+                </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" style="width: 33%;"></div>
+                    <div class="progress-fill" style="width: 66%;"></div>
                 </div>
 
                 <form id="registrationForm">
                     <div class="form-group">
                         <label class="form-label">{{t.auth.email_label}}</label>
                         <div class="input-wrapper">
-                            <span class="input-icon">✉️</span>
+                            <span class="input-icon"><i class="fa-regular fa-envelope"></i></span>
                             <input type="email" class="form-input" id="email" placeholder="{{t.auth.email_placeholder}}"
                                 required>
                         </div>
@@ -36,42 +41,48 @@
                     <div class="form-group">
                         <label class="form-label">{{t.auth.password_label}}</label>
                         <div class="password-wrapper">
-                            <span class="input-icon">🔒</span>
+                            <span class="input-icon"><i class="fa-solid fa-lock"></i></span>
                             <input type="password" class="form-input" id="password" placeholder="••••••••••••" required>
-                            <button type="button" class="toggle-password" id="togglePassword">👁</button>
+                            <button type="button" class="toggle-password" id="togglePassword">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
                         </div>
                     </div>
 
                     <button type="submit" class="submit-btn" onclick="loginUser(event)" id="submitBtn">
                         <span id="btnText">{{t.auth.login_btn}}</span>
-                        <div class="loader" id="loader"></div>
+
                     </button>
 
                     <div class="divider">
                         <span>{{t.auth.social_divider}}</span>
                     </div>
 
-                    <div class="social-login">
-                        <button type="button" class="social-btn">
-                            <i class="fa-brands fa-google" style="color: #DB4437;"></i> Google
-                        </button>
-                        <button type="button" class="social-btn">
-                            <i class="fa-brands fa-apple" style="font-size: 1.2rem;"></i> Apple
-                        </button>
+                    <div class="auth-footer">
+                        <div class="footer-row">
+                            <div class="login-link">
+                                {{t.auth.already_have_acc}} <a href="/register"
+                                    class="sign-in-link">{{t.auth.sign_in_link}}</a><a href="#" id="openResetModal"
+                                    class="sign-in-link sign-in-link-forgot">
+                                    •• {{t.auth.forgot_password}}?
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="login-link">
-                        {{t.auth.already_have_acc}} <a href="/register" class="sign-in-link">{{t.auth.sign_in_link}}</a>
-                    </div>
-                </form>
             </div>
-        </main>
-
-        <footer class="footer-info">
-            {{t.auth.footer_terms}}
-        </footer>
+            <footer class="footer-info">
+                {{t.auth.footer_terms}}
+            </footer>
+            </form>
     </div>
 
+    </main>
+
+
+    </div>
+
+    {{>modalWindowForgot}}
     <script src="./js/register.js"></script>
     <script src="./js/auth.js"></script>
 </body>

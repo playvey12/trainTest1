@@ -1,0 +1,42 @@
+<div class="modal-overlay" id="confirmationModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title">{{t.auth.email_confirm.title}}</h2>
+            <button class="close-btn" id="closeModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p class="modal-text">
+                {{t.auth.email_confirm.description_prefix}} <span id="userEmail"></span>.
+                {{t.auth.email_confirm.description_suffix}}
+            </p>
+
+            <div class="code-input-container">
+                <div class="code-inputs">
+                    <input type="text" class="code-input" maxlength="1" data-index="0" autocomplete="off">
+                    <input type="text" class="code-input" maxlength="1" data-index="1" autocomplete="off">
+                    <input type="text" class="code-input" maxlength="1" data-index="2" autocomplete="off">
+                    <input type="text" class="code-input" maxlength="1" data-index="3" autocomplete="off">
+                    <input type="text" class="code-input" maxlength="1" data-index="4" autocomplete="off">
+                    <input type="text" class="code-input" maxlength="1" data-index="5" autocomplete="off">
+                </div>
+                <div class="error-message" id="codeError" style="display: none;">
+                    {{t.auth.email_confirm.error_code}}
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="resend-btn" id="resendCode" disabled>
+                    {{t.auth.email_confirm.resend_btn}}
+                </button>
+                <div class="timer" id="timer" style="display: none;">
+                    {{t.auth.email_confirm.timer_text}} <span id="countdown">60</span>
+                    {{t.auth.email_confirm.seconds_unit}}
+                </div>
+                <button class="submit-btn" id="confirmCodeBtn" disabled>
+                    <span id="confirmBtnText">{{t.auth.email_confirm.confirm_btn}}</span>
+                    <div class="loader" id="confirmLoader" style="display: none;"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

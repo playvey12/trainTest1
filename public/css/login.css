@@ -1,26 +1,19 @@
 :root {
-    /* Основная палитра синхронизирована */
     --bg-radial-start: #1e1e2e;
     --bg-radial-end: #0d0d12;
     --card-bg: #1a1a20;
     --card-hover: #25252d;
-    --accent-color: #ff3b5c; /* Твой новый акцент */
+    --accent-color: #ff3b5c;
     --accent-glow: rgba(255, 59, 92, 0.4);
-    
-    /* Текст и элементы */
     --text-main: #ffffff;
     --text-dim: #8e8e93;
     --icon-bg: #2c2c34;
     --border-color: #2c2c34;
     --error-color: #ff6b6b;
-
-    /* Шрифты и радиусы */
     --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --radius-lg: 20px;
     --radius-md: 12px;
     --radius-sm: 8px;
-
-    /* Тайминги */
     --transition-fast: 0.2s;
 }
 
@@ -32,7 +25,6 @@
 }
 
 body {
-    /* Применяем фирменный радиальный градиент */
     background: radial-gradient(circle at center, var(--bg-radial-start), var(--bg-radial-end));
     color: var(--text-main);
     display: flex;
@@ -68,7 +60,7 @@ body {
 .registration-card {
     background-color: var(--card-bg);
     padding: 30px;
-    border-radius: var(--radius-lg); /* Используем твой большой радиус */
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-color);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
@@ -127,7 +119,7 @@ body {
 
 .form-input {
     width: 100%;
-    background: var(--icon-bg); /* Используем icon-bg для инпутов */
+    background: var(--icon-bg);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     padding: 14px 14px 14px 42px;
@@ -145,10 +137,30 @@ body {
 .toggle-password {
     position: absolute;
     right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
     color: var(--text-dim);
     cursor: pointer;
+    padding: 5px;
+    z-index: 10;
+    transition: color var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-password:hover {
+    color: var(--accent-color);
+}
+
+.toggle-password i {
+    font-size: 16px;
+}
+
+.form-input {
+    padding-right: 45px !important;
 }
 
 .submit-btn {
@@ -255,13 +267,14 @@ body {
 
 .footer-info {
     text-align: center;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--text-dim);
-    margin-top: 25px;
+    margin: 24px auto 0;
     line-height: 1.5;
-    padding: 0 10px;
+    max-width: 360px;
+    opacity: 0.6;
+    pointer-events: none;
 }
-/* Добавь это к стилям, которые мы писали ранее */
 
 .privacy-checkbox {
     display: flex;
@@ -322,7 +335,6 @@ body {
     text-decoration: underline;
 }
 
-/* Стили для карточки шагов */
 .card-header {
     display: flex;
     justify-content: space-between;
@@ -343,34 +355,32 @@ body {
     font-size: 0.75rem;
     font-weight: 700;
 }
-/* Фоновая подложка модального окна */
+
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85); /* Темный полупрозрачный фон */
-    backdrop-filter: blur(8px); /* Размытие заднего плана */
-    display: none; /* Скрыто по умолчанию */
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 1000;
     padding: 20px;
 }
 
-/* Состояние, когда модалка открыта (добавляй этот класс через JS) */
 .modal-overlay.active {
     display: flex;
     animation: fadeIn 0.3s ease;
 }
 
-/* Само окно с политикой */
 .policy-modal {
     background: var(--card-bg);
     width: 100%;
     max-width: 600px;
-    max-height: 80vh; /* Ограничиваем высоту */
+    max-height: 80vh;
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-color);
     display: flex;
@@ -380,7 +390,6 @@ body {
     overflow: hidden;
 }
 
-/* Шапка модалки */
 .modal-header {
     padding: 20px 25px;
     border-bottom: 1px solid var(--border-color);
@@ -398,7 +407,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* Кнопка закрытия (крестик) */
 .close-btn {
     background: none;
     border: none;
@@ -413,16 +421,14 @@ body {
     color: var(--accent-color);
 }
 
-/* Контентная часть со скроллом */
 .policy-content {
     padding: 25px;
-    overflow-y: auto; /* Включаем внутреннюю прокрутку */
+    overflow-y: auto;
     color: var(--text-dim);
     line-height: 1.6;
     font-size: 0.9rem;
 }
 
-/* Стилизация текста внутри политики */
 .policy-content h3 {
     color: var(--text-main);
     margin: 20px 0 10px 0;
@@ -439,7 +445,6 @@ body {
     margin-bottom: 8px;
 }
 
-/* Нижняя панель с кнопкой */
 .policy-actions {
     padding: 20px 25px;
     border-top: 1px solid var(--border-color);
@@ -464,13 +469,11 @@ body {
     transform: translateY(-2px);
 }
 
-/* Анимация появления */
 @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
 }
 
-/* Красивый скроллбар для Webkit */
 .policy-content::-webkit-scrollbar {
     width: 6px;
 }
@@ -487,9 +490,7 @@ body {
 .policy-content::-webkit-scrollbar-thumb:hover {
     background: var(--text-dim);
 }
-/* --- МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ (Confirmation Modal) --- */
 
-/* Специфические настройки для окна ввода кода */
 #confirmationModal .modal {
     background: var(--card-bg);
     width: 100%;
@@ -515,13 +516,12 @@ body {
 }
 
 #userEmail {
-    color: var(--text-main);
+    color: var(--accent-color);
     font-weight: 700;
     display: block;
     margin-top: 5px;
 }
 
-/* Контейнер для цифр кода */
 .code-inputs {
     display: flex;
     justify-content: center;
@@ -550,7 +550,6 @@ body {
     transform: translateY(-2px);
 }
 
-/* Состояния для JS */
 .code-input.filled {
     border-color: var(--accent-color);
 }
@@ -565,7 +564,6 @@ body {
     color: #4CAF50;
 }
 
-/* Футер и кнопки */
 .modal-footer {
     display: flex;
     flex-direction: column;
@@ -599,7 +597,6 @@ body {
     font-weight: 700;
 }
 
-/* Стили лоадера внутри кнопки */
 .loader {
     width: 20px;
     height: 20px;
@@ -612,7 +609,6 @@ body {
     margin-left: 10px;
 }
 
-/* Анимации */
 @keyframes modalSlideUp {
     from { opacity: 0; transform: translateY(30px) scale(0.9); }
     to { opacity: 1; transform: translateY(0) scale(1); }
@@ -628,7 +624,6 @@ body {
     75% { transform: translateX(5px); }
 }
 
-/* Мобильная адаптация */
 @media screen and (max-width: 400px) {
     .code-input {
         width: 38px;
@@ -639,6 +634,192 @@ body {
         gap: 6px;
     }
 }
-#userEmail{
-    color: var(--accent-color);
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    width: 100%;
+    max-width: 440px;
+    position: relative;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.modal-content h2 {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.modal-content p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.modal-content .form-input {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: var(--text-color);
+    font-size: 1rem;
+    margin-bottom: 15px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.modal-content .form-input:focus {
+    border-color: var(--secondary-color);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.modal-content .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--gradient-button);
+    border: none;
+    border-radius: 10px;
+    color: var(--white);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    margin-top: 10px;
+}
+
+.modal-content .submit-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.modal-content .submit-btn:active {
+    transform: translateY(0);
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: var(--text-muted);
+    font-size: 28px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    color: var(--secondary-color);
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal.active .modal-content {
+    animation: modalFadeIn 0.3s ease forwards;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    display: flex !important;
+    opacity: 1;
+}
+
+.modal-overlay .modal {
+    background: var(--card-bg);
+    width: 100%;
+    max-width: 420px;
+    height: 460px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    position: relative;
+    display: block !important;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal {
+    transform: translateY(0);
+}
+
+.modal-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-body {
+    padding: 25px;
+    text-align: center;
+}
+
+.code-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.code-input {
+    width: 45px;
+    height: 55px;
+    background: var(--icon-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-main);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.code-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-glow);
 }

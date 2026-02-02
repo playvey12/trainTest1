@@ -1,93 +1,73 @@
 :root {
-    /* Основная палитра (Dark Theme) */
-    --bg-radial-start: #1e1e2e;
-    --bg-radial-end: #0d0d12;
-    --card-bg: #1a1a20;
-    --card-hover: #25252d;
-    --accent-color: #ff3b5c;
-    --accent-glow: rgba(255, 59, 92, 0.4);
-    
-    /* Текст */
-    --text-main: #ffffff;
-    --text-dim: #8e8e93;
-    --icon-bg: #2c2c34;
-    --border-color: #2c2c34;
-
-    /* Шрифты и радиусы */
-    --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    --radius-lg: 20px;
-    --radius-md: 12px;
-    --radius-sm: 8px;
-
-    /* Тайминги анимаций */
-    --transition-fast: 0.2s;
-    --transition-slow: 0.6s;
+--bg-radial-start: #1e1e2e;
+--bg-radial-end: #0d0d12;
+--card-bg: #1a1a20;
+--card-hover: #25252d;
+--accent-color: #ff3b5c;
+--accent-glow: rgba(255, 59, 92, 0.4);
+--text-main: #ffffff;
+--text-dim: #8e8e93;
+--icon-bg: #2c2c34;
+--border-color: #2c2c34;
+--font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+--radius-lg: 20px;
+--radius-md: 12px;
+--radius-sm: 8px;
+--transition-fast: 0.2s;
+--transition-slow: 0.6s;
 }
 
-/* --- BOTTOM NAVIGATION --- */
-/* --- BUTTONS & NAV --- */
 .sign-out-btn {
-    background: none;
-    border: none;
-    color: var(--text-dim);
-    font-size: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+background: none;
+border: none;
+color: var(--text-dim);
+font-size: 12px;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 8px;
 }
 
 .bottom-nav {
-    position: fixed;
-    /* Центрирование */
-    left: 50%;
-    bottom: 20px;
-    transform: translateX(-50%); /* Сдвигаем назад на половину собственной ширины */
-    
-    /* Размеры */
-    width: calc(100% - 40px);
-    max-width: 430px;
-    
-    /* Стилизация */
-    background: rgba(26, 26, 32, 0.85);
-    backdrop-filter: blur(12px);
-    border-radius: 25px;
-    display: flex;
-    justify-content: space-around;
-    padding: 12px 0;
-    z-index: 1000; /* Чтобы навигация всегда была поверх контента */
+position: fixed;
+left: 50%;
+bottom: 20px;
+transform: translateX(-50%);
+width: calc(100% - 40px);
+max-width: 430px;
+background: rgba(26, 26, 32, 0.85);
+backdrop-filter: blur(12px);
+border-radius: 25px;
+display: flex;
+justify-content: space-around;
+padding: 12px 0;
+z-index: 1000;
 }
 
-/* Обновим hover, так как transform теперь занят центрированием */
 .nav-item {
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
-    align-items: center;
-    color: var(--text-dim);
-    font-size: 10px;
-    gap: 4px;
-    transition: all var(--transition-fast) ease-out;
+display: flex;
+flex-direction: column;
+cursor: pointer;
+align-items: center;
+color: var(--text-dim);
+font-size: 10px;
+gap: 4px;
+transition: all var(--transition-fast) ease-out;
 }
 
 .nav-item:hover {
-    color: var(--accent-color);
-    /* Вместо transform на всем элементе (чтобы не конфликтовать), 
-       лучше двигать только иконку или использовать margin */
-    transform: translateY(-5px);
+color: var(--accent-color);
+transform: translateY(-5px);
 }
 
-/* Свечение иконки при наведении */
 .nav-item:hover i {
-    text-shadow: 0 0 15px var(--accent-glow), 
-                 0 0 5px var(--accent-color);
-    /* Немного увеличим саму иконку для акцента */
-    transform: scale(1.1);
-    transition: transform var(--transition-fast) ease;
+text-shadow: 0 0 15px var(--accent-glow),
+0 0 5px var(--accent-color);
+transform: scale(1.1);
+transition: transform var(--transition-fast) ease;
 }
 
-/* Эффект для активного элемента (по желанию) */
 .nav-item.active {
-    color: var(--accent-color);
-    font-weight: bold;
+color: var(--accent-color);
+font-weight: bold;
 }

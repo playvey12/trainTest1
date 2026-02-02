@@ -1,0 +1,25 @@
+<div id="resetPasswordModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeResetModal">&times;</span>
+        <h2 id="resetModalTitle">{{t.auth.reset_password.title}}</h2>
+
+        <div id="resetStep1">
+            <p>{{t.auth.reset_password.step1_text}}</p>
+            <input type="email" id="resetEmail" class="form-input" placeholder="{{t.auth.email_placeholder}}">
+            <button class="submit-btn" onclick="requestResetCode()" id="requestResetBtn">
+                {{t.auth.reset_password.send_code_btn}}
+            </button>
+        </div>
+
+        <div id="resetStep2" style="display: none;">
+            <p>{{t.auth.reset_password.step2_text}}</p>
+            <input type="text" id="resetCode" class="form-input"
+                placeholder="{{t.auth.reset_password.code_placeholder}}">
+            <input type="password" id="newPassword" class="form-input"
+                placeholder="{{t.auth.reset_password.new_password_placeholder}}">
+            <button class="submit-btn" onclick="resetPassword()">
+                {{t.auth.reset_password.change_password_btn}}
+            </button>
+        </div>
+    </div>
+</div>

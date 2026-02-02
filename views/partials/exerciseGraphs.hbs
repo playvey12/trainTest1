@@ -8,15 +8,15 @@
             <div class="select-group">
                 <label>{{t.progressPage.mainChart.exerciseLabel}}</label>
                 <select class="custom-select" id="exercise-select">
-                    <option value="" disabled selected>Загрузка...</option>
+                    <option value="" disabled selected>{{t.progressPage.mainChart.loading}}</option>
                 </select>
             </div>
             <div class="select-group">
                 <label>{{t.progressPage.mainChart.periodLabel}}</label>
                 <select class="custom-select" id="period-select">
-                    <option value="30days">{{t.progressPage.mainChart.currentPeriod}}</option>
-                    <option value="3months">3 Месяца</option>
-                    <option value="all_time">Все время</option>
+                    <option value="30days">{{t.progressPage.mainChart.periods.30days}}</option>
+                    <option value="3months">{{t.progressPage.mainChart.periods.3months}}</option>
+                    <option value="all_time">{{t.progressPage.mainChart.periods.all_time}}</option>
                 </select>
             </div>
         </div>

@@ -1,7 +1,31 @@
+
 {
+  "seo": {
+  "default": {
+    "title": "HEAVYSTAT — Твой профессиональный дневник тренировок",
+    "description": "Отслеживай прогресс, планируй тренировки и анализируй рост весов в реальном времени.",
+    "og_image": "/img/og-preview.png"
+  },
+  "auth": {
+    "title": "Вход и Регистрация | HEAVYSTAT",
+    "description": "Авторизуйтесь в HeavyStat, чтобы получить доступ к своим планам тренировок и истории прогресса."
+  },
+  "progress": {
+    "title": "Статистика и Прогресс | Анализ тренировок",
+    "description": "Графики динамики рабочего веса, история веса тела и достижение личных рекордов."
+  },
+  "trainPlan": {
+    "title": "План тренировок | Настройка программы",
+    "description": "Создайте свою идеальную программу тренировок. Добавляйте упражнения, подходы и веса."
+  },
+  "trainMode": {
+    "title": "Активная тренировка | Режим прогресса",
+    "description": "Фиксируйте каждый подход, следите за отдыхом и побеждайте свои прошлые результаты."
+  }
+},
   "profile": {
     "title": "Мой Профиль",
-    "level": "HEAVYLIFT MEMBER",
+    "level": "HEAVYSTAT MEMBER",
     "stats": {
       "workouts": "ТРЕНИРОВКИ",
       "hours": "ЧАСЫ"
@@ -28,12 +52,13 @@
     },
     "privacy": {
       "title": "Приватность",
-      "password_label": "Новый пароль",
-      "password_confirm": "Подтвердите пароль",
+      "password_label": "Введите новый пароль",
+      "old_password": "Введите текущий пароль",
+      "password_confirm": "Подтвердите новый пароль",
       "visibility_label": "Публичный профиль",
       "visibility_sub": "Ваш прогресс видят другие атлеты",
       "sessions_title": "Активные сессии",
-      "logout_all": "Выйти из всех профиля",
+      "logout_all": "Выйти из профиля",
       "save_btn": "ОБНОВИТЬ БЕЗОПАСНОСТЬ"
     },
     "help": {
@@ -61,7 +86,6 @@
       "sets": "Кол-во подходов",
       "kg": "Рабочий вес",
       "name": "Название упражнения"
-
     },
     "modal": {
       "save_btn": "СОХРАНИТЬ",
@@ -82,15 +106,19 @@
       "subtitle": "Динамика рабочего веса",
       "exerciseLabel": "УПРАЖНЕНИЕ",
       "periodLabel": "ПЕРИОД",
-      "currentExercise": "Жим штанги лежа",
-      "currentPeriod": "30 дней"
+      "loading": "Загрузка...",
+      "periods": {
+        "30days": "30 дней",
+        "3months": "3 Месяца",
+        "all_time": "Все время"
+      }
     },
     "weightInput": {
       "title": "Ваш текущий вес",
       "subtitle": "Зафиксируйте результат сегодня",
       "currentValue": 74.5,
-      "min": 40.0,
-      "max": 150.0,
+      "min": 40,
+      "max": 150,
       "button": "Подтвердить"
     },
     "weightHistory": {
@@ -104,15 +132,14 @@
         "avgValue": "75.1 кг"
       }
     },
-    "settingModalWindowProgress":{
-      "settingGoal":"Настройка целей",
-      "startWeight":"Начальный вес (кг)",
-      "goalWeight":"Целевой вес (кг)",
-      "saveSettings":"Сохранить изменения"
+    "settingModalWindowProgress": {
+      "settingGoal": "Настройка целей",
+      "startWeight": "Начальный вес (кг)",
+      "goalWeight": "Целевой вес (кг)",
+      "saveSettings": "Сохранить изменения"
     }
-   
   },
-  "workoutSession": {  
+  "workoutSession": {
     "labels": {
       "duration": "SESSION DURATION",
       "noDaySelected": "Нет выбранного дня",
@@ -127,42 +154,95 @@
       "date": "Monday, Oct 23",
       "setInfo": "Set 3 of 4"
     },
-    "selectDays":{
-      "monday":"Понедельник",
-      "tuesday":"Вторник",
-      "wednesday":"Среда",
-      "thursday":"Четверг",
-      "friday":"Пятница",
-      "saturday":"Суббота",
-      "sunday":"Воскресенье"    
+    "active_exercise": {
+      "badge": "ТЕКУЩЕЕ УПРАЖНЕНИЕ",
+      "weight_label": "ВЕС (КГ)",
+      "weight_unit": "КГ",
+      "sets_label": "ПОДХОДЫ",
+      "sets_left": "ОСТАЛОСЬ",
+      "save_to_chart": "Сохранить в график"
+    },
+    "queue": {
+      "title": "ОЧЕРЕДЬ УПРАЖНЕНИЙ",
+      "waiting_status": "ОЖИДАНИЕ"
+    },
+    "selectDays": {
+      "monday": "Понедельник",
+      "tuesday": "Вторник",
+      "wednesday": "Среда",
+      "thursday": "Четверг",
+      "friday": "Пятница",
+      "saturday": "Суббота",
+      "sunday": "Воскресенье"
+    },
+    "modals": {
+      "confirm_finish": {
+        "title": "Завершить тренировку?",
+        "subtitle": "Таймер будет остановлен.",
+        "cancel_btn": "Отмена",
+        "confirm_btn": "Завершить"
+      },
+      "results": {
+        "title": "Результаты",
+        "time_label": "Время",
+        "rest_label": "Отдых",
+        "close_btn": "Отлично"
+      }
+    },
+    "weight_fix": {
+      "title": "Зафиксировать вес",
+      "weight_label": "Ваш рабочий вес (кг):",
+      "placeholder": "Например: 85",
+      "save_btn": "Сохранить"
     }
   },
   "auth": {
-  "login_title": "Вход",
-  "hero_title": "JOIN THE HEAVYLIFT",
-  "hero_subtitle": "Начните свою профессиональную трансформацию сегодня.",
-  "step_label": "НАСТРОЙКА АККАУНТА",
-  "step_1_of_3": "Шаг 1 из 3",
-  "email_label": "Email адрес",
-  "email_placeholder": "john@example.com",
-  "email_error": "Пожалуйста, введите корректный email",
-  "password_label": "Создайте пароль",
-  "login_btn": "ВОЙТИ В АККАУНТ",
-  "social_divider": "ИЛИ ПРОДОЛЖИТЕ ЧЕРЕЗ",
-  "already_have_acc": "Еще нет аккаунта?",
-  "sign_in_link": "Регистация",
-  "footer_terms": "Нажимая «Создать аккаунт», вы соглашаетесь с Условиями обслуживания и Политикой конфиденциальности."
-},
-"reg": {
-  "register_title": "Регистрация | HEAVYLIFT",
-  "hero_title": "JOIN THE HEAVYLIFT",
-  "hero_subtitle": "Создайте аккаунт, чтобы отслеживать прогресс.",
-  "confirm_password_label": "Подтвердите пароль",
-  "confirm_password_error": "Пароли не совпадают",
-  "register_btn": "СОЗДАТЬ АККАУНТ",
-  "agreement_text": "Я согласен с",
-  "policy_link": "Политикой конфиденциальности",
-  "already_have_acc_login": "Уже есть аккаунт?",
-  "login_link_text": "Войти"
-}
+    "login_title": "Вход",
+    "hero_title": "JOIN THE HEAVYSTAT",
+    "hero_subtitle": "Начните свою профессиональную трансформацию сегодня.",
+    "step_label": "НАСТРОЙКА АККАУНТА",
+    "step_1_of_3": "Шаг 1 из 3",
+    "step_2_of_3": "Шаг 2 из 3",
+    "email_label": "Email адрес",
+    "email_placeholder": "john@example.com",
+    "email_error": "Пожалуйста, введите корректный email",
+    "password_label": "Создайте пароль",
+    "forgot_password": "Забыли пароль",
+    "login_btn": "ВОЙТИ В АККАУНТ",
+    "social_divider": "ИЛИ ПРОДОЛЖИТЕ ЧЕРЕЗ",
+    "already_have_acc": "Еще нет аккаунта?",
+    "sign_in_link": "Регистация",
+    "footer_terms": "Нажимая «Создать аккаунт», вы соглашаетесь с Условиями обслуживания и Политикой конфиденциальности.",
+    "reset_password": {
+      "title": "Восстановление пароля",
+      "step1_text": "Введите ваш email, и мы отправим вам код для сброса пароля.",
+      "send_code_btn": "Отправить код",
+      "step2_text": "Код отправлен на почту. Введите его и новый пароль.",
+      "code_placeholder": "6-значный код",
+      "new_password_placeholder": "Новый пароль (мин. 8 симв.)",
+      "change_password_btn": "Сменить пароль"
+    },
+    "email_confirm": {
+      "title": "Подтверждение email",
+      "description_prefix": "Мы отправили 6-значный код подтверждения на адрес",
+      "description_suffix": "Пожалуйста, введите его ниже:",
+      "error_code": "Неверный код подтверждения",
+      "resend_btn": "Отправить код повторно",
+      "timer_text": "Отправить повторно через:",
+      "seconds_unit": "сек.",
+      "confirm_btn": "Подтвердить"
+    }
+  },
+  "reg": {
+    "register_title": "Регистрация | HEAVYSTAT",
+    "hero_title": "JOIN THE HEAVYSTAT",
+    "hero_subtitle": "Создайте аккаунт, чтобы отслеживать прогресс.",
+    "confirm_password_label": "Подтвердите пароль",
+    "confirm_password_error": "Пароли не совпадают",
+    "register_btn": "СОЗДАТЬ АККАУНТ",
+    "agreement_text": "Я согласен с",
+    "policy_link": "Политикой конфиденциальности",
+    "already_have_acc_login": "Уже есть аккаунт?",
+    "login_link_text": "Войти"
+  }
 }

@@ -1,24 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const trainList = require("../data/trainData");
-const { getDays } = require("./getRouter");
+const { getDays,getTrainPlanData } = require("./getRouter");
 const deleteTaskById = require("./deleteRouter");
 const {addTask} = require("./postRouter");
 const { editTask } = require("./putRouter");
 const { taskValidation, idParamValidation } = require("../middleware/validation/trainValidations");
 
 
-router.get("/", async (req, res) => {
-  try {
-    const userId = req.user.id;
-   
-    const data = await trainList.getDaysForView(userId);
-    res.render("trainingPlan.hbs", data);
-  } catch (error) {
-    console.error("Error rendering trainingPlan:", error);
-    res.status(500).send("Server Error");
-  }
-});
+router.get("/", getTrainPlanData )
 
 
 router.delete("/delete/:id", deleteTaskById);

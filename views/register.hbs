@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="./css/login.css" />
+    {{> seo}}
     <title>{{t.reg.register_title}}</title>
 </head>
 
@@ -34,7 +35,7 @@
                             <input type="email" class="form-input" id="email" placeholder="{{t.auth.email_placeholder}}"
                                 required>
                         </div>
-                        <div class="error-message" id="emailError">{{t.auth.email_error}}</div>
+                        <div class="error-message" id="emailError" style="display: none;">{{t.auth.email_error}}</div>
                     </div>
 
                     <div class="form-group">
@@ -42,53 +43,55 @@
                         <div class="password-wrapper">
                             <span class="input-icon"><i class="fa-solid fa-lock"></i></span>
                             <input type="password" class="form-input" id="password" placeholder="••••••••••••" required>
-                            <button type="button" class="toggle-password" id="togglePassword"><i
-                                    class="fa-regular fa-eye"></i></button>
+                            <button type="button" class="toggle-password" id="togglePassword">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
                         </div>
+                        <div class="error-message" id="passwordError" style="display: none;">Пароль слишком короткий
+                            (мин. 8 симв.)</div>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">{{t.reg.confirm_password_label}}</label>
+
                         <div class="password-wrapper">
-                            <span class="input-icon"><i class="fa-solid fa-shield-halved"></i></span>
+                            <span class="input-icon"><i class="fa-solid fa-lock"></i></span>
                             <input type="password" class="form-input" id="confirmPassword" placeholder="••••••••••••"
                                 required>
-                            <button type="button" class="toggle-password" id="toggleConfirmPassword"><i
-                                    class="fa-regular fa-eye"></i></button>
+                            <button type="button" class="toggle-password" id="toggleConfirmPassword">
+                                <i class="fa-regular fa-eye"></i>
+                            </button>
                         </div>
-                        <div class="error-message" id="confirmPasswordError">{{t.reg.confirm_password_error}}</div>
-                    </div>
 
-                    <div class="privacy-checkbox">
-                        <input type="checkbox" id="privacyAgreement" required>
-                        <label for="privacyAgreement" class="checkbox-label">
-                            {{t.reg.agreement_text}}
-                            <a href="#" id="showPrivacyPolicy" class="privacy-link">{{t.reg.policy_link}}</a>
-                        </label>
-                    </div>
+                        <div class="privacy-checkbox" id="privacyCheckbox">
+                            <input type="checkbox" id="privacyAgreement" required>
+                            <label for="privacyAgreement" class="checkbox-label">
+                                {{t.reg.agreement_text}}
+                                <a href="#" id="showPrivacyPolicy" class="privacy-link">{{t.reg.policy_link}}</a>
+                            </label>
+                        </div>
 
-                    <button type="submit" class="submit-btn" onclick="registerUser(event)" id="submitBtn">
-                        <span id="btnText">{{t.reg.register_btn}}</span>
-                        <div class="loader" id="loader"></div>
-                    </button>
+                        <button type="submit" class="submit-btn" onclick="registerUser(event)" id="submitBtn">
+                            <span id="btnText">{{t.reg.register_btn}}</span>
+                        </button>
 
-                    <div class="divider">
-                        <span>{{t.auth.social_divider}}</span>
-                    </div>
+                        <div class="divider">
+                            <span>{{t.auth.social_divider}}</span>
+                        </div>
 
-                    <div class="social-login">
-                        <button type="button" class="social-btn"><i class="fa-brands fa-google"></i> Google</button>
-                        <button type="button" class="social-btn"><i class="fa-brands fa-apple"></i> Apple</button>
-                    </div>
+                        <div class="auth-footer">
+                            <div class="footer-row">
+                                <div class="login-link">
+                                    {{t.reg.already_have_acc_login}}
+                                    <a href="/login" class="sign-in-link ">{{t.reg.login_link_text}}</a>
 
-                    <div class="login-link">
-                        {{t.reg.already_have_acc_login}} <a href="/login"
-                            class="sign-in-link">{{t.reg.login_link_text}}</a>
-                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </form>
             </div>
         </main>
-
+        {{>privacyModal}}
         <footer class="footer-info">
             {{t.auth.footer_terms}}
         </footer>
@@ -129,9 +132,9 @@
         </div>
     </div>
     {{>confirmationModal}}
-
-    <script src="./js/register.js"></script>
     <script src="./js/auth.js"></script>
+    <script src="./js/register.js"></script>
+
 </body>
 
 </html>

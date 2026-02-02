@@ -46,6 +46,7 @@ db.serialize(() => {
             INSERT INTO user_data (user_id) VALUES (NEW.id);
         END
     `);
+    db.run("PRAGMA journal_mode = WAL;");
 });
 
 console.log("Database старт");

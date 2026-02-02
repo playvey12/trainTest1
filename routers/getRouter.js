@@ -13,7 +13,21 @@ async function getDays(req, res) {
     res.status(500).json({ error: "Server error" });
   }
 }
+const getTrainModeData = async (req, res) => {
+ try {
+    const userId = req.user.id;
+    const data = await trainList.getDaysForView(userId);
+    
+    res.render("trainMode.hbs", {
+      ...data,
+      isDaySelected: false 
+    });
+  } catch (error) {
+    console.error("Error rendering trainMode:", error);
+    res.status(500).send("Server Error");
+  }
 
+}
 async function getDaysForTrainMode(req, res) {
   try {
     const { day } = req.params;
@@ -129,6 +143,43 @@ const getUniqueExercises = async (req, res) => {
         res.status(500).json({ success: false, error: "Ошибка сервера" });
     }
 };
+const getProfileData = async (req, res) => {
+try {
+    const userId = req.user.id;
+    const period = req.query.period || '30days';
+    
+ 
+    const profileData = await trainList.getProfileDataWithHistory(userId, period);
+    const uniqueExercises = await trainList.getUniqueExerciseNames(userId);
+    
+    
+    const exerciseHistory = await trainList.getExerciseHistoryByExerciseAndPeriod(userId, '', 'all'); 
+
+    res.render("profileMain.hbs", {
+      profileWeightList: profileData,
+      weightHistory: profileData.weightHistory || [],
+      exerciseHistory: exerciseHistory || [],
+      uniqueExercises: uniqueExercises,
+      userTheme: profileData.userTheme || 'black'
+    });
+  } catch (error) {
+    console.error("Error rendering profile:", error);
+    res.status(500).send("Server Error");
+  }
 
 
-module.exports = {getUniqueExercises, getDays, getDaysForTrainMode,getUserData,getExerciseHistory,getUniqeExercises,getUserDataForProgress };
+}
+const getTrainPlanData = async (req, res) => {
+try {
+    const userId = req.user.id;
+    const data = await trainList.getDaysForView(userId);
+    res.render("trainingPlan.hbs", data);
+  } catch (error) {
+    console.error("Error rendering trainingPlan:", error);
+    res.status(500).send("Server Error");
+  }
+
+}
+module.exports = {getTrainPlanData,getTrainModeData,getUniqueExercises,getProfileData, getDays, getDaysForTrainMode,getUserData,getExerciseHistory,getUniqeExercises,getUserDataForProgress };
+
+

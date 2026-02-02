@@ -37,11 +37,30 @@
     gap: 8px;
 }
 
-.dark-preview { background: #0d0d12; border: 1px solid #333; }
-.light-preview { background: #ffffff; border: 1px solid #ddd; }
+.dark-preview {
+    background: #0d0d12;
+    border: 1px solid #333;
+}
 
-.preview-line { width: 30px; height: 4px; border-radius: 2px; background: #888; opacity: 0.5; }
-.preview-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--theme-active-border); }
+.light-preview {
+    background: #ffffff;
+    border: 1px solid #ddd;
+}
+
+.preview-line {
+    width: 30px;
+    height: 4px;
+    border-radius: 2px;
+    background: #888;
+    opacity: 0.5;
+}
+
+.preview-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--theme-active-border);
+}
 
 .theme-card span {
     font-size: 14px;
@@ -64,4 +83,6 @@
     transform: scale(1);
 }
 
-.theme-card:hover { transform: translateY(-3px); }
+.theme-card:hover {
+    transform: translateY(-3px);
+}

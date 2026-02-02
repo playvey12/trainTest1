@@ -1,18 +1,19 @@
 <div id="weight-modal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>Зафиксировать вес</h3>
+            <h3>{{t.workoutSession.weight_fix.title}}</h3>
             <button class="close-modal" id="close-weight-modal">&times;</button>
         </div>
         <div class="modal-body modal-body-TrainMode">
             <p id="weight-modal-exercise-name" style="font-weight: bold; color: var(--accent-color);"></p>
             <div class="input-group">
-                <label for="weight-input">Ваш рабочий вес (кг):</label>
-                <input type="number" id="weight-input" placeholder="Например: 85" step="0.5">
+                <label for="weight-input">{{t.workoutSession.weight_fix.weight_label}}</label>
+                <input type="number" id="weight-input" placeholder="{{t.workoutSession.weight_fix.placeholder}}"
+                    step="0.5">
             </div>
         </div>
         <div class="modal-footer">
-            <button id="save-weight-btn" class="btn-confirm-modal">Сохранить</button>
+            <button id="save-weight-btn" class="btn-confirm-modal">{{t.workoutSession.weight_fix.save_btn}}</button>
         </div>
     </div>
 </div>

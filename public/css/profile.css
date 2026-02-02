@@ -1,30 +1,22 @@
 :root {
-    /* Основная палитра (Dark Theme) */
     --bg-radial-start: #1e1e2e;
     --bg-radial-end: #0d0d12;
     --card-bg: #1a1a20;
     --card-hover: #25252d;
     --accent-color: #ff3b5c;
     --accent-glow: rgba(255, 59, 92, 0.4);
-    
-    /* Текст */
     --text-main: #ffffff;
     --text-dim: #8e8e93;
     --icon-bg: #2c2c34;
     --border-color: #2c2c34;
-
-    /* Шрифты и радиусы */
     --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --radius-lg: 20px;
     --radius-md: 12px;
     --radius-sm: 8px;
-
-    /* Тайминги анимаций */
     --transition-fast: 0.2s;
     --transition-slow: 0.6s;
 }
 
-/* Сброс стилей */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -50,7 +42,6 @@ body {
     align-items: center;
 }
 
-/* --- HEADER & AVATAR --- */
 .profile-header {
     text-align: center;
     margin-bottom: 30px;
@@ -91,11 +82,13 @@ body {
     font-size: 28px;
     margin: 10px 0 5px;
 }
-.tg-user-name{
-     font-size: 16px;
+
+.tg-user-name {
+    font-size: 16px;
     margin: 5px 0 5px;
     color: var(--text-dim);
 }
+
 .membership-status {
     color: var(--accent-color);
     font-size: 12px;
@@ -103,7 +96,6 @@ body {
     font-weight: bold;
 }
 
-/* --- STATS CARD --- */
 .stats-card {
     background: var(--card-bg);
     width: 100%;
@@ -115,23 +107,28 @@ body {
     animation: fadeInUp var(--transition-slow) ease-out forwards;
 }
 
-.stat-item { text-align: center; }
+.stat-item {
+    text-align: center;
+}
+
 .stat-label {
     display: block;
     font-size: 10px;
     color: var(--text-dim);
     margin-bottom: 5px;
 }
-.stat-value { font-size: 18px; font-weight: bold; }
 
-/* --- MENU LIST --- */
+.stat-value {
+    font-size: 18px;
+    font-weight: bold;
+}
+
 .menu-list {
     width: 100%;
     background: var(--card-bg);
     border-radius: var(--radius-lg);
     overflow: hidden;
     margin-bottom: 30px;
-    
     animation: fadeInUp 0.8s ease-out forwards;
     border: 1px solid var(--border-color);
 }
@@ -139,19 +136,18 @@ body {
 .menu-item {
     display: flex;
     align-items: center;
-    width: 100%; /* Чтобы кнопка растягивалась на всю ширину */
+    width: 100%;
     padding: 18px 20px;
-    background: transparent; /* Убирает стандартный серый фон кнопки */
-    border: none; /* Убирает стандартную рамку */
-    border-bottom: 1px solid var(--border-color); /* Оставляем только твою линию снизу */
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
     color: var(--text-main);
-    font-family: inherit; /* Чтобы шрифт не менялся на стандартный системный */
-    text-align: left; /* Чтобы текст внутри кнопки не центрировался */
+    font-family: inherit;
+    text-align: left;
     cursor: pointer;
     transition: all var(--transition-fast) ease-in-out;
 }
 
-/* Убираем синюю обводку при клике в Chrome/Safari */
 .menu-item:focus {
     outline: none;
 }
@@ -159,11 +155,11 @@ body {
 .menu-item:last-child {
     border-bottom: none;
 }
-/* ЭФФЕКТ ПРИ НАВЕДЕНИИ (Desktop) */
+
 @media (hover: hover) {
     .menu-item:hover {
         background: var(--card-hover);
-        padding-left: 25px; /* Легкое смещение текста вправо */
+        padding-left: 25px;
     }
 
     .menu-item:hover .menu-icon {
@@ -177,13 +173,12 @@ body {
         color: var(--accent-color);
         transform: translateX(5px);
     }
-    
+
     .menu-item:hover .menu-title {
         color: var(--accent-color);
     }
 }
 
-/* ЭФФЕКТ ПРИ НАЖАТИИ (Mobile) */
 .menu-item:active {
     background: var(--card-hover);
     transform: scale(0.98);
@@ -193,7 +188,7 @@ body {
     width: 40px;
     height: 40px;
     background: var(--icon-bg);
-    border-radius: var(--radius-md); /* Сделал чуть мягче под стать окнам */
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -202,49 +197,60 @@ body {
     transition: all var(--transition-fast) ease;
 }
 
-.menu-content { flex-grow: 1; }
-.menu-title { 
-    display: block; 
-    font-size: 15px; 
-    font-weight: 600; 
+.menu-content {
+    flex-grow: 1;
+}
+
+.menu-title {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
     transition: color var(--transition-fast);
 }
-.menu-subtitle { display: block; font-size: 11px; color: var(--text-dim); }
 
-.arrow { 
-    color: #444; 
-    font-size: 12px; 
+.menu-subtitle {
+    display: block;
+    font-size: 11px;
+    color: var(--text-dim);
+}
+
+.arrow {
+    color: #444;
+    font-size: 12px;
     transition: all var(--transition-fast) ease;
 }
 
-/* --- ANIMATIONS --- */
 @keyframes fadeInUp {
-    from { 
-        opacity: 0; 
-        transform: translateY(20px); 
+    from {
+        opacity: 0;
+        transform: translateY(20px);
     }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
 @keyframes pulseGlow {
-    0%, 100% { 
+    0%, 100% {
         box-shadow: 0 0 10px var(--accent-glow);
         border-color: var(--accent-color);
     }
-    50% { 
+    50% {
         box-shadow: 0 0 25px var(--accent-glow);
-        border-color: #ff5f7a; /* Чуть светлее в пике */
+        border-color: #ff5f7a;
     }
 }
 
 @keyframes tapEffect {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(0.92); }
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.92);
+    }
 }
-/* --- BUTTONS & NAV --- */
+
 .sign-out-btn {
     background: none;
     border: none;
@@ -269,37 +275,39 @@ body {
     padding: 12px 0;
 }
 
-
-
-
-/* --- ANIMATIONS --- */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 10px var(--accent-glow); }
-    50% { box-shadow: 0 0 25px var(--accent-glow); }
-}
-
-@keyframes tapEffect {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(0.92); }
-}
-
-/* --- MEDIA QUERIES --- */
 @media screen and (max-width: 470px) {
-    .container { padding: 20px 15px 90px 15px; }
-    .user-name { font-size: 20px; }
-    .stats-card { padding: 15px 5px; }
-    .stat-value { font-size: 16px; }
-    .menu-icon { width: 34px; height: 34px; margin-right: 12px; }
-    .menu-title { font-size: 14px; }
+    .container {
+        padding: 20px 15px 90px 15px;
+    }
+    .user-name {
+        font-size: 20px;
+    }
+    .stats-card {
+        padding: 15px 5px;
+    }
+    .stat-value {
+        font-size: 16px;
+    }
+    .menu-icon {
+        width: 34px;
+        height: 34px;
+        margin-right: 12px;
+    }
+    .menu-title {
+        font-size: 14px;
+    }
 }
 
 @media screen and (max-width: 400px) {
-    .avatar-ring { width: 85px; height: 85px; }
-    .bottom-nav { width: calc(100% - 20px); bottom: 10px; }
-    .nav-item span { font-size: 9px; }
+    .avatar-ring {
+        width: 85px;
+        height: 85px;
+    }
+    .bottom-nav {
+        width: calc(100% - 20px);
+        bottom: 10px;
+    }
+    .nav-item span {
+        font-size: 9px;
+    }
 }

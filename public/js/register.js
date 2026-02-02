@@ -40,36 +40,7 @@ if (savedTheme){
     localStorage.setItem('themeMode', defaultTheme);
 }
 
-// ========== ФУНКЦИИ ДЛЯ ПАРОЛЕЙ ==========
-function togglePasswordVisibility() {
-    const passwordInput = document.getElementById('password');
-    const toggleButton = document.getElementById('togglePassword');
-    
-    if (passwordInput && toggleButton) {
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            toggleButton.textContent = '🔒';
-        } else {
-            passwordInput.type = 'password';
-            toggleButton.textContent = '👁'; 
-        }
-    }
-}
 
-function toggleConfirmPasswordVisibility() {
-    const confirmPasswordInput = document.getElementById('confirmPassword');
-    const toggleButton = document.getElementById('toggleConfirmPassword');
-    
-    if (confirmPasswordInput && toggleButton) {
-        if (confirmPasswordInput.type === 'password') {
-            confirmPasswordInput.type = 'text';
-            toggleButton.textContent = '🔒';
-        } else {
-            confirmPasswordInput.type = 'password';
-            toggleButton.textContent = '👁'; 
-        }
-    }
-}
 
 // ========== ВАЛИДАЦИЯ ФОРМЫ ==========
 function validateForm() {
@@ -145,28 +116,7 @@ function validateForm() {
     return isValid;
 }
 
-// ========== API ФУНКЦИИ ==========
-const getToken = () => localStorage.getItem("token");
-const setToken = (t) => localStorage.setItem("token", t);
-const clearToken = () => localStorage.removeItem("token");
 
-async function apiFetch(path, options = {}) {
-    const token = getToken();
-    const headers = {
-        "Content-Type": "application/json",
-        ...(options.headers || {}),
-    };
-    if (token) headers.Authorization = `Bearer ${token}`;
-    const res = await fetch(path, { ...options, headers });
-    let data;
-    try {
-        data = await res.json();
-    } catch {
-        data = { status: res.status };
-    }
-    if (!res.ok) throw { status: res.status, data };
-    return data;
-}
 
 // ========== МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ EMAIL ==========
 class ConfirmationModal {
@@ -216,16 +166,38 @@ class ConfirmationModal {
         });
     }
     
-    open(email, registrationData) {
-        this.userEmail = email;
-        this.registrationData = registrationData;
-        this.userEmailSpan.textContent = email;
-        this.modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        this.codeInputs[0].focus();
-        this.startTimer();
+   open(email, userData) {
+    console.log("Попытка открыть модалку для:", email);
+
+    // 1. Снова ищем элементы
+    const modal = document.getElementById('confirmationModal');
+    const emailSpan = document.getElementById('userEmail');
+
+    if (!modal) {
+        console.error("Критическая ошибка: модалка #confirmationModal не найдена в HTML!");
+        return;
     }
-    
+
+    // 2. Вставляем email в текст
+    if (emailSpan) {
+        emailSpan.textContent = email;
+    }
+
+    // --- ВАЖНО: ДОБАВЬТЕ ЭТУ СТРОКУ СЮДА ---
+    this.userEmail = email; 
+    // ---------------------------------------
+
+    // 3. Сохраняем данные
+    this.userData = userData;
+
+    // 4. Открываем
+    modal.classList.add('active'); 
+    modal.style.display = 'flex';
+
+    // 5. Запуск таймера и очистка
+    if (typeof this.startTimer === 'function') this.startTimer();
+    if (typeof this.clearInputs === 'function') this.clearInputs();
+}
     close() {
         this.modal.classList.remove('active');
         document.body.style.overflow = 'auto';
@@ -603,7 +575,7 @@ async function registerUser(event) {
         const privacyCheckbox = document.getElementById("privacyAgreement");
         const submitBtn = document.getElementById("submitBtn");
         const btnText = document.getElementById("btnText");
-        const loader = document.getElementById("loader");
+      
 
         const userRepeatPasswordValue = userRepeatPasswordInput.value;
         const userPasswordValue = userPasswordInput.value;
@@ -612,7 +584,7 @@ async function registerUser(event) {
         // Показываем загрузку
         submitBtn.disabled = true;
         btnText.textContent = "Отправка...";
-        loader.style.display = "block";
+      
 
         // Данные для регистрации
         const userData = { 
@@ -634,7 +606,7 @@ async function registerUser(event) {
         // Сбрасываем состояние кнопки
         submitBtn.disabled = false;
         btnText.textContent = "Создать аккаунт";
-        loader.style.display = "none";
+     
         
         if (response.ok) {
             showNotification("Код подтверждения отправлен на email", "success");
@@ -654,12 +626,12 @@ async function registerUser(event) {
         // Сбрасываем состояние кнопки в случае ошибки
         const submitBtn = document.getElementById("submitBtn");
         const btnText = document.getElementById("btnText");
-        const loader = document.getElementById("loader");
+       
         
-        if (submitBtn && btnText && loader) {
+        if (submitBtn && btnText ) {
             submitBtn.disabled = false;
             btnText.textContent = "Создать аккаунт";
-            loader.style.display = "none";
+        
         }
     }
     
@@ -840,7 +812,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+// Универсальная функция, которая меняет type="password" на "text" и иконку
+// ========== ОСТАВИТЬ ЭТОТ БЛОК (Строки 177-184) ==========
+function toggleInputVisibility(inputId, buttonId) {
+    const input = document.getElementById(inputId);
+    const button = document.getElementById(buttonId);
+    
+    if (!input || !button) return; 
+    
+    const icon = button.querySelector('i');
+    if (input.type === "password") {
+        input.type = "text";
+        // Меняем иконку
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash'); // Убедитесь, что у вас подключен FontAwesome, где есть эта иконка
+    } else {
+        input.type = "password";
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
 
+function togglePasswordVisibility() {
+    toggleInputVisibility('password', 'togglePassword');
+}
+
+function toggleConfirmPasswordVisibility() {
+    toggleInputVisibility('confirmPassword', 'toggleConfirmPassword');
+}
 // ========== СТИЛИ ДЛЯ АНИМАЦИЙ ==========
 const style = document.createElement('style');
 style.textContent = `
@@ -867,13 +866,95 @@ if (typeof module !== 'undefined' && module.exports) {
         togglePasswordVisibility,
         toggleConfirmPasswordVisibility,
         validateForm,
-        getToken,
-        setToken,
-        clearToken,
-        apiFetch,
+       
         ConfirmationModal,
         PrivacyPolicyModal,
         registerUser,
         loginUser
     };
 }
+
+// ========== ФУНКЦИИ ПЕРЕКЛЮЧЕНИЯ ВИДИМОСТИ ПАРОЛЯ ==========
+
+
+// Открыть модалку
+document.getElementById('forgotPasswordLink')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('resetPasswordModal').classList.add('active');
+});
+
+// Закрыть модалку
+document.getElementById('closeResetModal')?.addEventListener('click', () => {
+    document.getElementById('resetPasswordModal').classList.remove('active');
+});
+
+// Шаг 1: Запрос кода
+async function requestResetCode() {
+    const email = document.getElementById('resetEmail').value;
+    if (!email) return showNotification("Введите email", "error");
+
+    try {
+        const res = await fetch('/user/forgot-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        });
+        if (res.ok) {
+            showNotification("Код отправлен!", "success");
+            document.getElementById('resetStep1').style.display = 'none';
+            document.getElementById('resetStep2').style.display = 'block';
+        } else {
+            const data = await res.json();
+            showNotification(data.error, "error");
+        }
+    } catch (e) { showNotification("Ошибка сети", "error"); }
+}
+
+// Шаг 2: Сброс
+async function resetPassword() {
+    const email = document.getElementById('resetEmail').value;
+    const code = document.getElementById('resetCode').value;
+    const newPassword = document.getElementById('newPassword').value;
+
+    if (newPassword.length < 8) return showNotification("Пароль слишком короткий", "error");
+
+    try {
+        const res = await fetch('/user/reset-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, code, newPassword })
+        });
+        if (res.ok) {
+            showNotification("Пароль успешно изменен!", "success");
+            setTimeout(() => location.reload(), 1500);
+        } else {
+            const data = await res.json();
+            showNotification(data.error, "error");
+        }
+    } catch (e) { showNotification("Ошибка сети", "error"); }
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const resetModal = document.getElementById('resetPasswordModal');
+    const openBtn = document.getElementById('openResetModal');
+    const closeBtn = document.getElementById('closeResetModal');
+
+    if (openBtn && resetModal) {
+        openBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Чтобы страница не прыгала вверх
+            resetModal.classList.add('active'); // Добавляем класс из CSS
+        });
+    }
+
+    if (closeBtn && resetModal) {
+        closeBtn.addEventListener('click', () => {
+            resetModal.classList.remove('active');
+        });
+    }
+
+    // Закрытие при клике вне контента модалки
+    window.addEventListener('click', (e) => {
+        if (e.target === resetModal) {
+            resetModal.classList.remove('active');
+        }
+    });
+});

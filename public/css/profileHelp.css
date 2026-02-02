@@ -1,165 +1,150 @@
 :root {
-    /* Цвета */
-    --modal-overlay: rgba(0, 0, 0, 0.85);
-    --modal-bg: #1c1c24;
-    --help-item-bg: #252530;
-    --tg-color: #229ED9;
-    
-    /* Акценты */
-    --accent-main: #ff3b5c;
-    --accent-glow: rgba(255, 59, 92, 0.4);
-    
-    /* Текст */
-    --text-bright: #ffffff;
-    --text-muted: #8e8e93;
-    
-    /* Разное */
-    --radius-md: 15px;
-    --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+--modal-overlay: rgba(0, 0, 0, 0.85);
+--modal-bg: #1c1c24;
+--help-item-bg: #252530;
+--tg-color: #229ED9;
+--accent-main: #ff3b5c;
+--accent-glow: rgba(255, 59, 92, 0.4);
+--text-bright: #ffffff;
+--text-muted: #8e8e93;
+--radius-md: 15px;
+--transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* --- ОБЩИЙ БЛОК МОДАЛКИ --- */
 .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 9999;
-    background-color: var(--modal-overlay);
-    backdrop-filter: blur(10px);
-    opacity: 0;
-    pointer-events: none; /* Чтобы не блокировать клики, когда закрыта */
-    transition: opacity 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+z-index: 9999;
+background-color: var(--modal-overlay);
+backdrop-filter: blur(10px);
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.3s ease;
+display: flex;
+justify-content: center;
+align-items: center;
 }
 
 .modal.active {
-    display: flex !important;
-    opacity: 1;
-    pointer-events: auto;
+display: flex !important;
+opacity: 1;
+pointer-events: auto;
 }
 
-/* --- КОНТЕНТ ПОМОЩИ --- */
 .modal-content {
-    position: relative;
-    background: var(--modal-bg);
-    width: 90%;
-    max-width: 400px;
-    padding: 40px 25px 30px;
-    border-radius: 30px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    transform: scale(0.8);
-    transition: transform 0.3s var(--transition-bounce);
+position: relative;
+background: var(--modal-bg);
+width: 90%;
+max-width: 400px;
+padding: 40px 25px 30px;
+border-radius: 30px;
+box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+transform: scale(0.8);
+transition: transform 0.3s var(--transition-bounce);
 }
 
 .modal.active .modal-content {
-    transform: scale(1);
+transform: scale(1);
 }
 
-/* --- ЭЛЕМЕНТЫ СВЯЗИ --- */
 .help-item {
-    background: var(--help-item-bg);
-    padding: 18px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    transition: transform 0.2s ease, background 0.2s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+background: var(--help-item-bg);
+padding: 18px;
+border-radius: var(--radius-md);
+display: flex;
+align-items: center;
+justify-content: space-between;
+margin-bottom: 15px;
+transition: transform 0.2s ease, background 0.2s ease;
+border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .help-item:hover {
-    transform: translateY(-2px);
-    background: #2a2a38;
+transform: translateY(-2px);
+background: #2a2a38;
 }
 
-/* Анимация иконки письма */
 .help-item i.fa-envelope {
-    font-size: 18px;
-    color: var(--accent-main);
-    animation: mailSwing 3s infinite ease-in-out;
+font-size: 18px;
+color: var(--accent-main);
+animation: mailSwing 3s infinite ease-in-out;
 }
 
-/* Кнопка Telegram */
 .tg-link {
-    text-decoration: none;
-    background: var(--tg-color);
-    padding: 18px;
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 20px;
-    color: white;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3);
+text-decoration: none;
+background: var(--tg-color);
+padding: 18px;
+border-radius: var(--radius-md);
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 12px;
+margin-bottom: 20px;
+color: white;
+font-weight: 600;
+transition: all 0.3s ease;
+box-shadow: 0 4px 15px rgba(34, 158, 217, 0.3);
 }
 
 .tg-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(34, 158, 217, 0.5);
-    filter: brightness(1.1);
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(34, 158, 217, 0.5);
+filter: brightness(1.1);
 }
 
 .tg-link:active {
-    transform: scale(0.98);
+transform: scale(0.98);
 }
 
-/* --- КНОПКА КОПИРОВАНИЯ --- */
 .copy-btn {
-    background: transparent;
-    border: none;
-    color: var(--accent-main);
-    font-size: 12px;
-    cursor: pointer;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 5px 10px;
-    border-radius: 8px;
-    transition: background 0.2s ease;
+background: transparent;
+border: none;
+color: var(--accent-main);
+font-size: 12px;
+cursor: pointer;
+font-weight: 800;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+padding: 5px 10px;
+border-radius: 8px;
+transition: background 0.2s ease;
 }
 
 .copy-btn:hover {
-    background: rgba(255, 59, 92, 0.1);
+background: rgba(255, 59, 92, 0.1);
 }
 
-/* --- АНИМАЦИИ --- */
 @keyframes mailSwing {
-    0%, 100% { transform: rotate(0); }
-    20% { transform: rotate(-15deg); }
-    40% { transform: rotate(10deg); }
-    60% { transform: rotate(-5deg); }
-    80% { transform: rotate(0); }
+0%, 100% { transform: rotate(0); }
+20% { transform: rotate(-15deg); }
+40% { transform: rotate(10deg); }
+60% { transform: rotate(-5deg); }
+80% { transform: rotate(0); }
 }
 
-/* Красный крестик (общий для всех модалок) */
 .close-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 34px;
-    height: 34px;
-    background-color: var(--accent-main);
-    color: var(--text-bright);
-    border: none;
-    border-radius: 50%;
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 12px var(--accent-glow);
-    z-index: 10;
+position: absolute;
+top: 15px;
+right: 15px;
+width: 34px;
+height: 34px;
+background-color: var(--accent-main);
+color: var(--text-bright);
+border: none;
+border-radius: 50%;
+font-size: 24px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+box-shadow: 0 4px 12px var(--accent-glow);
+z-index: 10;
 }
 
 .close-btn:active {
-    transform: scale(0.9);
+transform: scale(0.9);
 }
