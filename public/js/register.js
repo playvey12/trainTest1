@@ -641,7 +641,7 @@ async function registerUser(event) {
 // ========== ВХОД ПОЛЬЗОВАТЕЛЯ ==========
 async function loginUser(event) {
     if (event) event.preventDefault();
-    
+    console.log("Функция loginUser запущена"); 
     try {
         const userEmailInput = document.getElementById("email");
         const userPasswordInput = document.getElementById("password");
@@ -657,32 +657,35 @@ async function loginUser(event) {
             userPassword: userPasswordValue,
             userEmail: userEmailValue
         };
-        
+
+        console.log("Отправка запроса на сервер...");
         const response = await fetch(`/user/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(userData),
         });
-        
+
+        console.log("Ответ сервера:", response.status);
+
         if (response.ok) {
             const result = await response.json();
-            if (result.token) {
-                localStorage.setItem('token', result.token);
-                showNotification("Вход выполнен!", "success");
-                setTimeout(() => {
-                    window.location.href = `/profileMain?token=${result.token}`;
-                }, 1000);
-            }
+            
+           if (result.token) {
+    localStorage.setItem('token', result.token);
+    showNotification("Вход выполнен!", "success");
+    // Убираем задержку для теста
+    window.location.replace(`/profileMain?token=${result.token}`); 
+}
         } else {
             const errorData = await response.json();
             showNotification(`Ошибка: ${errorData.error || 'Неверный email или пароль'}`, "error");
         }
     } catch (error) {
-        showNotification('Ошибка сети', 'error');
+        console.error("Критическая ошибка:", error); // Позволит увидеть реальную причину в консоли
+        showNotification('Ошибка сети или скрипта', 'error');
     }
     return false;
 }
-
 // ========== ИНИЦИАЛИЗАЦИЯ ==========
 document.addEventListener('DOMContentLoaded', function() {
     // Инициализация переключателей паролей
@@ -772,11 +775,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
-            e.preventDefault();
+            e.preventDefault(); // Обязательно: отменяет перезагрузку страницы
+            console.log("Попытка входа..."); // Проверка в консоли
             loginUser(e);
         });
     }
-    
     // Инициализация всех модальных окон
     window.confirmationModal = new ConfirmationModal();
     window.privacyPolicyModal = new PrivacyPolicyModal();

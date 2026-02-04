@@ -1,4 +1,5 @@
 .modal-overlay {
+
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.85);
@@ -9,7 +10,7 @@
     z-index: 2000;
     opacity: 0;
     visibility: hidden;
-    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .modal-overlay.active {
@@ -25,14 +26,24 @@
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-color);
     position: relative;
-    transform: translateY(30px);
-    transition: 0.4s;
+    
+    /* Начальное состояние для анимации */
+    opacity: 0;
+    transform: scale(0.9) translateY(40px);
+    
+    /* Одна плавная настройка перехода */
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .modal-overlay.active .modal-content {
-    transform: translateY(0);
-}
 
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+.input-group input:focus {
+    transform: translateX(5px);
+    box-shadow: -5px 0 0 var(--accent-color);
+}
 .modal-header {
     display: flex;
     align-items: center;
@@ -221,4 +232,55 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 15px;
+}
+/* Базовое состояние для карточек */
+.exercise-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Класс для запуска анимации из JS */
+.exercise-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Эффект при наведении на упражнение */
+.exercise-card:hover {
+    transform: scale(1.02);
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Анимация иконок при наведении на кнопку */
+.edit-btn:hover i { transform: rotate(15deg) scale(1.2); }
+.delete-btn:hover i { transform: shake 0.3s; }
+
+@keyframes shake {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+}
+.day-card.active {
+    position: relative;
+    overflow: hidden;
+}
+
+.day-card.active::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--accent-glow);
+    animation: pulseActiveDay 2s infinite;
+}
+
+@keyframes pulseActiveDay {
+    0% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+    100% { opacity: 0.2; }
+}
+
+.day-card:active {
+    transform: scale(0.9);
 }

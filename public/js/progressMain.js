@@ -90,13 +90,6 @@ async function updateMainChart() {
 
 // Отрисовка Chart.js
 function renderChart(ctx, historyData) {
-    // Если график уже существует - уничтожаем его перед новой отрисовкой
-    if (mainChartInstance) {
-        mainChartInstance.destroy();
-    }
-
-    // Подготовка данных
-    // historyData приходит в формате [{date: "ISO...", weight: 80, ...}, ...]
     const labels = historyData.map(item => {
         const d = new Date(item.date);
         return d.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
@@ -104,11 +97,24 @@ function renderChart(ctx, historyData) {
     
     const dataPoints = historyData.map(item => item.weight);
 
-    // Создаем градиент для красоты (как в CSS --accent-glow)
+    // 1. Если график УЖЕ существует — просто обновляем его данные
+    if (mainChartInstance) {
+        mainChartInstance.data.labels = labels;
+        mainChartInstance.data.datasets[0].data = dataPoints;
+        
+        // Метод update() делает переход супер-плавным
+        mainChartInstance.update({
+            duration: 800,
+            easing: 'easeInOutQuart'
+        });
+        return; 
+    }
+
+    // 2. Если графика еще нет — создаем его один раз (первый запуск)
     const chartContext = ctx.getContext('2d');
-    const gradient = chartContext.createLinearGradient(0, 0, 0, 400);
-    gradient.addColorStop(0, 'rgba(255, 59, 92, 0.4)'); // Розовый
-    gradient.addColorStop(1, 'rgba(255, 59, 92, 0.0)'); // Прозрачный
+    const gradient = chartContext.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, 'rgba(255, 59, 92, 0.4)');
+    gradient.addColorStop(1, 'rgba(255, 59, 92, 0.0)');
 
     mainChartInstance = new Chart(ctx, {
         type: 'line',
@@ -117,44 +123,36 @@ function renderChart(ctx, historyData) {
             datasets: [{
                 label: 'Рабочий вес (кг)',
                 data: dataPoints,
-                borderColor: '#ff3b5c',       // Твой акцентный цвет
-                backgroundColor: gradient,    // Градиент под линией
+                borderColor: '#ff3b5c',
+                backgroundColor: gradient,
                 borderWidth: 3,
-                pointBackgroundColor: '#1e1e2e', // Темный цвет точки (фон)
-                pointBorderColor: '#ff3b5c',     // Обводка точки
-                pointRadius: 6,
+                pointBackgroundColor: '#1e1e2e',
+                pointBorderColor: '#ff3b5c',
+                pointRadius: 5,
                 pointHoverRadius: 8,
                 fill: true,
-                tension: 0.4 // Плавность линий
+                tension: 0.4 // Плавность кривой
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            // Настройка анимации появления при первой загрузке
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
+            },
             plugins: {
-                legend: { display: false }, // Скрываем легенду
-                tooltip: {
-                    backgroundColor: '#2c2c34',
-                    titleColor: '#ffffff',
-                    bodyColor: '#ffffff',
-                    borderColor: '#ff3b5c',
-                    borderWidth: 1,
-                    displayColors: false,
-                    callbacks: {
-                        label: function(context) {
-                            return context.parsed.y + ' кг';
-                        }
-                    }
-                }
+                legend: { display: false }
             },
             scales: {
                 y: {
                     grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                    ticks: { color: '#8e8e93' }
+                    ticks: { color: '#8e8e93', font: { family: 'Montserrat' } }
                 },
                 x: {
                     grid: { display: false },
-                    ticks: { color: '#8e8e93' }
+                    ticks: { color: '#8e8e93', font: { family: 'Montserrat' } }
                 }
             }
         }
@@ -282,7 +280,6 @@ function setupModalLogic() {
 function renderWeightHistory(history) {
     const container = document.getElementById('weightBarContainer');
     const labelsContainer = document.getElementById('weightBarLabels');
- 
     const minWeightEl = document.getElementById('min-weight-display');
     const avgWeightEl = document.getElementById('avg-weight-display');
 
@@ -291,7 +288,6 @@ function renderWeightHistory(history) {
     container.innerHTML = '';
     labelsContainer.innerHTML = '';
 
-    // 1. Сортируем и фильтруем
     const sortedHistory = [...history]
         .filter(d => d.weight && !isNaN(parseFloat(d.weight)))
         .sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -304,40 +300,61 @@ function renderWeightHistory(history) {
         return;
     }
 
-    // 2. Расчеты
     const weights = last7Days.map(d => parseFloat(d.weight));
     const minW = Math.min(...weights);
-    const sum = weights.reduce((a, b) => a + b, 0);
-    const avgWeight = sum / weights.length;
+    const maxW = Math.max(...weights);
+    const avgWeight = weights.reduce((a, b) => a + b, 0) / weights.length;
 
-    // 3. ОБНОВЛЕНИЕ ТЕКСТА (теперь точно сработает)
     if (minWeightEl) minWeightEl.textContent = `${minW.toFixed(1)} кг`;
     if (avgWeightEl) avgWeightEl.textContent = `${avgWeight.toFixed(1)} кг`;
 
-    // 4. Отрисовка графиков (оставляем как было)
-    const maxW = Math.max(...weights);
     last7Days.forEach((entry, index) => {
+        // 1. Создаем обертку
         const barWrapper = document.createElement('div');
         barWrapper.className = 'bar-wrapper';
+
+        // 2. Создаем цифру над столбиком (с нулевой прозрачностью для анимации)
         const barValue = document.createElement('span');
         barValue.className = 'bar-value';
         barValue.textContent = Number(entry.weight).toFixed(1);
+        barValue.style.opacity = '0';
+        barValue.style.transition = 'opacity 0.5s ease-out';
+        barValue.style.transitionDelay = `${index * 0.1 + 0.4}s`; // Появится после того, как вырастет столбик
 
+        // 3. Создаем столбик
         const bar = document.createElement('div');
         bar.className = 'bar' + (index === last7Days.length - 1 ? ' active' : '');
-        
-        let heightPercent = maxW === minW ? 70 : (entry.weight / maxW) * 100;
-        bar.style.height = `${Math.max(heightPercent, 15)}%`;
+        bar.style.height = '0%'; // Начальная высота для анимации
 
+        // 4. Расчет "красивой" высоты
+        // Чтобы график не был плоским, если веса почти одинаковые
+        let heightPercent;
+        if (maxW === minW) {
+            heightPercent = 60;
+        } else {
+            // Масштабируем: минимальный вес в истории = 20% высоты, максимальный = 90%
+            heightPercent = 20 + ((entry.weight - minW) / (maxW - minW)) * 70;
+        }
+
+        // 5. Собираем в DOM
         barWrapper.appendChild(barValue);
         barWrapper.appendChild(bar);
         container.appendChild(barWrapper);
 
+        // 6. Подпись даты
         const dateObj = new Date(entry.date);
         const span = document.createElement('span');
         span.textContent = !isNaN(dateObj.getTime()) 
             ? dateObj.toLocaleDateString('ru-RU', {day:'2-digit', month:'2-digit'})
             : '??.??';
         labelsContainer.appendChild(span);
+
+        // 7. ЗАПУСК АНИМАЦИИ (с каскадным эффектом)
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                bar.style.height = `${heightPercent}%`;
+                barValue.style.opacity = '1';
+            }, index * 100); // Каждый следующий столбик начинает расти на 100мс позже
+        });
     });
 }

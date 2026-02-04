@@ -197,7 +197,7 @@ async function addTask(userId, data) {
 }
 
 
-// ФУНКЦИИ РЕДАКТИРОВАНИЯ ДАННЫХ
+
 
 
 async function editTask(userId, id, data) {
@@ -245,7 +245,7 @@ async function editTaskForTrainMode(userId, id, data) {
 
   if (!foundInPlan) return null;
 
-  // 2. Добавляем запись в историю для графика (НЕ ТРОГАЕМ trainData)
+
   if (weight !== undefined) {
     const now = new Date();
     const newHistoryEntry = {
@@ -260,32 +260,27 @@ async function editTaskForTrainMode(userId, id, data) {
     await saveUserDataDB(userId, "exercise_history", exerciseHistory);
   }
 
-  // Мы НЕ вызываем saveUserDataDB для "train_data", 
-  // поэтому старые веса (например, "300, 200, 200") останутся нетронутыми.
-  
+ 
   return { success: true }; 
 }
 
 async function updateProfileStats(userId, data) {
   const { addWorkout, hoursToAdd } = data;
   
-  // Получаем текущие данные из БД
+
   const allData = await getUserDataDB(userId);
   const profile = allData.profileWeightList;
 
-  // 1. Обновляем часы (всегда прибавляем то, что натикало)
-  // Используем parseFloat, чтобы избежать ошибок конкатенации строк
   const currentHours = parseFloat(profile.totalHours || 0);
   const newHours = currentHours + parseFloat(hoursToAdd);
-  profile.totalHours = parseFloat(newHours.toFixed(2)); // Округляем до 2 знаков
+  profile.totalHours = parseFloat(newHours.toFixed(2));
 
-  // 2. Обновляем счетчик тренировок (только если addWorkout === true)
   if (addWorkout) {
     const currentWorkouts = parseInt(profile.totalWorkouts || 0);
     profile.totalWorkouts = currentWorkouts + 1;
   }
 
-  // Сохраняем обновленный объект profile_data обратно в БД
+
   await saveUserDataDB(userId, "profile_data", profile);
 
   return {
@@ -305,24 +300,24 @@ async function editUserWeight(userId, data) {
   const newWeight = parseFloat(parseFloat(userWeight).toFixed(1));
   const now = new Date();
   
-  // Создаем ключ текущего дня в локальном формате, например "31.01.2026"
+
   const todayKey = now.toLocaleDateString('ru-RU');
 
-  // Ищем индекс записи за сегодня
+
   const existingEntryIndex = weightHistory.findIndex(entry => {
     if (!entry.date) return false;
-    // Сравниваем либо по ключу (если сохраняли так), либо через приведение к локальной дате
+
     const entryLocalDate = new Date(entry.date).toLocaleDateString('ru-RU');
     return entryLocalDate === todayKey;
   });
 
   if (existingEntryIndex !== -1) {
-    // ОБНОВЛЯЕМ: заменяем вес в существующей колонке
+ 
     weightHistory[existingEntryIndex].weight = newWeight;
-    weightHistory[existingEntryIndex].timestamp = now.toISOString(); // сохраняем точный момент обновления
+    weightHistory[existingEntryIndex].timestamp = now.toISOString();
     weightHistory[existingEntryIndex].date = now.toISOString();
   } else {
-    // ДОБАВЛЯЕМ: новая колонка для нового дня
+
     const weightEntry = {
       id: getRandomInt(1, 1000000000),
       weight: newWeight,
@@ -332,10 +327,10 @@ async function editUserWeight(userId, data) {
     weightHistory.push(weightEntry);
   }
 
-  // Сортируем
+
   weightHistory.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-  // Ограничиваем историю
+
   const finalHistory = weightHistory.length > 60 ? weightHistory.slice(-60) : weightHistory;
 
   profileWeightList.userWeight = newWeight;
@@ -347,7 +342,7 @@ async function editUserWeight(userId, data) {
   return {
     success: true,
     profileWeightList,
-    weightHistory: finalHistory // Возвращаем всю историю для корректного обновления
+    weightHistory: finalHistory 
   };
 }
 
@@ -367,8 +362,7 @@ async function editUserAvatar(userId, avatarUrl) {
     }
 }
 
-// Не забудьте добавить в module.exports в конце файла:
-// editUserAvatar
+
 async function editGoalWeight(userId, data) {
   const { userGoalWeight } = data;
   if (userGoalWeight === undefined || isNaN(userGoalWeight)) {
@@ -399,7 +393,7 @@ async function editStartWeight(userId, data) {
 }
 
 
-// В файле trainData.js
+
 async function editUserName(userId, data) {
   const { userName } = data;
   const trimmedName = userName ? userName.trim() : "";
@@ -440,7 +434,6 @@ async function editUserTheme(userId, data) {
   return { success: true, profileWeightList };
 }
 
-// ФУНКЦИИ УДАЛЕНИЯ
 
 
 async function deleteTaskById(userId, id) {
@@ -468,7 +461,7 @@ async function deleteTaskById(userId, id) {
 }
 
 
-// ФУНКЦИИ ПРОФИЛЯ И ВЕСА
+
 
 
 async function getProfileDataWithHistory(userId, period = '30days') {
@@ -511,7 +504,7 @@ if (!profileWeightList.avatarUrl) {
 }
 
 
-// ФУНКЦИИ ИСТОРИИ УПРАЖНЕНИЙ
+
 
 
 async function addExerciseToHistory(userId, exerciseName, weight) {
@@ -538,13 +531,12 @@ async function getExerciseHistoryByExerciseAndPeriod(userId, exerciseName, perio
     const data = await getUserDataDB(userId);
     let history = data.exerciseHistory || [];
 
-    // 1. Фильтруем по имени упражнения
+ 
     history = history.filter(item => item.exerciseName === exerciseName);
 
-    // 2. Сортируем по дате (от старых к новым)
     history.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-    // 3. Фильтруем по периоду (если нужно)
+
     const now = new Date();
     if (period === '30days') {
         const limitDate = new Date();
@@ -562,13 +554,13 @@ async function getUniqueExerciseNames(userId) {
     const data = await getUserDataDB(userId);
     const history = data.exerciseHistory || [];
     
-    // Собираем уникальные имена
+   
     const uniqueNames = [...new Set(history.map(item => item.exerciseName))];
-    return uniqueNames.sort(); // Сортируем по алфавиту
+    return uniqueNames.sort(); 
 }
 
 
-// ЭКСПОРТ
+
 
 
 module.exports = {

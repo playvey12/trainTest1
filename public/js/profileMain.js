@@ -296,5 +296,42 @@ async function savePrivacySettings() {
 
 window.savePrivacySettings = savePrivacySettings;
 
-// Привязываем к глобальному окну для работы onclick
-window.savePrivacySettings = savePrivacySettings;
+
+function confirmDeleteAccount() { 
+    toggleModal('deleteConfirmModal', true); 
+}
+
+function closeDeleteModal() { 
+    toggleModal('deleteConfirmModal', false); 
+}
+
+async function executeDeleteAccount() {
+
+    const btn = document.querySelector('.danger-btn');
+    btn.disabled = true;
+    btn.innerText = 'Удаление...';
+
+    try {
+        const response = await window.auth.authFetch('/user/delete-account', {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            window.auth.showNotification('Прощайте! Аккаунт удален.', 'success');
+            window.auth.clearToken();
+            setTimeout(() => {
+                window.location.href = '/register';
+            }, 1500);
+        } else {
+            const data = await response.json();
+            window.auth.showNotification(data.error || 'Ошибка удаления', 'error');
+            btn.disabled = false;
+            btn.innerText = 'Да, удалить';
+        }
+    } catch (error) {
+        console.error('Delete error:', error);
+        window.auth.showNotification('Ошибка сети', 'error');
+        btn.disabled = false;
+        btn.innerText = 'Да, удалить';
+    }
+}

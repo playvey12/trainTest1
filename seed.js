@@ -128,17 +128,44 @@ const profileData = {
 
 const userId = 1;
 
+
+
+
 db.serialize(() => {
-    const sql = `UPDATE user_data SET weight_history = ?, train_data = ?, exercise_history = ?, profile_data = ? WHERE user_id = ?`;
-    db.run(sql, [
-        JSON.stringify(weightData), 
-        JSON.stringify(trainData), 
-        JSON.stringify(exerciseHistory), 
-        JSON.stringify(profileData), 
-        userId
-    ], function(err) {
-        if (err) console.error("Ошибка:", err.message);
-        else console.log("✅ База данных обновлена! Теперь веса в планах хранятся строкой через запятую.");
-        process.exit();
+    // 1. Сначала находим ID самого последнего созданного пользователя
+    db.get("SELECT id FROM users ORDER BY id DESC LIMIT 1", [], (err, row) => {
+        if (err) {
+            console.error("Ошибка при поиске пользователя:", err.message);
+            return;
+        }
+
+        if (!row) {
+            console.log("❌ Пользователей в базе нет! Сначала зарегистрируйся.");
+            process.exit();
+            return;
+        }
+
+        const currentUserId = row.id;
+        console.log(`Нашел пользователя с ID: ${currentUserId}. Загружаю данные...`);
+
+        // 2. Используем полученный ID для обновления
+        const sql = `UPDATE user_data SET weight_history = ?, train_data = ?, exercise_history = ?, profile_data = ? WHERE user_id = ?`;
+        
+        db.run(sql, [
+            JSON.stringify(weightData), 
+            JSON.stringify(trainData), 
+            JSON.stringify(exerciseHistory), 
+            JSON.stringify(profileData), 
+            currentUserId
+        ], function(err) {
+            if (err) {
+                console.error("Ошибка при обновлении:", err.message);
+            } else if (this.changes === 0) {
+                console.log("⚠️ Запись в user_data не найдена. Проверь, работает ли триггер при регистрации.");
+            } else {
+                console.log(`✅ База данных обновлена для пользователя ID: ${currentUserId}!`);
+            }
+            process.exit();
+        });
     });
 });

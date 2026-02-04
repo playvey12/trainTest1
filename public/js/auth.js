@@ -84,8 +84,16 @@ function showNotification(message, type = 'info') {
 
 // auth-check.js
 function checkAuth() {
-  const token = getToken();
-  const protectedPaths = ['/profileMain', '/trainingPlan', '/trainMode','/progressMain'];
+  const urlParams = new URLSearchParams(window.location.search);
+  const tokenFromUrl = urlParams.get('token');
+  
+  // Если токен есть в URL, сохраняем его в localStorage прямо сейчас
+  if (tokenFromUrl) {
+    localStorage.setItem('token', tokenFromUrl);
+  }
+
+  const token = localStorage.getItem('token'); // Теперь проверяем актуальный токен
+  const protectedPaths = ['/profileMain', '/trainingPlan', '/trainMode', '/progressMain'];
   const currentPath = window.location.pathname;
   
   if (protectedPaths.includes(currentPath) && !token) {
@@ -98,6 +106,8 @@ function checkAuth() {
   
   return true;
 }
+checkAuth();
+// В конце файла auth.js обязательно вызовите эту функцию
 
 // theme.js
 function initTheme() {

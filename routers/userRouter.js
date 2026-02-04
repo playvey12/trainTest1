@@ -5,6 +5,7 @@ const { body } = require('express-validator');
 const { regValidation, loginValidation } = require("../middleware/validation/userValidations");
 const { changePassword } = require("./postRouter");
 const {isAuth} = require("../middleware/all.middleware");
+const { deleteUser } = require("./deleteRouter");
 
 
 
@@ -22,6 +23,9 @@ router.post('/resend-confirmation-code', [
 router.post('/login', loginValidation, userLogin);
 
 
+
+
+router.delete('/delete-account', isAuth, deleteUser)
 
 router.post('/forgot-password', [
   body('email').isEmail().normalizeEmail()

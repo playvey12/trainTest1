@@ -1,8 +1,9 @@
 const jwt = require("jsonwebtoken");
-const jwtSecret = process.env.JWT_SECRET || 'fallback';
+
 const db = require("../data/bin/db");
 const templateMailer = require("../EmailService/templateMailer");
-
+require('dotenv').config();
+const jwtSecret = process.env.JWT_SECRET;
 const isAuth = (req, res, next) => {
 if (req.path.startsWith('/css/') || req.path.startsWith('/js/') || req.path.startsWith('/img/')) {
     return next();

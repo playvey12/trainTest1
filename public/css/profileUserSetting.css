@@ -163,3 +163,17 @@
 .save-modal-btn:active {
     transform: scale(0.98);
 }
+
+
+.btn-confirm{ width: 100%;
+    background: var(--accent-main);
+    border: none;
+    padding: 18px;
+    border-radius: 15px;
+    color: var(--text-bright);
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 10px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px var(--accent-shadow);
+    transition: background 0.3s ease, transform 0.2s ease;}

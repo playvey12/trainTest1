@@ -70,21 +70,22 @@ function renderExercises(exercises) {
 
     exercises.forEach(ex => {
         const card = document.createElement("div");
-        card.className = "exercise-card fade-in";
+        // Оставляем только базовый класс, класс 'show' добавит аниматор
+        card.className = "exercise-card"; 
         card.setAttribute("data-id", ex.id);
 
-    const weightDisplay = Array.isArray(ex.weight) ? ex.weight.join(' — ') : ex.weight;
+        const weightDisplay = Array.isArray(ex.weight) ? ex.weight.join(' — ') : ex.weight;
         card.innerHTML = `
             <div class="exercise-icon-wrapper">
                 <div class="exercise-icon"><i class="fas fa-dumbbell"></i></div>
             </div>
-           <div class="exercise-info">
-        <h3>${ex.exerciseName}</h3>
-       <p>
-            <i class="fas fa-redo"></i> ${ex.approaches} подх.
-            <i class="fas fa-weight-hanging"></i> ${weightDisplay} кг
-        </p>
-    </div>
+            <div class="exercise-info">
+                <h3>${ex.exerciseName}</h3>
+                <p>
+                    <i class="fas fa-redo"></i> ${ex.approaches} подх.
+                    <i class="fas fa-weight-hanging"></i> ${weightDisplay} кг
+                </p>
+            </div>
             <div class="exercise-actions">
                 <button class="edit-btn" title="Редактировать">
                     <i class="fas fa-pencil-alt"></i>
@@ -95,14 +96,15 @@ function renderExercises(exercises) {
             </div>
         `;
 
-        // Назначаем обработчики динамически
         card.querySelector(".edit-btn").onclick = () => window.editExercise(ex.id, ex.exerciseName, ex.weight, ex.approaches);
         card.querySelector(".delete-btn").onclick = () => window.deleteExercise(ex.id);
 
         container.appendChild(card);
     });
-}
 
+    // ВАЖНО: Запускаем анимацию появления СРАЗУ после отрисовки
+    animateExerciseCards();
+}
 // ========== МОДАЛЬНЫЕ ОКНА (Глобальные функции) ==========
 window.openModal = function(modalId) {
     const modal = document.getElementById(modalId);
@@ -289,3 +291,17 @@ function setupModalListeners() {
     updateSetsCount('exerciseWeight', 'exerciseSets');       // Для добавления
 updateSetsCount('edit-exercise-weight', 'edit-exercise-approaches');
 }
+
+
+
+function animateExerciseCards() {
+    const cards = document.querySelectorAll('.exercise-card');
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.add('show');
+        }, index * 100); // Каждая карточка через 100мс после предыдущей
+    });
+}
+
+// Если ты используешь Handlebars и данные уже в DOM при загрузке:
+document.addEventListener('DOMContentLoaded', animateExerciseCards);

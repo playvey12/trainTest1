@@ -35,6 +35,15 @@
             <button class="save-modal-btn" onclick="saveProfileSettings()">
                 {{t.profile.settings.save_button}}
             </button>
+            <div class="form-group"
+                style="margin-top: 30px; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                <p style="font-size: 12px; color: var(--text-dim); margin-bottom: 10px;">
+                    Внимание: удаление аккаунта приведет к полной потере данных без возможности восстановления.
+                </p>
+                <button class="btn-confirm" style="background: #ff3b5c; width: 100%;" onclick="confirmDeleteAccount()">
+                    <i class="fas fa-user-slash"></i> Удалить мой аккаунт
+                </button>
+            </div>
         </div>
     </div>
 </div>
