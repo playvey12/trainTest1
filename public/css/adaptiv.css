@@ -864,3 +864,47 @@
         gap: 0;
     }
 }
+/* Адаптив для мобильных устройств */
+@media (max-width: 470px) {
+    .modal-content.ai-form {
+        width: 92%; /* Оставляем небольшие отступы по бокам */
+        padding: 20px;
+        margin: 10px;
+        max-height: 90vh; /* Чтобы модалка не вылезала за пределы экрана */
+        overflow-y: auto; /* Добавляем прокрутку, если контент не влезет */
+    }
+
+    .ai-inputs-form {
+        grid-template-columns: 1fr; /* Переключаем сетку в одну колонку */
+        gap: 15px; /* Увеличиваем расстояние между полями для удобства */
+    }
+
+    .input-group, .input-group.full-width {
+        grid-column: span 1; /* Все инпуты теперь на всю ширину */
+    }
+
+    .header-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .modal-header h2 {
+        font-size: 20px;
+    }
+
+    /* Улучшаем поля ввода для мобильных */
+    .input-group input {
+        padding: 14px 12px; 
+        font-size: 16px; /* Важно: 16px предотвращает авто-зум в iOS Safari */
+    }
+
+    .btn-save {
+        padding: 16px;
+        font-size: 16px;
+    }
+    .ai-inputs-form{
+        display: flex;
+       flex-direction: column;
+    }
+}

@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let activeRestTimer = null; // Таймер отдыха для кнопки
 
     // Константы
-    const REST_DURATION = 3; // Время отдыха в секундах
+    const REST_DURATION = 60; // Время отдыха в секундах
 
     // === 2. Обработчики событий (Listeners) ===
 

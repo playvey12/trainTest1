@@ -1,0 +1,37 @@
+<div class="modal-overlay" id="aiDataModal" style="display: none;">
+    <div class="modal-content ai-form">
+        <button class="modal-close" onclick="closeData()">&times;</button>
+
+        <div class="modal-header">
+            <div class="header-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h2> {{t.profile.AiData.title}}</h2>
+            <p> {{t.profile.AiData.desk}}</p>
+        </div>
+
+        <form class="ai-inputs-form" id="aiAssistantForm">
+            <div class="input-group">
+                <label>{{t.profile.AiData.weight_input}}</label>
+                <input type="number" name="weight" placeholder="67" required>
+            </div>
+            <div class="input-group">
+                <label>{{t.profile.AiData.height_input}}</label>
+                <input type="number" name="height" placeholder="184" required>
+            </div>
+            <div class="input-group">
+                <label>{{t.profile.AiData.age_input}}</label>
+                <input type="number" name="age" placeholder="22" required>
+            </div>
+            <div class="input-group">
+                <label>{{t.profile.AiData.experience_input}}</label>
+                <input type="number" name="experience" placeholder="5" required>
+            </div>
+            <div class="input-group full-width">
+                <label>{{t.profile.AiData.injuries_input}}</label>
+                <input type="text" name="injuries" placeholder="Например: боли в колене..." rows="2"></input>
+            </div>
+            <button type="submit" class="btn-save">{{t.profile.AiData.btn_save_btn}}</button>
+        </form>
+    </div>
+</div>

@@ -2,18 +2,20 @@
     <div class="modal-content delete-modal">
         <div class="modal-header">
             <i class="fas fa-exclamation-triangle" style="color: #ff3b5c; font-size: 40px; margin-bottom: 15px;"></i>
-            <h2>Удаление аккаунта</h2>
+            <h2>{{t.profile.deleteModal.delete_title}}</h2>
         </div>
         <div class="modal-body">
-            <p>Вы уверены, что хотите полностью удалить свой аккаунт? Это действие <strong>необратимо</strong>.</p>
-            <p style="font-size: 13px; color: var(--text-dim); margin-top: 10px;">Все ваши тренировки и настройки будут
-                стерты навсегда.</p>
+            <p>{{t.profile.deleteModal.delete_desk}}
+                <strong>{{t.profile.deleteModal.delete_desk_b}}</strong>.
+            </p>
+            <p style="font-size: 13px; color: var(--text-dim); margin-top: 10px;">
+                {{t.profile.deleteModal.delete_second_desk}}</p>
         </div>
         <div class="modal-footer" style="display: flex; gap: 10px; margin-top: 25px;">
-            <button class="modal-btn secondary-btn" onclick="closeDeleteModal()" style="flex: 1;">Отмена</button>
+            <button class="modal-btn secondary-btn" onclick="closeDeleteModal()"
+                style="flex: 1;">{{t.profile.deleteModal.delete_btn_cancel}}</button>
             <button class="modal-btn danger-btn" onclick="executeDeleteAccount()">
-
-                Да, удалить
+                {{t.profile.deleteModal.delete_btn_delete}}
             </button>
         </div>
     </div>

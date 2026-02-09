@@ -99,7 +99,7 @@ body {
 }
 
 .day-card .day-name {
-    font-size: 10px;
+    font-size: 12px;
     text-transform: uppercase;
     font-weight: 700;
     color: var(--text-dim);

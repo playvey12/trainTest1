@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./css/profileTheme.css" />
     <link rel="stylesheet" href="./css/footer.css" />
     <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/dataModel.css" />
     <link rel="stylesheet" href="/css/adaptiv.css" />
     {{> seo}}
 
@@ -25,6 +26,7 @@
     {{> settingForUserProfile}}
     {{> helpModal}}
     {{>deleteUserModal}}
+    {{>dataModalWindow}}
     <div class="container">
         <header class="profile-header">
             <div class="avatar-container">
@@ -48,43 +50,54 @@
             </div>
         </section>
         <nav class="menu-list">
-            <buttoon class="menu-item" onclick="openSettings()">
+            <button class="menu-item" onclick="openSettings()">
                 <div class="menu-icon"><i class="fas fa-user-circle"></i></div>
                 <div class="menu-content">
                     <span class="menu-title">{{t.profile.menu.settings_title}}</span>
                     <span class="menu-subtitle">{{t.profile.menu.settings_sub}}</span>
                 </div>
                 <i class="fas fa-chevron-right arrow"></i>
-            </buttoon>
+            </button>
 
 
 
-            <buttoon class="menu-item" onclick="openPrivacy()">
+            <button class="menu-item" onclick="openPrivacy()">
                 <div class="menu-icon"><i class="fas fa-shield-alt"></i></div>
                 <div class="menu-content">
                     <span class="menu-title">{{t.profile.menu.privacy_title}}</span>
                     <span class="menu-subtitle">{{t.profile.menu.privacy_sub}}</span>
                 </div>
                 <i class="fas fa-chevron-right arrow"></i>
-            </buttoon>
+            </button>
 
             <button class="menu-item" onclick="openSetTheme()">
                 <div class="menu-icon"><i class="fas fa-paint-brush"></i></div>
                 <div class="menu-content">
-                    <span class="menu-title">Внешний вид</span>
-                    <span class="menu-subtitle">Темная или светлая тема</span>
+                    <span class="menu-title">{{t.profile.menu.theme_title}}</span>
+                    <span class="menu-subtitle">{{t.profile.menu.theme_sub}}</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+            </button>
+            <button class="menu-item" onclick="openData()">
+                <div class="menu-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="menu-content">
+                    <span class="menu-title">{{t.profile.menu.data_title}}</span>
+                    <span class="menu-subtitle">{{t.profile.menu.data_sub}}</span>
                 </div>
                 <i class="fas fa-chevron-right arrow"></i>
             </button>
 
-            <buttoon class="menu-item" onclick="openHelp()">
+            <button class="menu-item" onclick="openHelp()">
                 <div class="menu-icon"><i class="fas fa-question-circle"></i></div>
                 <div class="menu-content">
                     <span class="menu-title">{{t.profile.menu.help_title}}</span>
                     <span class="menu-subtitle">{{t.profile.menu.help_sub}}</span>
                 </div>
                 <i class="fas fa-chevron-right arrow"></i>
-            </buttoon>
+            </button>
+
         </nav>
 
         {{>footer}}

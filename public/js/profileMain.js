@@ -68,6 +68,10 @@ function closeTheme() { toggleModal('themeModal', false); }
 function openHelp() { toggleModal('helpModal', true); }
 function closeHelp() { toggleModal('helpModal', false); }
 
+function openData() { toggleModal('aiDataModal', true); }
+function closeData() { toggleModal('aiDataModal', false); }
+
+
 function toggleModal(id, show) {
     const modal = document.getElementById(id);
     if (!modal) return;

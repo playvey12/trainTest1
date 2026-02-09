@@ -3,13 +3,13 @@ const { getRandomInt } = require("../utils/random");
 
 const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const russianDays = {
-  Monday: "Понедельник",
-  Tuesday: "Вторник",
-  Wednesday: "Среда",
-  Thursday: "Четверг",
-  Friday: "Пятница",
-  Saturday: "Суббота",
-  Sunday: "Воскресенье",
+  Monday: "Пн",
+  Tuesday: "Вт",
+  Wednesday: "Ср",
+  Thursday: "Чт",
+  Friday: "Пт",
+  Saturday: "Сб",
+  Sunday: "Вс",
 };
 
 
@@ -233,7 +233,7 @@ async function editTaskForTrainMode(userId, id, data) {
   const { exerciseName, weight } = data;
   const { trainData, exerciseHistory } = await getUserDataDB(userId);
   
-  // 1. Просто ищем упражнение, чтобы убедиться, что оно существует
+
   const searchId = String(id);
   let foundInPlan = false;
   for (const day of daysOfWeek) {
