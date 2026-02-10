@@ -146,7 +146,7 @@
     "weightHistory": {
       "title": "История веса",
       "subtitle": "Последние изменения",
-      "period": "30 ДНЕЙ",
+      "period": "7 ДНЕЙ",
       "stats": {
         "minLabel": "МИН",
         "minValue": "73.5 кг",

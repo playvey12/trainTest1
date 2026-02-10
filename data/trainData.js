@@ -228,6 +228,23 @@ async function editTask(userId, id, data) {
   return { ...foundTask, day: foundDay };
 }
 
+async function updateUserAiParams(userId, aiData) {
+
+    const { profileWeightList } = await getUserDataDB(userId);
+
+  
+    if (aiData.userWeightAi) profileWeightList.userWeightAi = aiData.userWeightAi;
+    if (aiData.userHeightAi) profileWeightList.userHeightAi = aiData.userHeightAi;
+    if (aiData.userAgeAi) profileWeightList.userAgeAi = aiData.userAgeAi;
+    if (aiData.userExperienceAi) profileWeightList.userExperienceAi = aiData.userExperienceAi;
+    if (aiData.userInjuriesAi) profileWeightList.userInjuriesAi = aiData.userInjuriesAi;
+
+   
+    await saveUserDataDB(userId, "profile_data", profileWeightList);
+
+    return profileWeightList;
+}
+
 
 async function editTaskForTrainMode(userId, id, data) {
   const { exerciseName, weight } = data;
@@ -575,7 +592,7 @@ module.exports = {
   editTask,
   deleteTaskById,
   editTaskForTrainMode,
-
+updateUserAiParams,
   getProfileDataWithHistory,
   editUserWeight,
   editGoalWeight,

@@ -13,25 +13,28 @@
         <form class="ai-inputs-form" id="aiAssistantForm">
             <div class="input-group">
                 <label>{{t.profile.AiData.weight_input}}</label>
-                <input type="number" name="weight" placeholder="67" required>
+                <input type="number" id="userWeightAi" name="weight" placeholder="67" required>
             </div>
             <div class="input-group">
                 <label>{{t.profile.AiData.height_input}}</label>
-                <input type="number" name="height" placeholder="184" required>
+                <input type="number" id="userHeightAi" name="height" placeholder="184" required>
             </div>
             <div class="input-group">
                 <label>{{t.profile.AiData.age_input}}</label>
-                <input type="number" name="age" placeholder="22" required>
+                <input type="number" id="userAgeAi" name="age" placeholder="22" required>
             </div>
             <div class="input-group">
                 <label>{{t.profile.AiData.experience_input}}</label>
-                <input type="number" name="experience" placeholder="5" required>
+                <input type="number" id="userExperienceAi" name="experience" placeholder="5" required>
             </div>
             <div class="input-group full-width">
                 <label>{{t.profile.AiData.injuries_input}}</label>
-                <input type="text" name="injuries" placeholder="Например: боли в колене..." rows="2"></input>
+                <input type="text" id="userInjuriesAi" name="injuries" placeholder="Например: боли в колене..."
+                    rows="2"></input>
             </div>
-            <button type="submit" class="btn-save">{{t.profile.AiData.btn_save_btn}}</button>
+
+            <button type="button" class="btn-save" onclick="saveAiUserData()">{{t.profile.AiData.btn_save_btn}}</button>
+
         </form>
     </div>
 </div>

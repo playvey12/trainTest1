@@ -4,62 +4,52 @@ const db = require("../data/bin/db");
 const templateMailer = require("../EmailService/templateMailer");
 require('dotenv').config();
 const jwtSecret = process.env.JWT_SECRET;
+
+
+
+
 const isAuth = (req, res, next) => {
-if (req.path.startsWith('/css/') || req.path.startsWith('/js/') || req.path.startsWith('/img/')) {
-    return next();
-  }
-  const publicPaths = [
-    '/', '/login', '/register', 
-    '/verify-token', 
-    '/css/', '/js/', '/img/'
-  ];
-  
-
-  let token = null;
-  
-
-  const authHeader = req.headers.authorization;
-  if (authHeader && authHeader.startsWith("Bearer ")) {
-    token = authHeader.substring(7);
-  }
-  
-
-  else if (req.query.token) {
-    token = req.query.token;
-
-  }
-  
-  if (!token) {
-    // Если запрос ожидает JSON (наш случай с fetch)
-    if (req.headers.accept && req.headers.accept.includes('application/json') || req.path.includes('userData')) {
-        return res.status(401).json({
-            isAuthenticated: false,
-            message: "Токен не предоставлен"
-        });
+    if (req.path.startsWith('/css/') || req.path.startsWith('/js/') || req.path.startsWith('/img/')) {
+        return next();
     }
-    return res.redirect('/login');
-}
-  
-  try {
-   
-    const decoded = jwt.verify(token, jwtSecret);
-    
-  
-    req.user = {
-      id: decoded.id,
-      email: decoded.email
-    };
-    
 
-    
-    next();
-  } catch (error) {
-    if (req.headers.accept && req.headers.accept.includes('application/json')) {
-        return res.status(401).json({ error: "Невалидный токен" });
+    const isApiRequest = 
+        (req.headers.accept && req.headers.accept.includes('application/json')) ||
+        req.path.startsWith('/user/') || 
+        req.path.includes('saveAiData');
+
+    let token = null;
+    const authHeader = req.headers.authorization;
+    if (authHeader && authHeader.startsWith("Bearer ")) {
+        token = authHeader.substring(7);
+    } else if (req.query.token) {
+        token = req.query.token;
     }
-    return res.redirect('/login');
-}
+
+    if (!token) {
+        return isApiRequest 
+            ? res.status(401).json({ error: "Токен отсутствует" }) 
+            : res.redirect('/login');
+    }
+
+    try {
+        const decoded = jwt.verify(token, jwtSecret);
+        req.user = { id: decoded.id, email: decoded.email };
+        next();
+    } catch (error) {
+        console.error("JWT Verify Error:", error.message);
+      
+        if (isApiRequest) {
+            return res.status(401).json({ error: "Сессия истекла, войдите заново" });
+        }
+        return res.redirect('/login');
+    }
 };
+
+
+
+
+
 
 const requireVerified = (req, res, next) => {
   db.get('SELECT is_verified FROM users WHERE id = ?', [req.user.id], (err, user) => {

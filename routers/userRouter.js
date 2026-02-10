@@ -3,7 +3,7 @@ const router = express.Router();
 const { regNewUser, confirmReg, resendCode, userLogin,forgotPassword,resetPassword } = require("./postRouter");
 const { body } = require('express-validator');
 const { regValidation, loginValidation } = require("../middleware/validation/userValidations");
-const { changePassword } = require("./postRouter");
+const { changePassword,saveUserAiData} = require("./postRouter");
 const {isAuth} = require("../middleware/all.middleware");
 const { deleteUser } = require("./deleteRouter");
 
@@ -22,7 +22,7 @@ router.post('/resend-confirmation-code', [
 
 router.post('/login', loginValidation, userLogin);
 
-
+router.post('/saveAiData', isAuth,saveUserAiData )
 
 
 router.delete('/delete-account', isAuth, deleteUser)

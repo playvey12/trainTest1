@@ -143,7 +143,6 @@ async function regNewUser(req, res) {
     });
   } catch (error) {
     console.error("Registration error:", error);
-    // --- ТЕЛЕГРАМ: Уведомление об ошибке (очень полезно!) ---
     notifyRegistration(`⚠️ Ошибка регистрации!\nEmail: ${req.body.userEmail}\nError: ${error.message}`);
     res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
@@ -348,36 +347,62 @@ async function resetPassword(req, res) {
         );
     });
 }
+
+async function saveUserAiData(req, res) {
+    try {
+      
+        const userId = req.user.id;
+        
+      
+        const { 
+            userWeightAi, 
+            userHeightAi, 
+            userAgeAi, 
+            userExperienceAi, 
+            userInjuriesAi 
+        } = req.body;
+
+     
+        if (!userWeightAi || !userHeightAi || !userAgeAi) {
+             return res.status(400).json({ error: "Основные поля не заполнены" });
+        }
+
+      
+        await trainList.updateUserAiParams(userId, {
+            userWeightAi,
+            userHeightAi,
+            userAgeAi,
+            userExperienceAi,
+            userInjuriesAi
+        });
+
+     
+        res.json({ success: true, message: "Данные AI успешно сохранены" });
+
+    } catch (error) {
+        console.error("Save AI Data Error:", error);
+        res.status(500).json({ error: "Внутренняя ошибка сервера" });
+    }
+}
+
 async function changePassword(req, res) {
     try {
         const { oldPassword, newPassword } = req.body;
         const userId = req.user.id;
-
-  
         if (!oldPassword || !newPassword || newPassword.length < 8) {
             return res.status(400).json({ error: "Заполните все поля корректно" });
         }
-
-    
         db.get('SELECT password FROM users WHERE id = ?', [userId], async (err, user) => {
             if (err) return res.status(500).json({ error: "Ошибка при обращении к БД" });
             if (!user) return res.status(404).json({ error: "Пользователь не найден" });
-
-      
             const isMatch = await bcrypt.compare(oldPassword, user.password);
-            
             if (!isMatch) {
                 return res.status(400).json({ error: "Текущий пароль введен неверно" });
             }
-
-           
             if (oldPassword === newPassword) {
                 return res.status(400).json({ error: "Новый пароль не может совпадать со старым" });
             }
-
-   
             const hashPassword = await bcrypt.hash(newPassword, 10);
-
             db.run(
                 'UPDATE users SET password = ? WHERE id = ?',
                 [hashPassword, userId],
@@ -392,4 +417,6 @@ async function changePassword(req, res) {
         res.status(500).json({ error: "Внутренняя ошибка сервера" });
     }
 }
-module.exports = {changePassword,resetPassword,forgotPassword,updateStats,addTask,regNewUser,confirmReg,resendCode,userLogin,addLogExercise};
+
+
+module.exports = {saveUserAiData,changePassword,resetPassword,forgotPassword,updateStats,addTask,regNewUser,confirmReg,resendCode,userLogin,addLogExercise};

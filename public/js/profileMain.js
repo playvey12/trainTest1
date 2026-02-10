@@ -239,6 +239,72 @@ async function apiFetch(path, options = {}) {
     return data;
 }
 
+async function saveAiUserData() {
+    const userWeightAiInput=document.getElementById('userWeightAi')
+    const userHeightAiInput=document.getElementById('userHeightAi')
+    const userAgeAiInput=document.getElementById('userAgeAi')
+    const userExperienceAiInput=document.getElementById('userExperienceAi')
+    const userInjuriesAiInput=document.getElementById('userInjuriesAi')
+ if (!userWeightAiInput || !userHeightAiInput || !userAgeAiInput||!userExperienceAiInput||!userInjuriesAiInput) {
+        showNotification("Ошибка: Поля ввода не найдены", "error");
+        return;
+    }
+const userWeightAi=userWeightAiInput.value
+const userHeightAi=userHeightAiInput.value
+const userAgeAi=userAgeAiInput.value
+const userExperienceAi=userExperienceAiInput.value
+const userInjuriesAi=userInjuriesAiInput.value
+// Валидация на фронтенде
+ if (!userWeightAi) {
+        showNotification("Введите текущий вес", "error");
+        userWeightAi.focus();
+        return;
+    }
+     if (!userHeightAi) {
+        showNotification("Введите текущий рост", "error");
+        userHeightAi.focus();
+        return;
+    } if (!userAgeAi) {
+        showNotification("Введите текущий возраст", "error");
+        userAgeAi.focus();
+        return;
+    } if (!userExperienceAi) {
+        showNotification("Введите ваш опыт тренировок", "error");
+        userExperienceAi.focus();
+        return;
+    } if (!userInjuriesAi) {
+        showNotification("Введите возможные травмы", "error");
+        userInjuriesAi.focus();
+        return;
+    }
+    const token = localStorage.getItem("token");
+console.log("Текущий токен:", token); // Посмотри в консоль браузера (F12)
+
+if (!token) {
+    showNotification("Вы не авторизованы. Пожалуйста, войдите в систему.", "error");
+    // Можно сделать window.location.href = '/login';
+    return;
+}
+     try {
+        const result = await apiFetch('/user/saveAiData', {
+            method: 'POST',
+            body: JSON.stringify({ 
+                userWeightAi: userWeightAi, 
+                userHeightAi: userHeightAi,
+                userAgeAi:userAgeAi,
+                userExperienceAi:userExperienceAi,
+                userInjuriesAi:userInjuriesAi
+            })
+        });
+        showNotification("Данные успешно изменены", "success");
+        [userWeightAiInput, userHeightAiInput, userAgeAiInput, userExperienceAiInput, userInjuriesAiInput].forEach(input => input.value = '');
+    } catch (err) {
+        console.error("Ошибка при смене данных:", err);
+ 
+        const errorMsg = err.data?.error || "Не удалось изменить ваши данные";
+        showNotification(errorMsg, "error");
+    }
+}
 async function savePrivacySettings() {
     const oldPassInput = document.getElementById('oldPassword');
     const newPassInput = document.getElementById('newPassword');
