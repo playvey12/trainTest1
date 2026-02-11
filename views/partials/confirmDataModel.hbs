@@ -1,0 +1,20 @@
+<div id="modalOverlayDataAi" class="modal-overlay">
+    <div class="modal-card">
+        <div class="modal-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+        </div>
+        <h2 class="modal-title">{{t.profile.confirmData.title}}</h2>
+        <p class="modal-text">
+            {{t.profile.confirmData.desk}}
+        </p>
+        <div class="modal-actions">
+            <button class="btn-secondary" onclick="closeConfirmDataAi()">{{t.profile.confirmData.btn_later}}</button>
+            <button class="btn-secondary btn-secondary-red"
+                onclick="generateTrainPlan()">{{t.profile.confirmData.btn_start}}</button>
+        </div>
+    </div>
+</div>

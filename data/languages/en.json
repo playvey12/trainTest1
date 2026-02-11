@@ -1,0 +1,275 @@
+{
+  "seo": {
+    "default": {
+      "title": "HEAVYSTAT — Your Professional Workout Log",
+      "description": "Track progress, plan workouts, and analyze strength gains in real-time.",
+      "og_image": "/img/og-preview.png"
+    },
+    "auth": {
+      "title": "Login & Registration | HEAVYSTAT",
+      "description": "Log in to HeavyStat to access your workout plans and progress history."
+    },
+    "progress": {
+      "title": "Stats & Progress | Workout Analysis",
+      "description": "Charts of working weight dynamics, body weight history, and personal records."
+    },
+    "trainPlan": {
+      "title": "Workout Plan | Program Setup",
+      "description": "Create your ideal workout program. Add exercises, sets, and weights."
+    },
+    "trainMode": {
+      "title": "Active Workout | Progress Mode",
+      "description": "Log every set, track rest time, and beat your past results."
+    }
+  },
+  "profile": {
+    "title": "My Profile",
+    "level": "HEAVYSTAT MEMBER",
+    "stats": {
+      "workouts": "WORKOUTS",
+      "hours": "HOURS"
+    },
+    "menu": {
+      "settings_title": "Account Settings",
+      "theme_title": "Appearance",
+      "theme_sub": "Dark or light theme",
+      "data_title": "Edit Data",
+      "data_sub": "Enter your details for plan generation",
+      "settings_sub": "Manage profile and data",
+      "privacy_title": "Privacy & Security",
+      "privacy_sub": "Data access",
+      "help_title": "Help & Support",
+      "help_sub": "FAQ & Contacts"
+    },
+    "common": {
+      "nav_training": "WORKOUTS",
+      "nav_progress": "STATS",
+      "nav_plan": "PLAN",
+      "nav_profile": "PROFILE"
+    },
+    "settings": {
+      "name_label": "Your Name",
+      "telegram_label": "Your Telegram",
+      "data_info": "This data will be visible in your profile and will help set up bot notifications.",
+      "save_button": "Save"
+    },
+    "privacy": {
+      "title": "Privacy",
+      "password_label": "Enter new password",
+      "old_password": "Enter current password",
+      "password_confirm": "Confirm new password",
+      "visibility_label": "Public Profile",
+      "visibility_sub": "Your progress is visible to other athletes",
+      "sessions_title": "Active Sessions",
+      "logout_all": "Log Out",
+      "save_btn": "UPDATE SECURITY"
+    },
+    "help": {
+      "title": "Support",
+      "description": "If you have any questions or technical issues, contact us via:",
+      "email_label": "Our Email",
+      "telegram_label": "Support Chat",
+      "faq_label": "Knowledge Base (FAQ)",
+      "copy_btn": "Copy",
+      "close_btn": "GOT IT"
+    },
+    "theme": {
+      "title": "App Theme",
+      "dark": "Dark",
+      "light": "Light",
+      "save_btn": "DONE"
+    },
+    "AiData": {
+      "title": "AI Data",
+      "desk": "Set up your avatar parameters",
+      "weight_input": "Weight (kg)",
+      "height_input": "Height (cm)",
+      "age_input": "Age",
+      "experience_input": "Experience (months)",
+      "injuries_input": "Injuries / Limitations",
+      "btn_save_btn": "Save and Send"
+    },
+    "trainPlan": {
+      "title": "Workout Plan",
+      "subtitle": "Organize your workout schedule and reach your goals",
+      "todayRoutine": "Today's Program",
+      "noExercises": "No exercises for today. Time to add some!",
+      "addExercise": "Add Exercise",
+      "generatePlan": "Generate Workout Plan",
+      "sets": "Sets",
+      "kg": "Working Weight",
+      "name": "Exercise Name"
+    },
+    "confirmData": {
+      "title": "Check Your Profile",
+      "desk": "To help us create the most accurate and effective workout plan for you, please ensure all profile data is correct. Set the weights manually.",
+      "btn_later": "Later",
+      "btn_start": "To Creation"
+    },
+    "modal": {
+      "save_btn": "SAVE",
+      "edit_tittle": "Editing",
+      "delete_deck": "Are you sure you want to remove this exercise from the plan? This action cannot be undone.",
+      "delete_quation": "Delete exercise?",
+      "delete_close": "Cancel",
+      "delete_delete": "Delete"
+    },
+    "deleteModal": {
+      "delete_title": "Delete Account",
+      "delete_desk": "Are you sure you want to completely delete your account? This action is",
+      "delete_second_desk": "All your workouts and settings will be permanently erased.",
+      "delete_desk_b": "irreversible",
+      "delete_btn_cancel": "Cancel",
+      "delete_btn_delete": "Yes, delete"
+    }
+  },
+  "progressPage": {
+    "header": {
+      "title": "Workout Progress",
+      "subtitle": "Track your achievements and metrics"
+    },
+    "mainChart": {
+      "title": "Your Progress",
+      "subtitle": "Working weight dynamics",
+      "exerciseLabel": "EXERCISE",
+      "periodLabel": "PERIOD",
+      "loading": "Loading...",
+      "periods": {
+        "30days": "30 Days",
+        "3months": "3 Months",
+        "all_time": "All Time"
+      }
+    },
+    "weightInput": {
+      "title": "Your Current Weight",
+      "subtitle": "Log your result today",
+      "currentValue": 74.5,
+      "min": 40,
+      "max": 150,
+      "button": "Confirm"
+    },
+    "weightHistory": {
+      "title": "Weight History",
+      "subtitle": "Recent changes",
+      "period": "7 DAYS",
+      "stats": {
+        "minLabel": "MIN",
+        "minValue": "73.5 kg",
+        "avgLabel": "AVG",
+        "avgValue": "75.1 kg"
+      }
+    },
+    "settingModalWindowProgress": {
+      "settingGoal": "Goal Setting",
+      "startWeight": "Starting Weight (kg)",
+      "goalWeight": "Target Weight (kg)",
+      "saveSettings": "Save Changes"
+    }
+  },
+  "workoutSession": {
+    "labels": {
+      "duration": "SESSION DURATION",
+      "noDaySelected": "No day selected",
+      "instruction": "Please select a workout day..."
+    },
+    "buttons": {
+      "start": "Start Workout",
+      "selectDay": "Select Day",
+      "finish": "Finish"
+    },
+    "status": {
+      "date": "Monday, Oct 23",
+      "setInfo": "Set 3 of 4"
+    },
+    "active_exercise": {
+      "badge": "CURRENT EXERCISE",
+      "weight_label": "WEIGHT (KG)",
+      "weight_unit": "KG",
+      "sets_label": "SETS",
+      "sets_left": "LEFT",
+      "save_to_chart": "Save to Chart"
+    },
+    "queue": {
+      "title": "EXERCISE QUEUE",
+      "waiting_status": "WAITING"
+    },
+    "selectDays": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "modals": {
+      "confirm_finish": {
+        "title": "Finish Workout?",
+        "subtitle": "The timer will be stopped.",
+        "cancel_btn": "Cancel",
+        "confirm_btn": "Finish"
+      },
+      "results": {
+        "title": "Results",
+        "time_label": "Time",
+        "rest_label": "Rest",
+        "close_btn": "Great"
+      }
+    },
+    "weight_fix": {
+      "title": "Log Weight",
+      "weight_label": "Your working weight (kg):",
+      "placeholder": "Example: 85",
+      "save_btn": "Save"
+    }
+  },
+  "auth": {
+    "login_title": "Login",
+    "hero_title": "JOIN THE HEAVYSTAT",
+    "hero_subtitle": "Start your professional transformation today.",
+    "step_label": "ACCOUNT SETUP",
+    "step_1_of_3": "Step 1 of 3",
+    "step_2_of_3": "Step 2 of 3",
+    "email_label": "Email Address",
+    "email_placeholder": "john@example.com",
+    "email_error": "Please enter a valid email",
+    "password_label": "Create Password",
+    "forgot_password": "Forgot password?",
+    "login_btn": "LOG IN",
+    "social_divider": "OR CONTINUE WITH",
+    "already_have_acc": "Don't have an account?",
+    "sign_in_link": "Register",
+    "footer_terms": "By clicking \"Create Account\", you agree to the Terms of Service and Privacy Policy.",
+    "reset_password": {
+      "title": "Password Recovery",
+      "step1_text": "Enter your email, and we will send you a reset code.",
+      "send_code_btn": "Send Code",
+      "step2_text": "Code sent to your email. Enter it and your new password.",
+      "code_placeholder": "6-digit code",
+      "new_password_placeholder": "New password (min. 8 chars)",
+      "change_password_btn": "Change Password"
+    },
+    "email_confirm": {
+      "title": "Email Confirmation",
+      "description_prefix": "We sent a 6-digit confirmation code to",
+      "description_suffix": "Please enter it below:",
+      "error_code": "Invalid confirmation code",
+      "resend_btn": "Resend Code",
+      "timer_text": "Resend in:",
+      "seconds_unit": "sec.",
+      "confirm_btn": "Confirm"
+    }
+  },
+  "reg": {
+    "register_title": "Registration | HEAVYSTAT",
+    "hero_title": "JOIN THE HEAVYSTAT",
+    "hero_subtitle": "Create an account to track your progress.",
+    "confirm_password_label": "Confirm Password",
+    "confirm_password_error": "Passwords do not match",
+    "register_btn": "CREATE ACCOUNT",
+    "agreement_text": "I agree to the",
+    "policy_link": "Privacy Policy",
+    "already_have_acc_login": "Already have an account?",
+    "login_link_text": "Log In"
+  }
+}

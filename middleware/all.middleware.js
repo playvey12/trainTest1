@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
-
+const fs = require("fs");
 const db = require("../data/bin/db");
 const templateMailer = require("../EmailService/templateMailer");
 require('dotenv').config();
 const jwtSecret = process.env.JWT_SECRET;
-
+const path = require("path");
+const trainList =require("../data/trainData")
 
 
 
@@ -47,7 +48,33 @@ const isAuth = (req, res, next) => {
 };
 
 
+const translations = {
 
+    ru: JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", "languages", "ru.json"), "utf8")),
+    en: JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", "languages", "en.json"), "utf8"))
+};
+const setLangMiddleware = async (req, res, next) => {
+  
+    res.locals.t = translations.ru;
+    res.locals.currentLang = 'ru';
+
+    
+    if (req.user) {
+        try {
+            const { profileWeightList } = await trainList.getUserDataDB(req.user.id);
+            const lang = profileWeightList.language || 'ru';
+            
+       
+            if (translations[lang]) {
+                res.locals.t = translations[lang];
+                res.locals.currentLang = lang;
+            }
+        } catch (e) {
+            console.error("Ошибка при получении языка:", e);
+        }
+    }
+    next();
+};
 
 
 
@@ -84,5 +111,6 @@ async function sendVerificationCode(email, code) {
 module.exports = {
   isAuth,
   requireVerified,
-  sendVerificationCode
+  sendVerificationCode,
+  setLangMiddleware
 };

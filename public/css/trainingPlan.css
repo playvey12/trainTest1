@@ -219,7 +219,10 @@ body {
     /* Плавный скролл */
     scroll-behavior: smooth;
 }
-
+.fa-solid {
+    width: 10px;
+    height: 10px;
+}
 /* Стилизация скроллбара, чтобы он не выглядел "стремно" */
 .exercise-list::-webkit-scrollbar {
     width: 6px;
@@ -238,4 +241,42 @@ body {
 
 .exercise-list::-webkit-scrollbar-thumb:hover {
     background: #ff5f7a;
+}
+
+/* Используем комбо селектор для повышения приоритета */
+.modal-header button.close-btn {
+    /* Сброс всех браузерных и старых стилей */
+    all: unset; 
+    
+    /* Геометрия */
+    width: 32px !important;
+    height: 32px !important;
+    aspect-ratio: 1 / 1 !important; /* Гарантирует квадрат */
+    min-width: 32px !important;
+  
+
+    /* Оформление */
+    background-color: var(--accent-color) !important;
+    border-radius: 50% !important;
+    color: white !important;
+    cursor: pointer !important;
+
+    /* Центрирование символа &times; */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    
+    /* Текст */
+    font-size: 22px !important;
+    font-weight: bold !important;
+    line-height: 0 !important; /* Убирает лишнюю высоту строки */
+    
+    /* Эффекты */
+    transition: transform 0.2s ease, background-color 0.2s ease !important;
+    box-shadow: 0 4px 10px rgba(255, 59, 92, 0.3) !important;
+}
+
+.modal-header button.close-btn:hover {
+    transform:  scale(1.1) !important;
+    background-color: #ff5f7a !important;
 }

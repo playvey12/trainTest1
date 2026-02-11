@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET || 'fallback';
 const { body, validationResult } = require('express-validator');
 const templateMailer  = require('../EmailService/templateMailer');
-
+const {generateWorkoutData}=require('../services/trainPlanAiYandexGpt')
 
 
 
@@ -419,4 +419,63 @@ async function changePassword(req, res) {
 }
 
 
-module.exports = {saveUserAiData,changePassword,resetPassword,forgotPassword,updateStats,addTask,regNewUser,confirmReg,resendCode,userLogin,addLogExercise};
+
+
+async function generateWorkout(req, res) {
+  try {
+    const userId = req.user.id;
+
+   
+    const userData = await trainList.getUserDataDB(userId);
+    const profile = userData.profileWeightList;
+
+    
+    if (!profile.userWeightAi || !profile.userHeightAi) {
+      return res.status(400).json({ 
+        message: "Пожалуйста, сначала заполните данные в форме профиля!" 
+      });
+    }
+
+  
+    const aiPlanArray = await generateWorkoutData({
+      userWeightAi: profile.userWeightAi,
+      userHeightAi: profile.userHeightAi,
+      userAgeAi: profile.userAgeAi,
+      userExperienceAi: profile.userExperienceAi,
+      userInjuriesAi: profile.userInjuriesAi
+    });
+
+    
+    const newTrainData = {
+      Monday: [], Tuesday: [], Wednesday: [], 
+      Thursday: [], Friday: [], Saturday: [], Sunday: []
+    };
+
+   
+    aiPlanArray.forEach(ex => {
+     
+        const dayMap = { "Пн": "Monday", "Вт": "Tuesday", "Ср": "Wednesday", "Чт": "Thursday", "Пт": "Friday", "Сб": "Saturday", "Вс": "Sunday" };
+        const englishDay = dayMap[ex.dayRussian] || "Monday";
+        
+        newTrainData[englishDay].push({
+            id: ex.id || `ai_${Math.random().toString(36).substr(2, 9)}`,
+            exerciseName: ex.exerciseName,
+            weight: ex.weight,
+            approaches: ex.approaches,
+            day: englishDay,
+            dayRussian: ex.dayRussian
+        });
+    });
+
+
+    await trainList.saveUserDataDB(userId, "train_data", newTrainData);
+
+    res.json({ success: true, plan: newTrainData });
+    
+  } catch (error) {
+    console.error("Ошибка генерации плана:", error);
+    res.status(500).json({ message: "Техническая ошибка при создании плана" });
+  }
+}
+
+module.exports = {generateWorkout,saveUserAiData,changePassword,resetPassword,forgotPassword,updateStats,addTask,regNewUser,confirmReg,resendCode,userLogin,addLogExercise};

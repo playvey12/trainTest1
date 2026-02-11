@@ -44,6 +44,7 @@ const defaultProfile = {
     userName: "Пользователь",
     avatarUrl: "",
     tgUserName:"",
+    language: "ru",
     userWeight: 0,
     userStartWeight: 0,
     userGoalWeight: 0,
@@ -379,6 +380,13 @@ async function editUserAvatar(userId, avatarUrl) {
     }
 }
 
+async function editUserLanguage(userId, lang) {
+    const { profileWeightList } = await getUserDataDB(userId);
+    profileWeightList.language = lang; 
+    
+    await saveUserDataDB(userId, "profile_data", profileWeightList);
+    return { success: true, language: lang };
+}
 
 async function editGoalWeight(userId, data) {
   const { userGoalWeight } = data;
@@ -601,6 +609,7 @@ updateUserAiParams,
   editUserAvatar,
   editUserTheme,
   editTgUserName,
+  editUserLanguage,
   
   addExerciseToHistory,
   getExerciseHistoryByExerciseAndPeriod,

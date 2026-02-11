@@ -175,7 +175,7 @@
 
 /* Кнопка закрытия (Крестик) */
 .close-btn {
-    width: 32px;
+    width: 30px;
     height: 32px;
     background-color: var(--accent-color); /* Красный фон */
     color: white; /* Белый крест */
@@ -283,4 +283,39 @@
 
 .day-card:active {
     transform: scale(0.9);
+}
+/* Кнопка закрытия (Крестик) */
+.close-btn {
+    /* Фиксированные и одинаковые размеры для идеального круга */
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px; /* Запрещаем сжатие в flex-контейнере */
+    
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    
+    /* Идеальное центрирование крестика внутри */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    
+    /* Убираем лишние отступы, которые могут давить изнутри */
+    line-height: 0; 
+    font-size: 20px;
+    font-weight: bold;
+    
+    /* Поднимаем над другими элементами */
+    z-index: 10;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg) scale(1.1);
+    background-color: #ff5f7a;
+    box-shadow: 0 0 15px var(--accent-glow);
 }

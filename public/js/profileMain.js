@@ -405,3 +405,33 @@ async function executeDeleteAccount() {
         btn.innerText = 'Да, удалить';
     }
 }
+
+//translition
+const translations = {
+    ru: {  },
+    en: {  }
+};
+
+
+async function setLanguage(lang) {
+    try {
+        const response = await fetch('/profileMain/change-language', { 
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            
+                'Authorization': `Bearer ${localStorage.getItem('token')}` 
+            },
+            body: JSON.stringify({ lang })
+        });
+
+        if (response.ok) {
+            showNotification(lang === 'ru' ? "Язык изменен" : "Language updated", "success");
+            setTimeout(() => window.location.reload(), 500);
+        } else {
+            showNotification("Error updating language", "error");
+        }
+    } catch (e) {
+        console.error("Language change error:", e);
+    }
+}

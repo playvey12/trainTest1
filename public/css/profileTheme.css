@@ -86,3 +86,34 @@
 .theme-card:hover {
     transform: translateY(-3px);
 }
+.lang-switcher-mini {
+    position: absolute;
+    top: 20px;
+    left: 25px; /* Слева, так как кнопка закрытия обычно справа */
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--text-muted, #888);
+}
+
+.lang-option {
+    cursor: pointer;
+    transition: 0.2s;
+    opacity: 0.6;
+}
+
+.lang-option:hover {
+    opacity: 1;
+}
+
+.lang-option.active {
+    opacity: 1;
+    color: var(--theme-active-border); /* Или ваш акцентный цвет */
+}
+
+.lang-divider {
+    margin: 0 5px;
+    opacity: 0.3;
+    font-weight: normal;
+}

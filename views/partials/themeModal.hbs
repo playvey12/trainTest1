@@ -1,5 +1,13 @@
 <div id="themeModal" class="modal">
     <div class="modal-content">
+        <div class="lang-switcher-mini">
+            <span class="lang-option {{#if (equal currentLang 'ru')}}active{{/if}}"
+                onclick="setLanguage('ru')">RU</span>
+            <span class="lang-divider">|</span>
+            <span class="lang-option {{#if (equal currentLang 'en')}}active{{/if}}"
+                onclick="setLanguage('en')">EN</span>
+        </div>
+
         <button class="close-btn" onclick="closeTheme()">&times;</button>
 
         <header class="modal-header">

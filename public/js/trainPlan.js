@@ -120,8 +120,8 @@ window.openAddModal = function() {
 };
 
 window.deleteExercise = function(id) {
-    currentDeleteId = id; // Запоминаем ID во внешнюю переменную
-    window.openModal("deleteModal"); // Открываем окно подтверждения
+    currentDeleteId = id; 
+    window.openModal("deleteModal"); 
 };
 
 window.editExercise = function(id, name, weight, approaches) {
@@ -305,3 +305,76 @@ function animateExerciseCards() {
 
 // Если ты используешь Handlebars и данные уже в DOM при загрузке:
 document.addEventListener('DOMContentLoaded', animateExerciseCards);
+
+
+
+function openConfirmDataAi() { toggleModal('modalOverlayDataAi', true); }
+function closeConfirmDataAi() { toggleModal('modalOverlayDataAi', false); }
+
+function toggleModal(id, show) {
+    const modal = document.getElementById(id);
+    if (!modal) return;
+    if (show) {
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('active'), 10);
+        document.body.style.overflow = "hidden";
+    } else {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            document.body.style.overflow = "";
+        }, 300);
+    }
+}
+async function generateTrainPlan() {
+    const btn = document.querySelector('.btn-secondary-red');
+    const originalText = btn.innerText;
+    btn.innerText = "Генерация... ⏳";
+    btn.disabled = true;
+
+    // 1. Получаем токен (предполагаю, что при логине ты сохраняешь его в localStorage)
+    const token = localStorage.getItem('token'); 
+
+    if (!token) {
+        showNotification("Вы не авторизованы!", "error");
+        btn.innerText = originalText;
+        btn.disabled = false;
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/workoutData/generate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // 2. ВАЖНО: Добавляем токен в заголовки
+                'Authorization': `Bearer ${token}` 
+            }
+            // body не нужен, так как данные берутся из БД на сервере по id юзера
+        });
+
+        // Сначала читаем статус, потому что если там редирект (302) или 401, json() может упасть
+        if (response.status === 401 || response.status === 403) {
+             throw new Error("Ошибка авторизации. Пожалуйста, войдите снова.");
+        }
+
+        const plan = await response.json();
+
+        if (response.ok) {
+            showNotification("План успешно создан!", "success");
+            location.reload(); 
+        } else {
+            showNotification("Ошибка: " + (plan.message || plan.error), "error");
+        }
+    } catch (error) {
+        console.error("Ошибка сети:", error);
+        showNotification(error.message, "error");
+    } finally {
+        btn.innerText = originalText;
+        btn.disabled = false;
+        // Если функция closeConfirmDataAi существует, раскомментируй
+        if (typeof closeConfirmDataAi === 'function') {
+             closeConfirmDataAi(); 
+        }
+    }
+}
