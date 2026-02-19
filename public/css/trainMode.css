@@ -746,3 +746,29 @@ width: 200px;
     transform: translateY(-50px) scale(1.05);
     opacity: 0;
 }
+/* 1. Гарантируем, что оверлеи не блокируют экран, когда они не активны */
+.modal-overlay:not(.active) {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
+/* 2. Поднимаем блок кнопок над всеми фоновыми эффектами и spacer-ами */
+.session-actions {
+    position: relative;
+    z-index: 999; /* Выше чем main-spacer */
+    pointer-events: auto !important;
+}
+
+/* 3. Делаем саму кнопку безусловно кликабельной */
+#select-day-btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    /* Убедимся, что кнопка не перекрыта нижним отступом контейнера */
+    margin-bottom: 20px; 
+}
+
+/* 4. Фикс для мобильного хрома в Telegram */
+.workout-screen-container {
+    overflow-y: auto !important; /* Разрешаем внутренний скролл, если кнопки не влазят */
+}

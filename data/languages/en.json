@@ -30,7 +30,10 @@
       "hours": "HOURS"
     },
     "menu": {
-      "settings_title": "Account Settings",
+      
+  "subscription_title": "My Plan",
+  "subscription_sub": "Manage HEAVYSTAT PRO subscription",
+  "settings_title": "Account Settings",
       "theme_title": "Appearance",
       "theme_sub": "Dark or light theme",
       "data_title": "Edit Data",
@@ -271,5 +274,25 @@
     "policy_link": "Privacy Policy",
     "already_have_acc_login": "Already have an account?",
     "login_link_text": "Log In"
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "subtitle": "Boost your results with professional tools",
+    "free_name": "BASIC",
+    "pro_name": "PRO ATHLETE",
+    "price_free": "Free",
+    "price_pro": "$4.99",
+    "period": "/ month",
+    "features": {
+      "tracking": "Workout Tracking",
+      "charts": "Progress Charts",
+      "ai_plan": "AI Plan Generation",
+      "ai_coach": "Chat with AI Coach",
+      "parsing": "Bot Plan Parsing"
+    },
+    "buttons": {
+      "current": "CURRENT PLAN",
+      "upgrade": "UPGRADE TO PRO"
+    }
   }
 }

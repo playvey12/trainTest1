@@ -1,0 +1,218 @@
+/* ========== MODAL BASE (FON & ANIMATION) ========== */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: flex-end; /* На мобилках снизу */
+    transition: all 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+.pricing-modal-content {
+    width: 100%;
+    max-height: 92vh;
+    background: linear-gradient(180deg, var(--card-bg) 0%, var(--bg-radial-end) 100%);
+    border-top: 2px solid var(--border-color);
+    border-radius: 32px 32px 0 0;
+    overflow-y: auto;
+    position: relative;
+    padding: 40px 0;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.modal.active .pricing-modal-content {
+    transform: translateY(0);
+}
+
+/* Десктопные правки для модалки */
+@media (min-width: 768px) {
+    .modal {
+        align-items: center; /* На компе по центру */
+    }
+    .pricing-modal-content {
+        width: 90%;
+        max-width: 900px;
+        border-radius: 24px;
+        border: 1px solid var(--border-color);
+        max-height: 80vh;
+    }
+}
+
+/* Кнопка закрытия */
+.close-modal-sub {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: var(--text-dim);
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* ========== PRICING SECTION CONTENT ========== */
+.pricing-section {
+    padding: 20px;
+    color: var(--text-main);
+    font-family: var(--font-main);
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.pricing-title {
+    font-size: 28px;
+    font-weight: 800;
+    text-transform: uppercase;
+    background: linear-gradient(to right, #fff, var(--text-dim));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+}
+
+.pricing-subtitle {
+    color: var(--text-dim);
+    font-size: 14px;
+}
+
+/* Контейнер карточек (ГОРризонтальный на ПК) */
+.pricing-container {
+    display: flex;
+    flex-direction: column; /* Мобилка по умолчанию */
+    gap: 20px;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .pricing-container {
+        flex-direction: row; /* ПК - в ряд */
+        justify-content: center;
+    }
+}
+
+/* ========== CARDS ========== */
+.pricing-card {
+    background: rgba(44, 44, 52, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 30px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.pricing-card:hover {
+    background: var(--card-hover);
+    transform: translateY(-5px);
+}
+
+.pricing-card.pro {
+    background: linear-gradient(145deg, rgba(255, 59, 92, 0.1) 0%, rgba(26, 26, 32, 1) 100%);
+    border: 1.5px solid var(--accent-color);
+    box-shadow: 0 10px 30px rgba(255, 59, 92, 0.15);
+}
+
+.popular-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--accent-color);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 100px;
+}
+
+.card-type {
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.card-price .amount {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.card-price .period {
+    color: var(--text-dim);
+    font-size: 14px;
+}
+
+/* ========== LIST & BUTTONS ========== */
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 25px 0;
+    flex-grow: 1;
+}
+
+.features-list li {
+    font-size: 14px;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.features-list li.included span {
+    color: #4cd964;
+    font-weight: bold;
+}
+
+.features-list li.not-included {
+    color: var(--text-dim);
+    opacity: 0.5;
+}
+
+.features-list li.accent {
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+.btn-subw {
+    width: 100%;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-current {
+    background: var(--icon-bg);
+    color: var(--text-dim);
+    cursor: default;
+}
+
+.btn-upgrade {
+    background: var(--accent-color);
+    color: white;
+    box-shadow: 0 8px 20px var(--accent-glow);
+}
+
+.btn-upgrade:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+}

@@ -10,7 +10,14 @@ const { body, validationResult } = require('express-validator');
 const templateMailer  = require('../EmailService/templateMailer');
 const {generateWorkoutData}=require('../services/trainPlanAiYandexGpt')
 
-
+// Настройки куки (вынес в переменную для удобства)
+// На бэкенде
+const cookieOptions = {
+    httpOnly: false, // ВАЖНО: ставим false, чтобы ваш скрипт auth.js мог её прочитать
+    secure: true,    // ОБЯЗАТЕЛЬНО: для SameSite: 'None' нужен https (в ТГ он всегда есть)
+    sameSite: 'None', // ОБЯЗАТЕЛЬНО: чтобы кука не блокировалась внутри Telegram
+    maxAge: 30 * 24 * 60 * 60 * 1000 
+};
 
 async function updateStats(req, res) {
 const { addWorkout, hoursToAdd } = req.body;
@@ -103,7 +110,7 @@ async function regNewUser(req, res) {
           }
         });
       } else {
-       
+        
       const hashPassword = await bcrypt.hash(userPassword, 10);
         const verificationCode = getRandomInt(100000, 999999);
         const expiryTime = new Date(Date.now() + 30 * 60000);
@@ -147,6 +154,7 @@ async function regNewUser(req, res) {
     res.status(500).json({ error: 'Внутренняя ошибка сервера' });
   }
 }
+
 async function confirmReg(req, res) {
   const { userEmail, confirmationCode } = req.body;
 
@@ -164,7 +172,6 @@ async function confirmReg(req, res) {
         return res.status(400).json({ error: 'Срок действия кода истек' });
       }
 
-      
       if (String(user.verification_code) !== String(confirmationCode)) {
         return res.status(400).json({ error: 'Неверный код подтверждения' });
       }
@@ -181,6 +188,9 @@ async function confirmReg(req, res) {
             { expiresIn: '7d' }
           );
 
+          // УСТАНОВКА КУКИ
+          res.cookie('token', token, { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1000 });
+
           res.json({
             message: "Email успешно подтвержден!",
             token: token,
@@ -191,6 +201,7 @@ async function confirmReg(req, res) {
     }
   );
 }
+
 async function resendCode(req,res) {
   const { email } = req.body;
   
@@ -234,6 +245,7 @@ async function resendCode(req,res) {
     );
   });
 }
+
 async function userLogin(req,res){
   const errors = validationResult(req);
  const { userEmail, userPassword } = req.body;
@@ -262,6 +274,9 @@ async function userLogin(req,res){
       id: user.id,
       email: user.email
     }, jwtSecret, { expiresIn: '7d' });
+
+    // УСТАНОВКА КУКИ
+    res.cookie('token', token, { ...cookieOptions, maxAge: 7 * 24 * 60 * 60 * 1000 });
     
     res.json({
       message: "Вход выполнен успешно",
@@ -293,12 +308,7 @@ async function addLogExercise(req,res){
   } catch (error) {
     res.status(500).json({ error: "Server Error" });
   }
-
-
 }
-
-
-
 
 async function forgotPassword(req, res) {
     const { email } = req.body;
@@ -312,7 +322,6 @@ async function forgotPassword(req, res) {
             if (err) return res.status(500).json({ error: "Ошибка БД" });
             if (this.changes === 0) return res.status(404).json({ error: "Пользователь не найден" });
 
-            // Вызываем НОВУЮ функцию
             templateMailer.sendResetPassword({ 
                 to: email, 
                 templateVar: { code: code } 
@@ -350,10 +359,7 @@ async function resetPassword(req, res) {
 
 async function saveUserAiData(req, res) {
     try {
-      
         const userId = req.user.id;
-        
-      
         const { 
             userWeightAi, 
             userHeightAi, 
@@ -362,12 +368,10 @@ async function saveUserAiData(req, res) {
             userInjuriesAi 
         } = req.body;
 
-     
         if (!userWeightAi || !userHeightAi || !userAgeAi) {
              return res.status(400).json({ error: "Основные поля не заполнены" });
         }
 
-      
         await trainList.updateUserAiParams(userId, {
             userWeightAi,
             userHeightAi,
@@ -376,7 +380,6 @@ async function saveUserAiData(req, res) {
             userInjuriesAi
         });
 
-     
         res.json({ success: true, message: "Данные AI успешно сохранены" });
 
     } catch (error) {
@@ -418,25 +421,18 @@ async function changePassword(req, res) {
     }
 }
 
-
-
-
 async function generateWorkout(req, res) {
   try {
     const userId = req.user.id;
-
-   
     const userData = await trainList.getUserDataDB(userId);
     const profile = userData.profileWeightList;
 
-    
     if (!profile.userWeightAi || !profile.userHeightAi) {
       return res.status(400).json({ 
         message: "Пожалуйста, сначала заполните данные в форме профиля!" 
       });
     }
 
-  
     const aiPlanArray = await generateWorkoutData({
       userWeightAi: profile.userWeightAi,
       userHeightAi: profile.userHeightAi,
@@ -445,15 +441,12 @@ async function generateWorkout(req, res) {
       userInjuriesAi: profile.userInjuriesAi
     });
 
-    
     const newTrainData = {
       Monday: [], Tuesday: [], Wednesday: [], 
       Thursday: [], Friday: [], Saturday: [], Sunday: []
     };
 
-   
     aiPlanArray.forEach(ex => {
-     
         const dayMap = { "Пн": "Monday", "Вт": "Tuesday", "Ср": "Wednesday", "Чт": "Thursday", "Пт": "Friday", "Сб": "Saturday", "Вс": "Sunday" };
         const englishDay = dayMap[ex.dayRussian] || "Monday";
         
@@ -467,9 +460,7 @@ async function generateWorkout(req, res) {
         });
     });
 
-
     await trainList.saveUserDataDB(userId, "train_data", newTrainData);
-
     res.json({ success: true, plan: newTrainData });
     
   } catch (error) {
@@ -478,4 +469,69 @@ async function generateWorkout(req, res) {
   }
 }
 
-module.exports = {generateWorkout,saveUserAiData,changePassword,resetPassword,forgotPassword,updateStats,addTask,regNewUser,confirmReg,resendCode,userLogin,addLogExercise};
+const crypto = require('crypto');
+
+async function tgLogin(req, res) {
+    try {
+        const { initData } = req.body;
+        const botToken = process.env.TELEGRAM_APP_BOT_TOKEN; 
+
+        if (!initData) return res.status(400).json({ error: "No initData" });
+
+        const urlParams = new URLSearchParams(initData);
+        const hash = urlParams.get('hash');
+        urlParams.delete('hash');
+        
+        const dataCheckString = Array.from(urlParams.entries())
+            .map(([key, value]) => `${key}=${value}`)
+            .sort()
+            .join('\n');
+
+        const secretKey = crypto.createHmac('sha256', 'WebAppData').update(botToken).digest();
+        const hmac = crypto.createHmac('sha256', secretKey).update(dataCheckString).digest('hex');
+
+        if (hmac !== hash) return res.status(403).json({ error: "Invalid signature" });
+
+        const userTg = JSON.parse(urlParams.get('user'));
+        const telegramId = String(userTg.id);
+
+        db.get('SELECT id, email FROM users WHERE telegram_id = ?', [telegramId], (err, user) => {
+            if (err) return res.status(500).json({ error: "DB Error" });
+
+            if (user) {
+                // --- ЛОГИКА ВХОДА ---
+                const token = jwt.sign({ id: user.id, email: user.email }, jwtSecret, { expiresIn: '30d' });
+                
+                // Шлем уведомление о входе
+                notifyRegistration({ ...userTg, type: 'login', id: telegramId });
+
+                res.cookie('token', token, cookieOptions);
+                return res.json({ token });
+
+            } else {
+                // --- ЛОГИКА РЕГИСТРАЦИИ ---
+                const tempEmail = `tg_${telegramId}@yourbot.com`;
+                db.run('INSERT INTO users(email, password, is_verified, telegram_id) VALUES (?, ?, 1, ?)', 
+                    [tempEmail, 'tg_auto_pass', telegramId], function(err) {
+                        if (err) return res.status(500).json({ error: "Create Error" });
+                        
+                        const userId = this.lastID;
+                        const token = jwt.sign({ id: userId, email: tempEmail }, jwtSecret, { expiresIn: '30d' });
+
+                        db.get('SELECT COUNT(*) as count FROM users', (err, row) => {
+                            const total = row ? row.count : '?';
+                            notifyRegistration({ ...userTg, type: 'registration', id: telegramId, total: total });
+                        });
+
+                        res.cookie('token', token, cookieOptions);
+                        return res.json({ token });
+                    });
+            } 
+        });
+    } catch (e) {
+        console.error("Глобальная ошибка в tgLogin:", e);
+        res.status(500).json({ error: "Server error" });
+    }
+}
+
+module.exports = {tgLogin,generateWorkout,saveUserAiData,changePassword,resetPassword,forgotPassword,updateStats,addTask,regNewUser,confirmReg,resendCode,userLogin,addLogExercise};

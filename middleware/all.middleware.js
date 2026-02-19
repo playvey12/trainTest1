@@ -20,12 +20,20 @@ const isAuth = (req, res, next) => {
         req.path.includes('saveAiData');
 
     let token = null;
-    const authHeader = req.headers.authorization;
-    if (authHeader && authHeader.startsWith("Bearer ")) {
-        token = authHeader.substring(7);
-    } else if (req.query.token) {
-        token = req.query.token;
+
+    if (req.cookies && req.cookies.token) {
+        token = req.cookies.token;
+    } 
+
+    else {
+        const authHeader = req.headers.authorization;
+        if (authHeader && authHeader.startsWith("Bearer ")) {
+            token = authHeader.substring(7);
+        } else if (req.query.token) {
+            token = req.query.token;
+        }
     }
+ 
 
     if (!token) {
         return isApiRequest 
@@ -43,10 +51,11 @@ const isAuth = (req, res, next) => {
         if (isApiRequest) {
             return res.status(401).json({ error: "Сессия истекла, войдите заново" });
         }
+ 
+        res.clearCookie('token'); 
         return res.redirect('/login');
     }
 };
-
 
 const translations = {
 

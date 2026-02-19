@@ -582,3 +582,27 @@ body {
     height: 260px; /* Фиксируем высоту для стабильности */
     overflow: hidden;
 }
+/* 1. Гарантируем, что футер ВСЕГДА сверху и кликабелен */
+.bottom-nav {
+    z-index: 999999 !important;
+    pointer-events: auto !important;
+    position: fixed !important;
+    /* Убираем любые трансформации, которые могут сбить контекст */
+    transform: none !important; 
+}
+
+/* 2. Если анимация карточек глючит — делаем их видимыми */
+.card {
+    opacity: 1 !important; /* Убираем риск невидимости */
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 10;
+}
+
+/* 3. Защита от "невидимых" модалок */
+.modal-overlay:not(.active) {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+}

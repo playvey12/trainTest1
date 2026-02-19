@@ -12,7 +12,7 @@ const helloTemplate = ejs.compile(
 exports.sendHello = ({ to, templateVar }) => {
   mailTransport.send({
     to,
-    subject: "Подтверждение регистрации PLANLIFT",
+    subject: "Подтверждение регистрации HeavyStat",
     text: `Ваш код подтверждения: ${templateVar.code}`,
     html: helloTemplate(templateVar)
   });
@@ -27,7 +27,7 @@ const resetTemplate = ejs.compile(
 exports.sendResetPassword = ({ to, templateVar }) => {
   mailTransport.send({
     to,
-    subject: "Восстановление пароля PLANLIFT",
+    subject: "Восстановление пароля HeavyStat",
     text: `Ваш код для сброса пароля: ${templateVar.code}`,
     html: resetTemplate(templateVar) 
   });

@@ -2,24 +2,24 @@ const express = require("express");
 const path = require("path");
 const hbs = require("hbs");
 const fs = require("fs");
-// Подключаем функцию получения данных из БД
+require('dotenv').config();
 const { getUserDataDB } = require("./data/trainData"); 
 
 const { isAuth, requireVerified,setLangMiddleware } = require("./middleware/all.middleware");
 const { startCleanupTask } = require("./services/cleanDB");
 const favicon = require('serve-favicon');
-
+const cookieParser = require('cookie-parser');
 const profileRouter = require("./routers/profileRouter");
 const trainModeRouter = require("./routers/trainModeRouter");
 const userRouter = require("./routers/userRouter");
 const apiRouter = require("./routers/apiRouter");
 const trainPlanRouter = require("./routers/trainPlanRouter");
 const progressMainRouter = require("./routers/progressMainRouter");
-
+const bot = require("./services/tgApp");
+const statsBot = require("./services/notifier");
 const port = process.env.PORT || 3333;
 const app = express();
-
-
+app.use(cookieParser());
 
 
 hbs.registerHelper('equal', function(a, b) {
@@ -40,16 +40,15 @@ app.use(express.static(path.join(__dirname, "./public")));
 app.use(express.json({ limit: '10mb' })); 
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-// 2. Создаем Middleware для языка (но пока не подключаем глобально)
 
-app.get('/', (req, res) => res.redirect('/register'));
-app.get('/register', (req, res) => res.render("register.hbs"));
-app.get('/login', (req, res) => res.render("login.hbs"));
 
-app.use("/user", userRouter); // Тут язык обычно не нужен, это технические роуты
+app.get('/',setLangMiddleware, (req, res) => res.redirect('/register'));
+app.get('/register',setLangMiddleware, (req, res) => res.render("register.hbs"));
+app.get('/login',setLangMiddleware, (req, res) => res.render("login.hbs"));
 
-// 3. ВАЖНО: Вставляем setLangMiddleware ПОСЛЕ isAuth
-// Цепочка такая: Проверка авторизации -> Установка языка -> Роутер страницы
+app.use("/user", userRouter); 
+
+
 app.use("/api", isAuth, requireVerified, apiRouter);
 
 app.use("/profileMain", isAuth,setLangMiddleware, requireVerified, setLangMiddleware, profileRouter);
@@ -60,6 +59,7 @@ app.use("/trainMode", isAuth,setLangMiddleware, requireVerified, setLangMiddlewa
 app.use((req, res) => res.status(404).render("404.hbs", { layout: false }));
 
 const server = app.listen(port, () => {
+  bot.launch();
   console.log(` Server running: http://localhost:${port}/`);
 });
 
@@ -70,3 +70,5 @@ server.on('error', (err) => {
     console.error(' Ошибка сервера:', err);
   }
 });
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));

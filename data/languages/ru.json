@@ -31,6 +31,8 @@
       "hours": "ЧАСЫ"
     },
     "menu": {
+      "subscription_title": "Мой тариф",
+  "subscription_sub": "Управление подпиской HEAVYSTAT PRO",
       "settings_title": "Настройки аккаунта",
       "theme_title":"Внешний вид",
       "theme_sub":"Темная или светлая тема",
@@ -234,7 +236,7 @@
     "email_label": "Email адрес",
     "email_placeholder": "john@example.com",
     "email_error": "Пожалуйста, введите корректный email",
-    "password_label": "Создайте пароль",
+    "password_label": "Введите пароль",
     "forgot_password": "Забыли пароль",
     "login_btn": "ВОЙТИ В АККАУНТ",
     "social_divider": "ИЛИ ПРОДОЛЖИТЕ ЧЕРЕЗ",
@@ -272,5 +274,25 @@
     "policy_link": "Политикой конфиденциальности",
     "already_have_acc_login": "Уже есть аккаунт?",
     "login_link_text": "Войти"
+  },
+  "pricing": {
+    "title": "Выберите свой план",
+    "subtitle": "Улучшайте свои результаты с профессиональными инструментами",
+    "free_name": "БАЗОВЫЙ",
+    "pro_name": "PRO АТЛЕТ",
+    "price_free": "Бесплатно",
+    "price_pro": "$4.99",
+    "period": "/ месяц",
+    "features": {
+      "tracking": "Трекинг тренировок",
+      "charts": "Графики прогресса",
+      "ai_plan": "AI-генерация плана",
+      "ai_coach": "Чат с ИИ-тренером",
+      "parsing": "Парсинг плана из бота"
+    },
+    "buttons": {
+      "current": "ТЕКУЩИЙ ПЛАН",
+      "upgrade": "ПОДКЛЮЧИТЬ PRO"
+    }
   }
 }

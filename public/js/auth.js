@@ -1,6 +1,17 @@
 // const.js
 const API_BASE = '';
-const getToken = () => localStorage.getItem('token');
+const getToken = () => {
+
+    const localToken = localStorage.getItem('token');
+    if (localToken) return localToken;
+
+
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; token=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+
+    return null;
+};
 const setToken = (token) => localStorage.setItem('token', token);
 const clearToken = () => localStorage.removeItem('token');
 
@@ -82,32 +93,7 @@ function showNotification(message, type = 'info') {
   }, 3000);
 }
 
-// auth-check.js
-function checkAuth() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const tokenFromUrl = urlParams.get('token');
-  
-  // Если токен есть в URL, сохраняем его в localStorage прямо сейчас
-  if (tokenFromUrl) {
-    localStorage.setItem('token', tokenFromUrl);
-  }
 
-  const token = localStorage.getItem('token'); // Теперь проверяем актуальный токен
-  const protectedPaths = ['/profileMain', '/trainingPlan', '/trainMode', '/progressMain'];
-  const currentPath = window.location.pathname;
-  
-  if (protectedPaths.includes(currentPath) && !token) {
-    showNotification('Пожалуйста, войдите в систему', 'error');
-    setTimeout(() => {
-      window.location.href = '/login';
-    }, 1500);
-    return false;
-  }
-  
-  return true;
-}
-checkAuth();
-// В конце файла auth.js обязательно вызовите эту функцию
 
 // theme.js
 function initTheme() {
@@ -136,15 +122,70 @@ async function verifyToken() {
     return false;
   }
 }
+async function checkAuth() {
+
+    
+    const currentPath = window.location.pathname;
+    const authPages = ['/login', '/register', '/'];
+    const protectedPaths = ['/profileMain', '/trainingPlan', '/trainMode', '/progressMain'];
+
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    };
+
+    let token = getCookie('token');
+    const tg = window.Telegram?.WebApp;
+
+
+if (!token && tg?.initData) {
+    try {
+        const response = await fetch('/user/tg-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ initData: tg.initData })
+        });
+        
+        if (response.ok) {
+            const data = await response.json(); // Читаем JSON ответ
+            
+            
+            if (data.token) {
+                // ПРИНУДИТЕЛЬНО СОХРАНЯЕМ ТОКЕН
+                setToken(data.token); 
+                token = data.token; // Обновляем локальную переменную, чтобы сработал редирект ниже
+               
+            }
+        }
+    } catch (err) {
+        console.error('Ошибка авто-логина:', err);
+    }
+}
+
+if (token) {
+    if (authPages.includes(currentPath)) {
+    
+        window.location.replace('/profileMain');
+        return;
+    }
+} else {
+    if (protectedPaths.some(path => currentPath.startsWith(path))) {
+        window.location.replace('/login');
+    }
+}
+}
+
 
 // Экспорт функций
 window.auth = {
+  checkAuth,
   getToken,
   setToken,
   clearToken,
   authFetch,
   showNotification,
-  checkAuth,
   initTheme,
   verifyToken
 };
@@ -179,4 +220,9 @@ if (!document.querySelector('#notification-styles')) {
     .notification.info { background: #2196F3; color: white; }
   `;
   document.head.appendChild(style);
+}
+
+if (window.Telegram?.WebApp) {
+    window.Telegram.WebApp.ready();
+    checkAuth(); // Принудительный запуск
 }

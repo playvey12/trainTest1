@@ -6,7 +6,11 @@ const { regValidation, loginValidation } = require("../middleware/validation/use
 const { changePassword,saveUserAiData} = require("./postRouter");
 const {isAuth} = require("../middleware/all.middleware");
 const { deleteUser } = require("./deleteRouter");
+const { tgLogin } = require("./postRouter");
 
+
+
+router.post('/tg-login', tgLogin);
 
 
 router.post('/register', regValidation, regNewUser);

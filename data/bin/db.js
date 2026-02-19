@@ -3,7 +3,9 @@ const path = require("path");
 
 const db = new sqlite3.Database(path.join(__dirname, 'db.sqlite'));
 db.run("PRAGMA foreign_keys = ON;");
+
 db.serialize(() => {
+   
     db.run(`
        CREATE TABLE IF NOT EXISTS users(
        id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -12,8 +14,10 @@ db.serialize(() => {
        is_verified BOOLEAN DEFAULT 0,
        verification_code VARCHAR(6),
        code_expires_at DATETIME,
+       telegram_id TEXT UNIQUE, 
        created_at TEXT NOT NULL DEFAULT (datetime('now'))
        ) `);
+
 
     db.run(`
         CREATE TABLE IF NOT EXISTS user_data (
@@ -23,19 +27,12 @@ db.serialize(() => {
             weight_history TEXT DEFAULT '[]',
             exercise_history TEXT DEFAULT '[]',
             FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
-           
         )
     `);
     
-    
-    db.run(`
-        CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)
-    `);
-    
 
-    db.run(`
-        CREATE INDEX IF NOT EXISTS idx_users_verification ON users(email, verification_code)
-    `);
+    db.run(`CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)`);
+    db.run(`CREATE INDEX IF NOT EXISTS idx_users_verification ON users(email, verification_code)`);
     
 
     db.run(`
@@ -46,11 +43,12 @@ db.serialize(() => {
             INSERT INTO user_data (user_id) VALUES (NEW.id);
         END
     `);
+
+
     db.run("PRAGMA journal_mode = WAL;");
+
 });
 
-console.log("Database старт");
-
-
+console.log("Database старт - Структура обновлена");
 
 module.exports = db;

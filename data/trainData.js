@@ -41,26 +41,26 @@ function getUserDataDB(userId) {
 
      
 const defaultProfile = {
-    userName: "Пользователь",
-    avatarUrl: "",
-    tgUserName:"",
-    language: "ru",
-    userWeight: 0,
-    userStartWeight: 0,
-    userGoalWeight: 0,
-    userWeightChange: 0,
-    userWeightToGoal: 0,
-    userTheme: "black",
-    totalWorkouts: 0, 
-    totalHours: 0      
-};
+            userName: tgData?.first_name || "Пользователь", 
+            avatarUrl: "",
+            tgUserName: tgData?.username || "", 
+            language: tgData?.language_code || "ru",
+            userWeight: 0,
+            userStartWeight: 0,
+            userGoalWeight: 0,
+            userWeightChange: 0,
+            userWeightToGoal: 0,
+            userTheme: "black",
+            totalWorkouts: 0, 
+            totalHours: 0      
+        };
 
         const defaultWeightHistory = [];
         const defaultExerciseHistory = [];
 
         db.run(
           `INSERT INTO user_data (user_id, train_data, profile_data, weight_history, exercise_history) 
-           VALUES (?, ?, ?, ?, ?)`,
+            VALUES (?, ?, ?, ?, ?)`,
           [
             userId,
             JSON.stringify(defaultTrainData),

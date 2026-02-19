@@ -71,6 +71,9 @@ function closeHelp() { toggleModal('helpModal', false); }
 function openData() { toggleModal('aiDataModal', true); }
 function closeData() { toggleModal('aiDataModal', false); }
 
+function openSubscription() {  toggleModal('pricing-modal', true); }
+function closeSubscription() { toggleModal('pricing-modal', false); }
+
 
 function toggleModal(id, show) {
     const modal = document.getElementById(id);

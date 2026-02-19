@@ -1,0 +1,48 @@
+<div id="pricing-modal" class="modal">
+    <div class="modal-content pricing-modal-content">
+        <div class="close-modal-sub" onclick="closeSubscription()">
+            <i class="fas fa-times"></i>
+        </div>
+
+        <section class="pricing-section">
+            <div class="pricing-header">
+                <h2 class="pricing-title">{{t.pricing.title}}</h2>
+                <p class="pricing-subtitle">{{t.pricing.subtitle}}</p>
+            </div>
+
+            <div class="pricing-container">
+                <div class="pricing-card">
+                    <div class="card-type">{{t.pricing.free_name}}</div>
+                    <div class="card-price">
+                        <span class="amount">{{t.pricing.price_free}}</span>
+                    </div>
+                    <ul class="features-list">
+                        <li class="included"><span>✔</span> {{t.pricing.features.tracking}}</li>
+                        <li class="included"><span>✔</span> {{t.pricing.features.charts}}</li>
+                        <li class="not-included"><span>✕</span> {{t.pricing.features.ai_plan}}</li>
+                        <li class="not-included"><span>✕</span> {{t.pricing.features.ai_coach}}</li>
+                        <li class="not-included"><span>✕</span> {{t.pricing.features.parsing}}</li>
+                    </ul>
+                    <button class="btn-current btn-sub" disabled>{{t.pricing.buttons.current}}</button>
+                </div>
+
+                <div class="pricing-card pro">
+                    <div class="popular-badge">POPULAR</div>
+                    <div class="card-type">{{t.pricing.pro_name}}</div>
+                    <div class="card-price">
+                        <span class="amount">{{t.pricing.price_pro}}</span>
+                        <span class="period">{{t.pricing.period}}</span>
+                    </div>
+                    <ul class="features-list">
+                        <li class="included"><span>✔</span> {{t.pricing.features.tracking}}</li>
+                        <li class="included"><span>✔</span> {{t.pricing.features.charts}}</li>
+                        <li class="included accent"><span>✔</span> {{t.pricing.features.ai_plan}}</li>
+                        <li class="included accent"><span>✔</span> {{t.pricing.features.ai_coach}}</li>
+                        <li class="included accent"><span>✔</span> {{t.pricing.features.parsing}}</li>
+                    </ul>
+                    <button class="btn-upgrade btn-sub">{{t.pricing.buttons.upgrade}}</button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,29 +1,32 @@
 // Универсальная функция навигации
+// Универсальная функция навигации
 function navigateTo(path) {
-  const token = localStorage.getItem('token') || getTokenFromUrl();
+  // Функция для чтения куки (аналогичная той, что у тебя в auth.js)
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return null;
+  };
+
+  const token = getCookie('token') || localStorage.getItem('token');
   
   if (token) {
-    if (!localStorage.getItem('token') && getTokenFromUrl()) {
-        localStorage.setItem('token', getTokenFromUrl());
-    }
-    // Убираем точку! Теперь переход всегда идет от корня: localhost:3333/path
-    document.location = `/${path}?token=${token}`; 
+    // Делаем чистый переход без передачи токена в URL. 
+    // Браузер сам прикрепит куку к запросу!
+    window.location.href = `/${path}`; 
   } else {
-    // Здесь тоже лучше использовать абсолютный путь
-    document.location = "/login";
+    window.location.href = "/login";
   }
 }
 
-// Теперь старые функции можно переписать так (для совместимости):
+// Старые функции оставляем для совместимости
 function resetUrl() { navigateTo('trainingPlan'); }
 function resetUrl1() { navigateTo('trainMode'); }
 function resetUrl2() { navigateTo('profileMain'); }
-function getTokenFromUrl() {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('token');
-}
 
-
+// getTokenFromUrl больше не нужна, если мы отказываемся от токенов в URL, 
+// но можешь оставить, если она используется где-то еще для старых ссылок.
 
 
 
@@ -58,17 +61,22 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-  
   let lastTouchEnd = 0;
+
   document.addEventListener('touchend', function(event) {
     const now = (new Date()).getTime();
+    
+    // Проверяем двойной тап (быстрее 300мс)
     if (now - lastTouchEnd <= 300) {
-      event.preventDefault();
+      // ПРОВЕРКА: Если событие можно отменить и это НЕ скролл
+      if (event.cancelable) {
+        event.preventDefault();
+      }
     }
     lastTouchEnd = now;
-  }, false);
-
-
+  }, { passive: false }); // Важно: false, чтобы preventDefault сработал
+  
+  // Анимация кнопок (оставляем как есть, тут все ок)
   const weightButtons = document.querySelectorAll('.weight-btn, .nav-item');
   weightButtons.forEach(button => {
     button.addEventListener('touchstart', function() {
