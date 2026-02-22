@@ -35,14 +35,21 @@ db.serialize(() => {
     db.run(`CREATE INDEX IF NOT EXISTS idx_users_verification ON users(email, verification_code)`);
     
 
-    db.run(`
-        CREATE TRIGGER IF NOT EXISTS create_user_data
-        AFTER INSERT ON users
-        FOR EACH ROW
-        BEGIN
-            INSERT INTO user_data (user_id) VALUES (NEW.id);
-        END
-    `);
+   db.run(`
+    CREATE TRIGGER IF NOT EXISTS create_user_data
+    AFTER INSERT ON users
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO user_data (user_id, train_data, profile_data, weight_history, exercise_history) 
+        VALUES (
+            NEW.id, 
+            '{"Monday":[],"Tuesday":[],"Wednesday":[],"Thursday":[],"Friday":[],"Saturday":[],"Sunday":[]}', 
+            '{"userName":"Пользователь","language":"ru","userWeight":0,"totalWorkouts":0,"totalHours":0}', 
+            '[]', 
+            '[]'
+        );
+    END
+`);
 
 
     db.run("PRAGMA journal_mode = WAL;");

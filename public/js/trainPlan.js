@@ -329,13 +329,19 @@ function toggleModal(id, show) {
 async function generateTrainPlan() {
     const btn = document.querySelector('.btn-secondary-red');
     const originalText = btn.innerText;
-    btn.innerText = "Генерация... ⏳";
     btn.disabled = true;
 
-    // 1. Получаем токен (предполагаю, что при логине ты сохраняешь его в localStorage)
+   
+    let dotCount = 0;
+    const loadingInterval = setInterval(() => {
+        dotCount = (dotCount + 1) % 4; 
+        btn.innerText = "Генерация" + ".".repeat(dotCount);
+    }, 400);
+
     const token = localStorage.getItem('token'); 
 
     if (!token) {
+        clearInterval(loadingInterval); 
         showNotification("Вы не авторизованы!", "error");
         btn.innerText = originalText;
         btn.disabled = false;
@@ -347,13 +353,10 @@ async function generateTrainPlan() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                // 2. ВАЖНО: Добавляем токен в заголовки
                 'Authorization': `Bearer ${token}` 
             }
-            // body не нужен, так как данные берутся из БД на сервере по id юзера
         });
 
-        // Сначала читаем статус, потому что если там редирект (302) или 401, json() может упасть
         if (response.status === 401 || response.status === 403) {
              throw new Error("Ошибка авторизации. Пожалуйста, войдите снова.");
         }
@@ -361,7 +364,7 @@ async function generateTrainPlan() {
         const plan = await response.json();
 
         if (response.ok) {
-            showNotification("План успешно создан!", "success");
+          showNotification("Упражнения добавлины на ВТ,ЧТ,CБ", "success");
             location.reload(); 
         } else {
             showNotification("Ошибка: " + (plan.message || plan.error), "error");
@@ -370,9 +373,12 @@ async function generateTrainPlan() {
         console.error("Ошибка сети:", error);
         showNotification(error.message, "error");
     } finally {
+       
+      
+        clearInterval(loadingInterval); 
         btn.innerText = originalText;
         btn.disabled = false;
-        // Если функция closeConfirmDataAi существует, раскомментируй
+        
         if (typeof closeConfirmDataAi === 'function') {
              closeConfirmDataAi(); 
         }

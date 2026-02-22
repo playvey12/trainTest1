@@ -6,15 +6,20 @@ const getToken = () => {
     if (localToken) return localToken;
 
 
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; token=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-
+    const name = "token=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const ca = decodedCookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+        let c = ca[i].trim();
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
     return null;
 };
 const setToken = (token) => localStorage.setItem('token', token);
-const clearToken = () => localStorage.removeItem('token');
-
+const clearToken = () => {
+    localStorage.removeItem('token');
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+};
 // fetch.js
 async function authFetch(url, options = {}) {
 
@@ -88,7 +93,7 @@ function showNotification(message, type = 'info') {
   
   document.body.appendChild(notification);
   setTimeout(() => {
-    notification.style.animation = 'slideOut 0.3s ease';
+    notification.style.animation = 'slideOut 0.7s ease';
     setTimeout(() => notification.remove(), 300);
   }, 3000);
 }
@@ -123,60 +128,49 @@ async function verifyToken() {
   }
 }
 async function checkAuth() {
-
-    
     const currentPath = window.location.pathname;
     const authPages = ['/login', '/register', '/'];
-    const protectedPaths = ['/profileMain', '/trainingPlan', '/trainMode', '/progressMain'];
-
-    const getCookie = (name) => {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-        return null;
-    };
-
-    let token = getCookie('token');
     const tg = window.Telegram?.WebApp;
 
-
-if (!token && tg?.initData) {
-    try {
-        const response = await fetch('/user/tg-login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ initData: tg.initData })
-        });
-        
-        if (response.ok) {
-            const data = await response.json(); // Читаем JSON ответ
+    // Если мы внутри Telegram, всегда пробуем обновить сессию по initData
+    // Это гарантирует, что даже если сменили аккаунт в приложении TG, 
+    // кука обновится под нужного юзера.
+    if (tg?.initData) {
+        try {
+            const response = await fetch('/user/tg-login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ initData: tg.initData })
+            });
             
-            
-            if (data.token) {
-                // ПРИНУДИТЕЛЬНО СОХРАНЯЕМ ТОКЕН
-                setToken(data.token); 
-                token = data.token; // Обновляем локальную переменную, чтобы сработал редирект ниже
-               
+            if (response.ok) {
+                const data = await response.json();
+                if (data.token) {
+                    setToken(data.token);
+                    if (authPages.includes(currentPath)) {
+                        window.location.replace('/profileMain');
+                    }
+                    return; // Успешно вошли по актуальным данным TG
+                }
             }
+        } catch (err) {
+            console.error('Ошибка авто-логина:', err);
         }
-    } catch (err) {
-        console.error('Ошибка авто-логина:', err);
     }
-}
 
-if (token) {
-    if (authPages.includes(currentPath)) {
-    
-        window.location.replace('/profileMain');
-        return;
-    }
-} else {
-    if (protectedPaths.some(path => currentPath.startsWith(path))) {
-        window.location.replace('/login');
+    // Если мы НЕ в Telegram или авто-логин не сработал, проверяем обычную куку
+    let token =  getToken(); 
+    if (token) {
+        if (authPages.includes(currentPath)) {
+            window.location.replace('/profileMain');
+        }
+    } else {
+        const protectedPaths = ['/profileMain', '/trainingPlan', '/trainMode', '/progressMain'];
+        if (protectedPaths.some(path => currentPath.startsWith(path))) {
+            window.location.replace('/login');
+        }
     }
 }
-}
-
 
 // Экспорт функций
 window.auth = {

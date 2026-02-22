@@ -20,64 +20,19 @@ function getUserDataDB(userId) {
   return new Promise((resolve, reject) => {
     db.get("SELECT * FROM user_data WHERE user_id = ?", [userId], (err, row) => {
       if (err) return reject(err);
+      if (!row) return resolve(null);
 
-      if (row) {
-        try {
-          resolve({
-            trainData: JSON.parse(row.train_data),
-            profileWeightList: JSON.parse(row.profile_data),
-            weightHistory: JSON.parse(row.weight_history),
-            exerciseHistory: JSON.parse(row.exercise_history)
-          });
-        } catch (parseError) {
-          console.error("Ошибка парсинга JSON из БД:", parseError);
-          reject(parseError);
-        }
-      } else {
-        const defaultTrainData = {};
-        daysOfWeek.forEach((day) => {
-          defaultTrainData[day] = [];
+      try {
+       
+        resolve({
+          trainData: row.train_data ? JSON.parse(row.train_data) : {},
+          profileWeightList: row.profile_data ? JSON.parse(row.profile_data) : {},
+          weightHistory: row.weight_history ? JSON.parse(row.weight_history) : [],
+          exerciseHistory: row.exercise_history ? JSON.parse(row.exercise_history) : [] 
         });
-
-     
-const defaultProfile = {
-            userName: tgData?.first_name || "Пользователь", 
-            avatarUrl: "",
-            tgUserName: tgData?.username || "", 
-            language: tgData?.language_code || "ru",
-            userWeight: 0,
-            userStartWeight: 0,
-            userGoalWeight: 0,
-            userWeightChange: 0,
-            userWeightToGoal: 0,
-            userTheme: "black",
-            totalWorkouts: 0, 
-            totalHours: 0      
-        };
-
-        const defaultWeightHistory = [];
-        const defaultExerciseHistory = [];
-
-        db.run(
-          `INSERT INTO user_data (user_id, train_data, profile_data, weight_history, exercise_history) 
-            VALUES (?, ?, ?, ?, ?)`,
-          [
-            userId,
-            JSON.stringify(defaultTrainData),
-            JSON.stringify(defaultProfile),
-            JSON.stringify(defaultWeightHistory),
-            JSON.stringify(defaultExerciseHistory)
-          ],
-          (insertErr) => {
-            if (insertErr) return reject(insertErr);
-            resolve({
-              trainData: defaultTrainData,
-              profileWeightList: defaultProfile,
-              weightHistory: defaultWeightHistory,
-              exerciseHistory: defaultExerciseHistory
-            });
-          }
-        );
+      } catch (e) { 
+        console.error("Ошибка парсинга JSON для юзера:", userId, e);
+        reject(e); 
       }
     });
   });

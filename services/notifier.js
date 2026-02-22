@@ -50,10 +50,6 @@ bot.onText(/\/stat/, (msg) => {
 });
 });
 
-// Если бот получит это, значит связь есть
-bot.onText(/\/start/, (msg) => {
-    bot.sendMessage(msg.chat.id, `Привет! Твой ID: ${msg.chat.id}. Добавь его в .env как TELEGRAM_CHAT_ID`);
-});
 
 const notifyRegistration = (userInfo) => {
     let text = '';

@@ -1,0 +1,186 @@
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      background-color: #0b050f; /* Очень темный фиолетово-черный фон */
+      font-family: 'Montserrat', sans-serif;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Фоновые градиенты и свечения (имитация луча света сверху справа) */
+    .background-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, #1a0814 0%, #0b050f 70%);
+      z-index: 1;
+    }
+
+    .light-beam {
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 60%;
+      height: 60%;
+      background: linear-gradient(215deg, rgba(255, 32, 78, 0.15) 0%, transparent 50%);
+      filter: blur(40px);
+      z-index: 2;
+    }
+
+    /* Главный контейнер для контента */
+    .loader-container {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* --- ЛОГОТИП (CSS Рисунок) --- */
+    .logo-mark {
+      position: relative;
+   
+      margin-bottom: 5px;
+      /* Добавляем легкое неоновое свечение всему логотипу */
+      filter: drop-shadow(0 0 15px rgba(255, 32, 78, 0.4));
+    }
+
+    /* Центральная ось (гриф гантели) */
+    .logo-mark .center-bar {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 14px;
+      background-color: #ff204e;
+      transform: translateY(-50%);
+      border-radius: 2px;
+    }
+
+    /* Вертикальные стойки буквы H */
+    .logo-mark .h-leg {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 18px;
+      background-color: #ff204e;
+      border-radius: 2px;
+    }
+    .logo-mark .h-leg.left { left: 24px; }
+    .logo-mark .h-leg.right { right: 24px; }
+
+    /* Блины гантели */
+    .logo-mark .plate {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #ff204e;
+      border-radius: 3px;
+    }
+    
+    .logo-mark .plate-large { height: 40px; width: 10px; }
+    .logo-mark .plate-small { height: 24px; width: 6px; }
+
+    .logo-mark .plate-large.left { left: 10px; }
+    .logo-mark .plate-small.left { left: 0; }
+    
+    .logo-mark .plate-large.right { right: 10px; }
+    .logo-mark .plate-small.right { right: 0; }
+
+
+    /* --- ТЕКСТ --- */
+    .brand-name {
+      color: #ffffff;
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    .subtitle {
+      color: #dfcbd5; /* Светло-серо-розовый оттенок */
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 50px;
+    }
+
+    /* --- ПОЛОСА ЗАГРУЗКИ --- */
+    .loading-track {
+      position: relative;
+      width: 260px;
+      height: 4px;
+      background: rgba(255, 32, 78, 0.15); /* Темный след от полосы */
+      border-radius: 2px;
+      box-shadow: 0 0 10px rgba(255, 32, 78, 0.1) inset;
+    }
+
+    .loading-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: #ff204e;
+      border-radius: 2px;
+      /* Неоновое свечение самой полосы */
+      box-shadow: 0 0 10px #ff204e, 0 0 20px #ff204e;
+      animation: fillUp 3s ease-out infinite alternate, pulseGlow 2s infinite alternate;
+    }
+
+    /* Светящаяся точка в начале (слева) полосы */
+    .loading-progress::before {
+      content: '';
+      position: absolute;
+      left: -2px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 10px 3px #ff204e;
+    }
+
+    /* Светящийся кончик (справа) полосы */
+    .loading-progress::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 15px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 2px;
+      filter: blur(2px);
+    }
+
+    /* --- АНИМАЦИИ --- */
+    @keyframes fillUp {
+      0% { width: 5%; }
+      10% { width: 5%; }
+      50% { width: 60%; }
+      80% { width: 85%; }
+      100% { width: 95%; }
+    }
+
+    @keyframes pulseGlow {
+      0% { opacity: 0.8; filter: brightness(1); }
+      100% { opacity: 1; filter: brightness(1.2); }
+    }
+    .fa-dumbbell{
+        color: #ff204e;
+        font-size: 130px;
+    }

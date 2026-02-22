@@ -118,6 +118,12 @@ body.light-theme .timer-separator {
 ============================================ */
 
 /* Основные кнопки */
+body.light-theme  .theme-card{
+    background-color: var(--bg-main);
+}
+body.light-theme  .theme-card span{
+  color: var(--text-main);
+}
 body.light-theme .btn-primary,
 body.light-theme .btn-primary-large,
 body.light-theme .btn-confirm,

@@ -21,12 +21,11 @@ body, html {
     padding: 0;
     height: 100%;
     color: var(--text-main);
-    overflow: hidden; /* Убираем лишнюю прокрутку */
+    overflow: hidden;
     background-color: var(--bg-radial-end);
     font-family: var(--font-main);
 }
 
-/* Главный экран */
 .workout-screen-container {
     height: 100vh;
     width: 100%;
@@ -34,26 +33,24 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: auto !important;
 }
 
-/* Ограничиваем контент по ширине и высоте */
 .workout-content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 400px; /* Фиксированная ширина как на макете */
-    height: 90%;      /* Отступы сверху и снизу */
+    max-width: 400px;
+    height: 90%;
     padding: 20px;
     box-sizing: border-box;
 }
 
-/* --- ТАЙМЕР --- */
 .session-header {
     text-align: center;
     width: 100%;
-    
     max-height: 200px;
 }
 
@@ -76,6 +73,18 @@ body, html {
     align-items: center;
     gap: 12px;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.3s ease, border-color 0.3s ease;
+    cursor: default;
+}
+
+.timer-display:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.timer-display:hover .timer-value {
+    color: var(--text-main);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
 }
 
 .timer-unit {
@@ -112,35 +121,43 @@ body, html {
     opacity: 0.8;
 }
 
-/* --- ЦЕНТРАЛЬНЫЙ БЛОК --- */
-/* --- ЦЕНТРАЛЬНЫЙ БЛОК (Исправлено) --- */
 .main-spacer {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Центрирует по вертикали внутри свободного места */
-    align-items: center;     /* Центрирует по горизонтали */
+    justify-content: center;
+    align-items: center;
     width: 100%;
     text-align: center;
 }
 
-/* Это контейнер внутри emptyState.hbs */
 .empty-state {
     display: flex;
     flex-direction: column;
-    align-items: center;     /* Гарантирует, что иконка и текст внутри будут по центру */
+    align-items: center;
     justify-content: center;
     width: 100%;
 }
 
 .empty-icon-wrapper {
     position: relative;
-    width: 160px;  /* Размер как на макете */
+    width: 160px;
     height: 160px;
-    margin: 0 auto 40px; /* margin: 0 auto центрирует сам блок */
+    margin: 0 auto 40px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.empty-icon-wrapper:hover .calendar-card {
+    transform: scale(1.02);
+    border-color: #3a3a4c;
+}
+
+.empty-icon-wrapper:hover .floating-badge {
+    transform: rotate(0deg) scale(1.1);
+    background-color: #ff5271;
+    box-shadow: 0 12px 30px var(--accent-glow);
 }
 
 .calendar-card {
@@ -152,10 +169,10 @@ body, html {
     align-items: center;
     justify-content: center;
     border: 1px solid var(--border-color);
-    position: relative; /* Чтобы точки и бейдж позиционировались относительно карты */
+    position: relative;
+    transition: transform var(--transition-fast) ease, border-color var(--transition-fast);
 }
 
-/* Бейдж с гантелей (красный) */
 .floating-badge {
     position: absolute;
     top: -10px;
@@ -169,16 +186,16 @@ body, html {
     justify-content: center;
     box-shadow: 0 10px 20px var(--accent-glow);
     transform: rotate(12deg);
-    z-index: 2; /* Чтобы был поверх всего */
+    z-index: 2;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s;
 }
 
-/* Заголовок и описание */
 .empty-title {
     font-size: 28px;
     font-weight: 800;
     color: var(--text-main);
     margin: 0 0 12px 0;
-    width: 100%; /* Чтобы текст мог центрироваться */
+    width: 100%;
 }
 
 .empty-text {
@@ -186,139 +203,269 @@ body, html {
     font-size: 15px;
     line-height: 1.4;
     max-width: 300px;
-    margin: 0 auto; /* Центрирует текстовый блок */
+    margin: 0 auto;
 }
-/* --- КНОПКИ --- */
+
 .session-actions {
     display: flex;
-    flex-direction: column; /* Кнопки друг под другом на узких экранах */
+    flex-direction: row;
+    justify-content: center;
     gap: 12px;
     width: 100%;
     padding-bottom: 20px;
+    position: relative;
+    z-index: 999;
+    pointer-events: auto !important;
 }
 
 @media (min-width: 380px) {
     .session-actions {
-        flex-direction: row; /* В ряд, если место позволяет */
+        flex-direction: row;
         flex-wrap: wrap;
     }
-    .btn-primary { flex-basis: 100%; } /* Основная кнопка на всю ширину */
+    .btn-primary { flex-basis: 100%; }
     .btn-secondary, .btn-outline { flex: 1; }
+}
+
+button, .btn {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    text-align: center;
+    color: #ffffff !important;
 }
 
 .btn {
     height: 56px;
     border-radius: var(--radius-md);
-    border: none;
-    font-family: var(--font-main);
-    font-weight: 700;
     font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s;
-}
-
-.btn-primary { background: var(--accent-color); color: white; }
-.btn-secondary { background: var(--icon-bg); color: white; gap: 8px; }
-.btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-dim); }
-
-.btn:active { transform: scale(0.96); }
-/* --- ЭФФЕКТЫ ДЛЯ КНОПОК --- */
-.btn {
-    transition: all var(--transition-fast) ease-in-out;
     position: relative;
     overflow: hidden;
 }
 
-/* Главная кнопка: легкое свечение и увеличение */
+.btn:active {
+    transform: scale(0.96);
+    filter: brightness(0.9);
+}
+
+.btn-primary, .btn-confirm {
+    background-color: #ff3b5c !important;
+    height: 50px;
+    width: 120px;
+    border-radius: 18px;
+    font-size: 16px;
+    box-shadow: 0 8px 20px rgba(255, 59, 92, 0.3);
+}
+.btn-primary-large-stop{
+    background-color: #ff3b5c !important;
+    height: 50px;
+    width: 100%;
+    border-radius: 18px;
+    font-size: 16px;
+    box-shadow: 0 8px 20px rgba(255, 59, 92, 0.3);
+}
+.btn-primary-large {
+    background-color: #ff3b5c !important;
+    height: 50px;
+    width: 45%;
+    border-radius: 18px;
+    font-size: 16px;
+    box-shadow: 0 8px 20px rgba(255, 59, 92, 0.3);
+}
+
 .btn-primary:hover {
-    background-color: #ff5271; /* Чуть светлее основного акцента */
+    background-color: #ff5271;
     transform: translateY(-2px);
     box-shadow: 0 8px 25px var(--accent-glow);
 }
 
-/* Вторичная кнопка: изменение фона */
+.btn-secondary {
+    background: var(--icon-bg);
+    color: white;
+    gap: 8px;
+}
+
 .btn-secondary:hover {
     background-color: var(--card-hover);
     color: var(--text-main);
     transform: translateY(-2px);
 }
 
-/* Контурная кнопка: выделение границы */
+.btn-secondary-large, .btn-outline {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid #2c2c34 !important;
+    height: 56px;
+    width: 45%;
+    border-radius: 18px;
+    font-size: 16px;
+}
+.btn-secondary-large-day{
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid #2c2c34 !important;
+    height: 56px;
+    width: 100%;
+    border-radius: 18px;
+    font-size: 16px;
+}
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-dim);
+}
+
 .btn-outline:hover {
     border-color: var(--text-dim);
     color: var(--text-main);
     background: rgba(255, 255, 255, 0.03);
 }
 
-/* Эффект нажатия для всех кнопок */
-.btn:active {
-    transform: translateY(0) scale(0.96);
-    filter: brightness(0.9);
+.btn-mini-action {
+    background-color: #2c2c34 !important;
+    border: 1px solid #3a3a4c !important;
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
 }
 
-/* --- ЭФФЕКТЫ ДЛЯ ЦЕНТРАЛЬНОЙ ИКОНКИ --- */
-.calendar-card {
-    transition: transform var(--transition-fast) ease, border-color var(--transition-fast);
+.btn-circle-confirm {
+     background-color: #ff3b5c !important;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 59, 92, 0.4);
 }
 
-.empty-icon-wrapper:hover .calendar-card {
-    transform: scale(1.02);
-    border-color: #3a3a4c;
+.btn-add-exercise {
+    background: none !important;
+    color: #ff3b5c !important;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-/* Анимация красного бейджа при наведении на всю иконку */
-.empty-icon-wrapper:hover .floating-badge {
-    transform: rotate(0deg) scale(1.1); /* Выпрямляется и увеличивается */
-    background-color: #ff5271;
-    box-shadow: 0 12px 30px var(--accent-glow);
+.btn-add-exercise:hover {
+    opacity: 0.7;
+    text-decoration: none;
 }
 
-.floating-badge {
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s;
-}
-
-/* --- ЭФФЕКТ ДЛЯ ТАЙМЕРА --- */
-.timer-display {
-    transition: background 0.3s ease, border-color 0.3s ease;
-    cursor: default;
-}
-
-.timer-display:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
-/* Легкое увеличение цифр при наведении */
-.timer-display:hover .timer-value {
-    color: var(--text-main);
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-}
-/* Растягиваем кнопку на всю ширину, если она одна */
 .btn-full-width {
-    flex: 1 1 100% !important; 
+    flex: 1 1 100% !important;
     width: 100%;
-    background: var(--accent-color) !important; /* Изменил с --card-bg на --icon-bg */
+    background: var(--accent-color) !important;
     border: 1px solid var(--border-color) !important;
     color: var(--text-main) !important;
 }
-/* Убедимся, что контейнер кнопок позволяет растягивание */
-.session-actions {
-    display: flex;
-    gap: 12px;
-    width: 100%;
-    flex-wrap: wrap; /* Позволяет кнопкам переноситься или расширяться */
-}
+
 .btn-full-width:hover {
-    background-color: #ff5271; /* Чуть светлее основного акцента */
+    background-color: #ff5271;
     transform: translateY(-2px);
     box-shadow: 0 8px 25px var(--accent-glow);
 }
-/* Оверлей (фон) */
+
+.btn-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(0.5);
+}
+
+button:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+button svg {
+    fill: #ffffff;
+    stroke: #ffffff;
+}
+
+.session-actions .btn-secondary-large:has(svg) {
+    all: unset;
+    box-sizing: border-box;
+    width: 100%;
+    height: 60px;
+    background-color: #ff3b5c !important;
+    color: #ffffff !important;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255, 59, 92, 0.4);
+    transition: all 0.2s ease;
+    margin-bottom: 30px !important;
+}
+
+.session-actions .btn-secondary-large:has(svg):active {
+    transform: scale(0.97);
+    filter: brightness(0.9);
+}
+
+.session-actions .btn-secondary-large:has(svg) svg {
+    stroke: #ffffff;
+}
+
+#select-day-btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    
+    margin-top: 100px !important;
+}
+
+.btn-mini-action-save {
+    width: 200px;
+}
+
+.btn-mini-action-save > i > span {
+    padding-left: 5px;
+}
+
+.action-buttons-row {
+    display: flex;
+    gap: 10px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.red-icon {
+    color: var(--accent-color);
+}
+
+.queue-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.queue-title {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    opacity: 0.8;
+}
+
 .modal-overlay {
-    display: none; /* Это полностью убирает элемент из потока кликов */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -329,7 +476,17 @@ body, html {
     justify-content: center;
     align-items: center;
 }
-/* Контент модалки */
+
+.modal-overlay.active {
+    display: flex !important;
+}
+
+.modal-overlay:not(.active) {
+    display: none !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+}
+
 .modal-content {
     background: var(--card-bg);
     width: 90%;
@@ -367,7 +524,14 @@ body, html {
     cursor: pointer;
 }
 
-/* Список дней */
+.modal {
+    display: none;
+}
+
+.modal.active {
+    display: flex;
+}
+
 .days-list {
     display: flex;
     flex-direction: column;
@@ -390,16 +554,38 @@ body, html {
 .day-option:hover {
     background: var(--card-hover);
     border-color: var(--accent-color);
-    padding-left: 20px; /* Эффект смещения */
+    padding-left: 20px;
 }
-/* Основная активная карточка */
+
 .exercise-card-active {
     background: #1c1c24;
     border-radius: 24px;
     max-height: 220px;
     padding: 15px;
+    padding-bottom: 60px !important;
     margin-bottom: 10px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.exercise-card-active.removing {
+    transform: translateY(-30px) scale(0.95);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.exercise-card-active.fade-in {
+    animation: slideUpFade 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .badge-active {
@@ -412,11 +598,6 @@ body, html {
     text-transform: uppercase;
 }
 
-
-
-
-
-/* Мини-карточки в очереди */
 .exercise-card-mini {
     background: #1c1c24;
     display: flex;
@@ -425,6 +606,16 @@ body, html {
     padding: 15px 20px;
     border-radius: 16px;
     margin-bottom: 10px;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+}
+
+.exercise-card-mini.scaling-up {
+    transform: translateY(-50px) scale(1.05);
+    opacity: 0;
+}
+
+.exercise-card-mini:nth-child(n+3) {
+    display: none;
 }
 
 .mini-icon {
@@ -448,232 +639,59 @@ body, html {
     font-size: 11px;
     font-weight: bold;
 }
-/* Находим кнопку внутри блока session-actions в состоянии, когда день не выбран */
-.session-actions .btn-secondary-large:has(svg) {
-    all: unset; /* Сброс системных стилей */
-    box-sizing: border-box;
-    width: 100%;
-    height: 60px;
-    background-color: #ff3b5c !important; /* Ярко-розовый */
-    color: #ffffff !important;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 17px;
-    cursor: pointer;
-    box-shadow: 0 10px 25px rgba(255, 59, 92, 0.4);
-    transition: all 0.2s ease;
+
+.exercise-title {
+    margin: 0;
 }
 
-/* Эффект нажатия */
-.session-actions .btn-secondary-large:has(svg):active {
-    transform: scale(0.97);
-    filter: brightness(0.9);
-}
-
-/* Цвет иконки внутри кнопки */
-.session-actions .btn-secondary-large:has(svg) svg {
-    stroke: #ffffff; /* Делаем календарь белым */
-}
-
-/* 1. Сброс и базовые стили для всех кнопок */
-button, .btn {
-    all: unset; /* Сбрасываем стандартные серые стили браузера */
-    box-sizing: border-box;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Montserrat', sans-serif; /* Или твой основной шрифт */
-    font-weight: 700;
-    transition: all 0.2s ease;
-    text-align: center;
-    color: #ffffff !important; /* Делаем текст белым принудительно */
-}
-
-/* 2. Главная розовая кнопка (Начать, Подтвердить) */
- .btn-confirm, .btn-primary {
-    background-color: #ff3b5c !important;
-    height: 50px;
-    width: 120px;
-    border-radius: 18px;
-    font-size: 16px;
-    box-shadow: 0 8px 20px rgba(255, 59, 92, 0.3);
-}
-.btn-primary-large{
-    background-color: #ff3b5c !important;
-    height: 50px;
-    width: 100%;
-    border-radius: 18px;
-    font-size: 16px;
-    box-shadow: 0 8px 20px rgba(255, 59, 92, 0.3);
-}
-/* 3. Вторичная кнопка (Завершить, Выбрать день) */
-.btn-secondary-large, .btn-outline {
-    background-color: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid #2c2c34 !important;
-    height: 56px;
-    width: 100%;
-    border-radius: 18px;
-    font-size: 16px;
-}
-
-/* 4. Маленькие кнопки действий (иконки: изменить, график) */
-.btn-mini-action {
-    background-color: #2c2c34 !important;
-    border: 1px solid #3a3a4c !important;
-    width: 50px;
-    height: 50px;
-    border-radius: 14px;
-}
-
-/* 5. Круглая розовая кнопка с галочкой */
-.btn-circle-confirm {
-    background-color: #ff3b5c !important;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    box-shadow: 0 0 20px rgba(255, 59, 92, 0.4);
-}
-
-/* 6. Кнопка "Добавить +" (текстовая) */
-.btn-add-exercise {
-    background: none !important;
-    color: #ff3b5c !important; /* Здесь текст розовый по дизайну */
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Состояния при наведении и нажатии */
-button:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
-}
-
-button:active {
-    transform: scale(0.97);
-}
-
-/* Исправление для SVG иконок внутри кнопок */
-button svg {
-    fill: #ffffff; /* Если иконки заливкой */
-    stroke: #ffffff; /* Если иконки контурные */
-}
-.btn-mini-action-save{
-width: 200px;
-}
-.btn-mini-action-save>i>span{
-    padding-left: 5px;
-}
-.action-buttons-row{
-    display: flex;
-    gap: 10px;
-}
-.card-header{
-    display: flex;
-    justify-content: space-between;
-}
-.red-icon{
-    color: var(--accent-color);
-}
-
-/* Контейнер для заголовка очереди */
-.queue-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    width: 100%;
-}
-
-/* Стили для текста "ОЧЕРЕДЬ УПРАЖНЕНИЙ" */
-.queue-title {
-    font-size: 11px; /* Маленький размер */
-    font-weight: 800; /* Жирный */
-    color: var(--text-dim); /* Серый цвет из переменных (#8e8e93) */
-    text-transform: uppercase; /* Все заглавные */
-    letter-spacing: 1.2px; /* Межсимвольный интервал для читаемости */
-    opacity: 0.8;
-}
-
-/* Стили для кнопки "ДОБАВИТЬ +" */
-.btn-add-exercise {
-    all: unset; /* Убираем лишние стили */
-    cursor: pointer;
-    color: var(--accent-color) !important; /* Розовый цвет (#ff3b5c) */
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: opacity 0.2s ease;
-}
-
-.btn-add-exercise:hover {
-    opacity: 0.7;
-    text-decoration: none;
-}
-/* Контейнер для двух колонок (Вес и Подходы) */
 .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px; /* Отступ между карточками */
+    gap: 16px;
     margin: 20px 0;
     width: 100%;
 }
 
-/* Сама карточка параметра */
 .stat-box {
-    background: #252530 !important; /* Глубокий темно-серый цвет карточки */
+    background: #252530 !important;
     border-radius: 20px;
     padding: 10px 10px;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.03); /* Почти незаметная граница */
+    border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
-/* Верхняя мелкая подпись (ВЕС (КГ) / ПОДХОДЫ) */
 .stat-label {
     font-size: 10px;
     font-weight: 700;
-    color: #8e8e93; /* Приглушенный серый текст */
+    color: #8e8e93;
     text-transform: uppercase;
     letter-spacing: 0.8px;
     margin-bottom: 8px;
 }
 
-/* Основное значение (Число) */
 .stat-value {
-    font-size: 32px; /* Крупный шрифт для цифр */
+    font-size: 32px;
     font-weight: 600;
-    color: #ffffff !important; /* Чисто белый цвет */
+    color: #ffffff !important;
     line-height: 1;
 }
 
-/* Подпись рядом с числом (КГ / ОСТАЛОСЬ) */
 .stat-value .unit {
     font-size: 14px;
     font-weight: 600;
-    color: #8e8e93; /* Серый цвет для единиц измерения */
+    color: #8e8e93;
     margin-left: 4px;
     text-transform: uppercase;
 }
-/* Контейнер списка упражнений */
+
 .exercises-list-container {
-    max-height: 220px; /* Высота примерно на 2.5 карточки */
-    overflow-y: auto;  /* Включаем вертикальную прокрутку */
-    padding-right: 4px; /* Отступ для скроллбара */
-    
-    /* Плавный скролл */
+    max-height: 220px;
+    overflow-y: auto;
+    padding-right: 4px;
     scroll-behavior: smooth;
-    
-    /* Скрываем стандартный скроллбар для красоты (Chrome/Safari) */
 }
 
 .exercises-list-container::-webkit-scrollbar {
@@ -684,91 +702,441 @@ width: 200px;
     background: var(--border-color);
     border-radius: 10px;
 }
-/* Скрываем все упражнения в очереди, начиная с третьего (индекс 2+) */
-.exercise-card-mini:nth-child(n+3) {
-    display: none;
-}
 
-.exercise-title{
-    margin: 0;
-}
-/* Состояние заблокированной кнопки */
-.btn-disabled {
-    opacity: 0.5;
-    pointer-events: none; /* Запрещает клики */
-    filter: grayscale(0.5); /* Делает цвета тусклыми */
-}
-
-
-
-/* Этот класс будем добавлять через JS, чтобы показать модалку */
-.modal-overlay.active {
-    display: flex !important;
-}
-.modal {
-    display: none; /* Скрыто по умолчанию */
-    /* остальные стили модалки */
-}
-
-.modal.active {
-    display: flex; /* Или block, чтобы показать */
-}
-/* Анимация исчезновения активной карточки (вверх и прозрачность) */
-.exercise-card-active.removing {
-    transform: translateY(-30px) scale(0.95);
-    opacity: 0;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Анимация появления новой карточки */
-.exercise-card-active.fade-in {
-    animation: slideUpFade 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-@keyframes slideUpFade {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+@media screen and (max-width: 470px) {
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        min-height: 100vh;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    .workout-content {
+       padding: 15px 15px 170px 15px !important;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+.bottom-nav {
+        position: fixed !important;
+        width: calc(100% - 20px) !important;
+        bottom: 15px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        border-radius: 20px !important;
+        z-index: 999999 !important;
+        pointer-events: auto !important;
+        display: flex !important;
+    }
+
+    .nav-item i { font-size: 20px !important; }
+  
+    .main-content {
+        flex: 1;
+        height: auto !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .exercise-card-active {
+        padding: 10px !important;
+        padding-bottom: 30px !important;
+        gap: 10px !important;
+        background: #1a1a20;
+        border-radius: 20px;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        align-items: center !important;
+        margin-bottom: 20px;
+        height: 40px;
+        gap: 5px !important;
+        padding-top: 25px;
+    }
+
+    .card-header-trainMode {
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .badge-active {
+        font-size: 9px !important;
+        padding: 3px 8px !important;
+    }
+
+    .exercise-title {
+        font-size: 1.2rem !important;
+        margin: 10px 0 !important;
+        line-height: 1.2;
+    }
+
+    .stats-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 12px !important;
+        margin: 15px 0 !important;
+    }
+
+    .stat-box {
+        padding: 8px !important;
+        height: auto !important;
+    }
+
+    .stat-label { font-size: 9px !important; }
+    .stat-value { font-size: 22px !important; }
+    .weight-value {
+        font-size: 32px !important;
+        font-weight: 800 !important;
+    }
+    .approaches-value { font-size: 22px; }
+
+    .action-buttons-row {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 8px !important;
+        width: 100%;
+    }
+
+    .btn-confirm.complete-btn,
+    .btn-mini-action-save {
+        width: 100% !important;
+        height: 45px !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+    }
+
+    .btn-mini-action-save { flex: 2 !important; font-size: 13px !important; }
+    .btn-confirm.complete-btn { flex: 1 !important; }
+
+    .queue-header { margin: 15px 0 8px !important; }
+    .queue-title { font-size: 11px !important; letter-spacing: 1px; }
+
+    .exercises-scroll-container {
+        max-height: 75px !important;
+        overflow-y: auto !important;
+        padding-right: 5px !important;
+        margin-bottom: 15px !important;
+        -webkit-overflow-scrolling: touch;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .exercises-scroll-container::-webkit-scrollbar { width: 3px !important; }
+    .exercises-scroll-container::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1) !important; }
+
+    .exercise-card-mini {
+        flex-shrink: 0 !important;
+        height: 55px !important;
+        padding: 8px 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        border-radius: 12px !important;
+        font-size: 18px;
+    }
+
+    .mini-title { font-size: 15px; width: 10px; }
+
+    .mini-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 42px !important;
+        height: 42px !important;
+        flex-shrink: 0 !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-radius: 12px !important;
+        color: var(--accent-color) !important;
+    }
+    .mini-icon i { font-size: 18px !important; }
+
+    .session-header {
+        padding-top: 5px !important;
+        margin-bottom: 5px !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .session-label {
+        font-size: 15px;
+        padding: 0;
+        margin: 0 0 10px 0;
+    }
+
+    .timer-display {
+        margin: 1px 0 !important;
+        padding: 5px;
+        width: 200px;
+        height: 35px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .timer-value { font-size: 30px !important; }
+
+    .session-info {
+        margin: 15px 0 50px 0 !important;
+    }
+
+    .session-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        height: auto;
+     
+        width: 100%;
+    }
+.btn-secondary-large-day{
+    margin-top: 60px !important;
+}
+    #start-workout-btn, #finish-workout-btn {
+        flex: 1;
+        width: auto !important;
+        height: 50px !important;
+        padding: 0 10px !important;
+        font-size: 14px !important;
+        white-space: nowrap;
+    }
+
+    .empty-icon-wrapper {
+        width: 140px;
+        height: 140px;
+        position: relative;
+        margin: 0 auto;
+    }
+
+    .empty-msg {
+        font-size: 18px !important;
+        font-weight: 600 !important;
+        color: #8e8e93 !important;
+        line-height: 1.4 !important;
+        max-width: 280px !important;
+        margin: 0 auto !important;
+    }
+
+    .modal, .modal-overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: 100dvh !important;
+        background: rgba(0, 0, 0, 0.8) !important;
+        display: none;
+        align-items: center !important;
+        justify-content: center !important;
+        z-index: 99999 !important;
+    }
+
+    .modal-overlay.active, .modal-overlay.show {
+        display: flex !important;
+        pointer-events: auto;
+    }
+
+    .modal-content {
+        width: 85% !important;
+        max-width: 340px !important;
+        max-height: 80dvh !important;
+        margin: 0 auto !important;
+        padding: 25px 20px !important;
+        overflow-y: auto !important;
+        position: relative !important;
+        display: block !important;
+        background: #1a1a20 !important;
+        border-radius: 24px !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+        -webkit-overflow-scrolling: touch;
+        bottom: auto !important;
+        transform: none !important;
+    }
+
+    .modal-body-TrainMode { height: 120px; }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .modal-header h2, .modal-header h3 { font-size: 20px; }
+
+    .lang-switcher-mini {
+        position: absolute;
+        left: 0;
+        top: 5px;
+        display: flex;
+        align-items: center;
+    }
+
+    .main-chart-card {
+        padding: 10px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .main-chart-card h2, .weight-card h2, .history-card h2 { font-size: 14px !important; }
+    .weight-card, .history-card { padding: 12px !important; }
+
+    .chart-wrapper {
+        height: 180px !important;
+        margin-top: 5px !important;
+    }
+
+    .bar-chart {
+        height: 100px !important;
+        align-items: flex-end !important;
+        gap: 8px !important;
+        margin-top: 10px !important;
+    }
+
+    .history-stats {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        margin-top: 10px !important;
+        border-top: 1px solid rgba(255,255,255,0.1) !important;
+        padding-top: 8px !important;
+    }
+
+    .stat-item {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 4px !important;
+    }
+
+    .weight-selector {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        margin: 10px 0 !important;
+        gap: 10px !important;
+    }
+
+    .weight-btn {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 15px !important;
+        font-size: 24px !important;
+    }
+
+    .weight-slider {
+        width: 100% !important;
+        height: 8px !important;
+        margin: 15px 0 !important;
+    }
+
+    .slider-labels {
+        display: flex !important;
+        justify-content: space-between !important;
+        font-size: 12px !important;
+        color: #8e8e93 !important;
     }
 }
 
-/* Плавный подъем мини-карточек в очереди */
-.exercise-card-mini {
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+@media screen and (min-width: 471px) {
+    .main-chart-card .card-header {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .card-controls {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .chart-wrapper {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+
+    .history-card .card-header {
+        position: relative;
+        margin-bottom: 40px;
+        z-index: 2;
+    }
+
+    .period-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+
+    .bar-chart {
+        margin-top: 20px;
+        height: 180px;
+        align-items: flex-end;
+    }
+
+    .weight-display {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 15px 0;
+    }
+
+    .weight-display .weight-value {
+        font-size: 3rem;
+        line-height: 1;
+        font-weight: 700;
+    }
+
+    .weight-display .weight-unit {
+        font-size: 1.2rem;
+        margin-top: 5px;
+        color: #888;
+    }
+
+    .weight-selector {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .weight-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 24px;
+    }
 }
 
-/* Эффект для "вылетающей" мини-карточки, которая становится активной */
-.exercise-card-mini.scaling-up {
-    transform: translateY(-50px) scale(1.05);
-    opacity: 0;
-}
-/* 1. Гарантируем, что оверлеи не блокируют экран, когда они не активны */
-.modal-overlay:not(.active) {
-    display: none !important;
-    pointer-events: none !important;
-    visibility: hidden !important;
+@media screen and (max-width: 750px) {
+    .progress-grid {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
-/* 2. Поднимаем блок кнопок над всеми фоновыми эффектами и spacer-ами */
-.session-actions {
-    position: relative;
-    z-index: 999; /* Выше чем main-spacer */
-    pointer-events: auto !important;
-}
-
-/* 3. Делаем саму кнопку безусловно кликабельной */
-#select-day-btn {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    /* Убедимся, что кнопка не перекрыта нижним отступом контейнера */
-    margin-bottom: 20px; 
-}
-
-/* 4. Фикс для мобильного хрома в Telegram */
-.workout-screen-container {
-    overflow-y: auto !important; /* Разрешаем внутренний скролл, если кнопки не влазят */
+@media screen and (max-width: 600px) {
+    .card-header { gap: 0; }
 }

@@ -14,10 +14,11 @@ const isAuth = (req, res, next) => {
         return next();
     }
 
-    const isApiRequest = 
-        (req.headers.accept && req.headers.accept.includes('application/json')) ||
-        req.path.startsWith('/user/') || 
-        req.path.includes('saveAiData');
+   const isApiRequest = 
+    req.xhr || 
+    (req.headers.accept && req.headers.accept.includes('application/json')) ||
+    req.path.startsWith('/user/') || 
+    req.path.includes('Ai'); 
 
     let token = null;
 
@@ -63,23 +64,23 @@ const translations = {
     en: JSON.parse(fs.readFileSync(path.join(__dirname, "..", "data", "languages", "en.json"), "utf8"))
 };
 const setLangMiddleware = async (req, res, next) => {
-  
-    res.locals.t = translations.ru;
+    res.locals.t = translations.ru; // Дефолт
     res.locals.currentLang = 'ru';
 
-    
-    if (req.user) {
+    if (req.user && req.user.id) {
         try {
-            const { profileWeightList } = await trainList.getUserDataDB(req.user.id);
-            const lang = profileWeightList.language || 'ru';
-            
-       
-            if (translations[lang]) {
-                res.locals.t = translations[lang];
-                res.locals.currentLang = lang;
+            const userData = await trainList.getUserDataDB(req.user.id);
+            // ПРОВЕРКА:userData может быть null или не иметь profileWeightList
+            if (userData && userData.profileWeightList) {
+                const lang = userData.profileWeightList.language || 'ru';
+                if (translations[lang]) {
+                    res.locals.t = translations[lang];
+                    res.locals.currentLang = lang;
+                }
             }
-        } catch (e) {
-            console.error("Ошибка при получении языка:", e);
+        } catch (error) {
+            console.error("Критическая ошибка в setLangMiddleware:", error);
+            // Если БД упала, просто идем дальше с русским языком, не вешая сервер
         }
     }
     next();

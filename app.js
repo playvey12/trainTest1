@@ -42,7 +42,9 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 
 
-app.get('/',setLangMiddleware, (req, res) => res.redirect('/register'));
+app.get('/',setLangMiddleware, (req, res) => res.redirect('/loading'));
+app.get('/loading',setLangMiddleware, (req, res) => res.render("loading.hbs"));
+
 app.get('/register',setLangMiddleware, (req, res) => res.render("register.hbs"));
 app.get('/login',setLangMiddleware, (req, res) => res.render("login.hbs"));
 

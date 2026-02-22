@@ -13,10 +13,10 @@ const {generateWorkoutData}=require('../services/trainPlanAiYandexGpt')
 // Настройки куки (вынес в переменную для удобства)
 // На бэкенде
 const cookieOptions = {
-    httpOnly: false, // ВАЖНО: ставим false, чтобы ваш скрипт auth.js мог её прочитать
-    secure: true,    // ОБЯЗАТЕЛЬНО: для SameSite: 'None' нужен https (в ТГ он всегда есть)
-    sameSite: 'None', // ОБЯЗАТЕЛЬНО: чтобы кука не блокировалась внутри Telegram
-    maxAge: 30 * 24 * 60 * 60 * 1000 
+    httpOnly: true,
+    secure: true, // Всегда true для работы в Telegram
+    sameSite: 'None', 
+    maxAge: 30 * 24 * 60 * 60 * 1000
 };
 
 async function updateStats(req, res) {
@@ -474,53 +474,59 @@ const crypto = require('crypto');
 async function tgLogin(req, res) {
     try {
         const { initData } = req.body;
-        const botToken = process.env.TELEGRAM_APP_BOT_TOKEN; 
-
+        const botToken = process.env.TELEGRAM_APP_BOT_TOKEN;
+        if (!botToken) {
+            console.error("  TELEGRAM_APP_BOT_TOKEN не найден. Проверь файл .env!");
+            return res.status(500).json({ error: "Server configuration error (missing token)" });
+        }
         if (!initData) return res.status(400).json({ error: "No initData" });
-
         const urlParams = new URLSearchParams(initData);
         const hash = urlParams.get('hash');
         urlParams.delete('hash');
-        
         const dataCheckString = Array.from(urlParams.entries())
             .map(([key, value]) => `${key}=${value}`)
             .sort()
             .join('\n');
-
         const secretKey = crypto.createHmac('sha256', 'WebAppData').update(botToken).digest();
         const hmac = crypto.createHmac('sha256', secretKey).update(dataCheckString).digest('hex');
-
         if (hmac !== hash) return res.status(403).json({ error: "Invalid signature" });
-
-        const userTg = JSON.parse(urlParams.get('user'));
+        const userStr = urlParams.get('user');
+        if (!userStr) return res.status(400).json({ error: "User data is missing in initData" });
+        const userTg = JSON.parse(userStr);
         const telegramId = String(userTg.id);
-
         db.get('SELECT id, email FROM users WHERE telegram_id = ?', [telegramId], (err, user) => {
-            if (err) return res.status(500).json({ error: "DB Error" });
+            if (err) {
+              
+                console.error("❌ ОШИБКА БД ПРИ ПОИСКЕ ЮЗЕРА:", err.message);
+                return res.status(500).json({ error: "DB Error (SELECT)", details: err.message });
+            }
 
             if (user) {
-                // --- ЛОГИКА ВХОДА ---
+               
                 const token = jwt.sign({ id: user.id, email: user.email }, jwtSecret, { expiresIn: '30d' });
                 
-                // Шлем уведомление о входе
-                notifyRegistration({ ...userTg, type: 'login', id: telegramId });
-
+           
                 res.cookie('token', token, cookieOptions);
                 return res.json({ token });
 
             } else {
-                // --- ЛОГИКА РЕГИСТРАЦИИ ---
+             
                 const tempEmail = `tg_${telegramId}@yourbot.com`;
                 db.run('INSERT INTO users(email, password, is_verified, telegram_id) VALUES (?, ?, 1, ?)', 
-                    [tempEmail, 'tg_auto_pass', telegramId], function(err) {
-                        if (err) return res.status(500).json({ error: "Create Error" });
-                        
-                        const userId = this.lastID;
+    [tempEmail, 'tg_auto_pass', telegramId], function(err) {
+        if (err) {
+       
+            console.error("❌ КРИТИЧЕСКАЯ ОШИБКА РЕГИСТРАЦИИ:", err.message);
+            return res.status(500).json({ error: "Этот аккаунт уже привязан" });
+        }
+        
+        const userId = this.lastID;
+        console.log(`✅ Успешно создан новый пользователь с ID: ${userId}`)
                         const token = jwt.sign({ id: userId, email: tempEmail }, jwtSecret, { expiresIn: '30d' });
 
                         db.get('SELECT COUNT(*) as count FROM users', (err, row) => {
                             const total = row ? row.count : '?';
-                            notifyRegistration({ ...userTg, type: 'registration', id: telegramId, total: total });
+                            notifyRegistration(`🚀 НОВЫЙ TG ЮЗЕР: ID ${telegramId}\n📊 Всего в базе: ${total}`);
                         });
 
                         res.cookie('token', token, cookieOptions);
@@ -529,9 +535,9 @@ async function tgLogin(req, res) {
             } 
         });
     } catch (e) {
-        console.error("Глобальная ошибка в tgLogin:", e);
-        res.status(500).json({ error: "Server error" });
+       
+        console.error("❌ ГЛОБАЛЬНАЯ ОШИБКА В tgLogin:", e.stack || e);
+        res.status(500).json({ error: "Server error catch block", details: e.message });
     }
 }
-
 module.exports = {tgLogin,generateWorkout,saveUserAiData,changePassword,resetPassword,forgotPassword,updateStats,addTask,regNewUser,confirmReg,resendCode,userLogin,addLogExercise};
