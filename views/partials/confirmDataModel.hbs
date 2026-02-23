@@ -13,8 +13,10 @@
         </p>
         <div class="modal-actions">
             <button class="btn-secondary" onclick="closeConfirmDataAi()">{{t.profile.confirmData.btn_later}}</button>
-            <button class="btn-secondary btn-secondary-red"
-                onclick="generateTrainPlan()">{{t.profile.confirmData.btn_start}}</button>
+            <button class="btn-secondary btn-gif btn-secondary-red" onclick="generateTrainPlan(this)">
+                <span class="btn-generate">{{t.profile.confirmData.btn_start}}</span>
+                <img class="gif" src="/gif/run.gif" alt="loading">
+            </button>
         </div>
     </div>
 </div>

@@ -328,20 +328,22 @@ function toggleModal(id, show) {
 }
 async function generateTrainPlan() {
     const btn = document.querySelector('.btn-secondary-red');
+  const btnText = btn.querySelector('.btn-generate');
+    const gifRun = btn.querySelector('.gif');
     const originalText = btn.innerText;
     btn.disabled = true;
 
    
     let dotCount = 0;
-    const loadingInterval = setInterval(() => {
+ 
         dotCount = (dotCount + 1) % 4; 
-        btn.innerText = "Генерация" + ".".repeat(dotCount);
-    }, 400);
+btnText.innerHTML = 'Генерация';
+    gifRun.classList.add("active");
 
     const token = localStorage.getItem('token'); 
 
     if (!token) {
-        clearInterval(loadingInterval); 
+gifRun.classList.remove("active")
         showNotification("Вы не авторизованы!", "error");
         btn.innerText = originalText;
         btn.disabled = false;
@@ -364,6 +366,8 @@ async function generateTrainPlan() {
         const plan = await response.json();
 
         if (response.ok) {
+gifRun.classList.remove("active")
+
           showNotification("Упражнения добавлины на ВТ,ЧТ,CБ", "success");
             location.reload(); 
         } else {
@@ -375,7 +379,7 @@ async function generateTrainPlan() {
     } finally {
        
       
-        clearInterval(loadingInterval); 
+      
         btn.innerText = originalText;
         btn.disabled = false;
         

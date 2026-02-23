@@ -1,37 +1,39 @@
-/* --- ПЕРЕМЕННЫЕ И ШРИФТЫ --- */
+/* =================================== */
+/* === ПЕРЕМЕННЫЕ И БАЗОВЫЕ СТИЛИ === */
+/* =================================== */
+
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
 
 :root {
-    /* Основная палитра (Dark Theme) */
+    /* Цвета */
     --bg-radial-start: #1e1e2e;
     --bg-radial-end: #0d0d12;
     --card-bg: #1a1a20;
     --card-hover: #25252d;
     --accent-color: #ff3b5c;
     --accent-glow: rgba(255, 59, 92, 0.4);
-    
-    /* Текст */
     --text-main: #ffffff;
     --text-dim: #8e8e93;
     --icon-bg: #2c2c34;
     --border-color: #2c2c34;
-
-    /* Шрифты и радиусы */
+    
+    /* Типографика */
     --font-main: 'Montserrat', sans-serif;
+    
+    /* Радиусы */
     --radius-lg: 20px;
     --radius-md: 12px;
     --radius-sm: 8px;
-
-    /* Тайминги анимаций */
+    
+    /* Анимации */
     --transition-fast: 0.2s;
-    --transition-slow: 0.6s;
+    --transition-smooth: 0.3s ease;
 }
 
-/* --- БАЗОВЫЕ СТИЛИ --- */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
 }
 
 body {
@@ -42,11 +44,14 @@ body {
     min-height: 100vh;
 }
 
-/* --- КОНТЕЙНЕР И СЕТКА --- */
-.progress-container {
-    padding: 20px;
-    max-width: 1000px;
-    margin: 0 auto;
+/* =================================== */
+/* === КОНТЕЙНЕРЫ И СЕТКА =========== */
+/* =================================== */
+
+.progress-container { 
+    padding: 20px; 
+    max-width: 1000px; 
+    margin: 0 auto; 
 }
 
 .progress-header {
@@ -68,17 +73,25 @@ body {
     margin-top: 20px;
 }
 
-/* --- КАРТОЧКИ --- */
+/* =================================== */
+/* === КАРТОЧКИ ===================== */
+/* =================================== */
+
 .card {
     background: var(--card-bg);
     border-radius: var(--radius-lg);
     padding: 24px;
     border: 1px solid var(--border-color);
-    transition: background var(--transition-fast);
+    transition: all var(--transition-smooth);
+    opacity: 1;
+    position: relative;
+    z-index: 10;
 }
 
 .card:hover {
     background: var(--card-hover);
+    transform: translateY(-4px);
+    border-color: rgba(255, 59, 92, 0.2);
 }
 
 .card h2 {
@@ -93,7 +106,6 @@ body {
     margin-top: 4px;
 }
 
-/* --- ГЛАВНЫЙ ГРАФИК --- */
 .card-header {
     display: flex;
     justify-content: space-between;
@@ -101,6 +113,10 @@ body {
     margin-bottom: 20px;
     height: 40px;
 }
+
+/* =================================== */
+/* === ЭЛЕМЕНТЫ УПРАВЛЕНИЯ ========== */
+/* =================================== */
 
 .card-controls {
     display: flex;
@@ -124,15 +140,140 @@ body {
     outline: none;
 }
 
+.btn-primary {
+    width: 100%;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 16px 18px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-family: var(--font-main);
+    cursor: pointer;
+    box-shadow: 0 4px 15px var(--accent-glow);
+    transition: all var(--transition-fast);
+}
+
+.btn-primary:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 6px 20px var(--accent-glow);
+    transform: translateY(-2px);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+    background: #2c2c2e;
+    box-shadow: none;
+    opacity: 0.6;
+    transform: none;
+    cursor: not-allowed;
+}
+
+.settings-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    box-shadow: 0 4px 15px var(--accent-glow);
+}
+
+.settings-btn i {
+    font-size: 16px;
+}
+
+.settings-btn:hover {
+    transform: scale(1.1) rotate(-10deg);
+    background: #ff4d6d;
+    box-shadow: 0 6px 20px rgba(255, 59, 92, 0.5);
+}
+
+.settings-btn:active {
+    transform: scale(0.95);
+}
+
+/* =================================== */
+/* === ГРАФИКИ ====================== */
+/* =================================== */
+
 .chart-wrapper {
     width: 100%;
     height: 260px;
     position: relative;
     background: linear-gradient(180deg, rgba(255, 59, 92, 0.05) 0%, transparent 100%);
     border-radius: var(--radius-md);
+    overflow: hidden;
 }
 
-/* --- ВВОД ВЕСА --- */
+/* Столбчатый график */
+.bar-chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 160px;
+    margin: 20px 0 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    flex: 1;
+}
+
+.bar-value {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.bar {
+    width: 35px;
+    background: var(--icon-bg);
+    border-radius: 6px 6px 0 0;
+    transition: height 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    min-height: 3px;
+    will-change: height;
+}
+
+.bar.active {
+    background: var(--accent-color);
+    animation: pulseGlow 2s infinite ease-in-out;
+}
+
+.bar-wrapper:last-child .bar-value {
+    color: var(--accent-color);
+    font-weight: 800;
+    font-size: 12px;
+}
+
+.bar-labels {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-dim);
+    font-size: 10px;
+    margin-top: 10px;
+    padding: 0 5px;
+}
+
+/* =================================== */
+/* === КАРТОЧКА ВВЕСА ВЕСА ========== */
+/* =================================== */
+
 .weight-card {
     text-align: center;
 }
@@ -169,11 +310,17 @@ body {
     color: var(--text-main);
     font-size: 20px;
     cursor: pointer;
-    transition: opacity var(--transition-fast);
+    transition: all var(--transition-fast);
+}
+
+.weight-btn:hover {
+    background: var(--border-color);
+    color: var(--accent-color);
 }
 
 .weight-btn:active {
     opacity: 0.7;
+    transform: scale(0.95);
 }
 
 .weight-slider {
@@ -191,25 +338,10 @@ body {
     margin-bottom: 30px;
 }
 
-.btn-primary {
-    width: 100%;
-    background: var(--accent-color);
-    color: white;
-    border: none;
-    padding: 18px;
-    border-radius: var(--radius-md);
-    font-weight: 700;
-    font-family: var(--font-main);
-    box-shadow: 0 4px 15px var(--accent-glow);
-    cursor: pointer;
-    transition: transform var(--transition-fast);
-}
+/* =================================== */
+/* === КАРТОЧКА ИСТОРИИ ============= */
+/* =================================== */
 
-.btn-primary:active {
-    transform: scale(0.98);
-}
-
-/* --- ИСТОРИЯ ВЕСА (СТОЛБИКИ) --- */
 .period-badge {
     background: var(--icon-bg);
     padding: 6px 12px;
@@ -217,9 +349,6 @@ body {
     font-size: 10px;
     font-weight: 700;
 }
-
-
-
 
 .history-stats {
     display: flex;
@@ -244,277 +373,10 @@ body {
     font-size: 18px;
 }
 
-/* --- АДАПТИВНОСТЬ --- */
-@media (max-width: 768px) {
-    .progress-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .card-header {
-        flex-direction: column;
-        gap: 15px;
-    }
-}
-/* --- АНИМАЦИИ --- */
+/* =================================== */
+/* === КАРТОЧКА УПРАЖНЕНИЙ ========== */
+/* =================================== */
 
-/* Появление снизу вверх */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Пульсация для активного бара или акцента */
-@keyframes pulseGlow {
-    0% { box-shadow: 0 0 5px var(--accent-glow); }
-    50% { box-shadow: 0 0 15px var(--accent-glow); }
-    100% { box-shadow: 0 0 5px var(--accent-glow); }
-}
-
-/* Применяем анимацию к карточкам */
-.card {
-    background: var(--card-bg);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    border: 1px solid var(--border-color);
-    transition: all var(--transition-fast) ease-out;
-    
-    /* Начальное состояние для анимации появления */
-    animation: fadeInUp 0.6s ease forwards;
-    opacity: 0; 
-}
-
-/* Задержки для поочередного появления */
-.main-chart-card { animation-delay: 0.1s; }
-.weight-card      { animation-delay: 0.2s; }
-.history-card     { animation-delay: 0.3s; }
-
-/* Эффект при наведении на карточку */
-.card:hover {
-    background: var(--card-hover);
-    transform: translateY(-4px);
-    border-color: rgba(255, 59, 92, 0.2);
-}
-
-/* Анимация активного столбца в графике */
-
-/* Интерактивность кнопок */
-.btn-primary:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 6px 20px var(--accent-glow);
-}
-
-.weight-btn:hover {
-    background: var(--border-color);
-    color: var(--accent-color);
-}
-
-.settings-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%; /* Делаем круглым */
-    background: var(--accent-color, #ff3b5c); /* Твой фирменный красный */
-    border: none;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 59, 92, 0.3);
-}
-
-.settings-btn i {
-    font-size: 16px; /* Размер карандашика */
-}
-
-/* Эффект при наведении */
-.settings-btn:hover {
-    transform: scale(1.1) rotate(-10deg); /* Немного наклоним при наведении */
-    background: #ff4d6d;
-    box-shadow: 0 6px 20px rgba(255, 59, 92, 0.5);
-}
-
-/* Эффект нажатия */
-.settings-btn:active {
-    transform: scale(0.95);
-}
-
-
-
-
-/* --- ПЕРЕМЕННЫЕ И ШРИФТЫ --- */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
-
-:root {
-    --bg-radial-start: #1e1e2e;
-    --bg-radial-end: #0d0d12;
-    --card-bg: #1a1a20;
-    --card-hover: #25252d;
-    --accent-color: #ff3b5c;
-    --accent-glow: rgba(255, 59, 92, 0.4);
-    --text-main: #ffffff;
-    --text-dim: #8e8e93;
-    --icon-bg: #2c2c34;
-    --border-color: #2c2c34;
-    --font-main: 'Montserrat', sans-serif;
-    --radius-lg: 20px;
-    --radius-md: 12px;
-    --radius-sm: 8px;
-    --transition-fast: 0.2s;
-}
-
-/* --- БАЗОВЫЕ СТИЛИ --- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-    background: radial-gradient(circle at top right, var(--bg-radial-start), var(--bg-radial-end));
-    background-attachment: fixed;
-    font-family: var(--font-main);
-    color: var(--text-main);
-    min-height: 100vh;
-}
-
-/* --- КОНТЕЙНЕРЫ И КАРТОЧКИ --- */
-.progress-container { padding: 20px; max-width: 1000px; margin: 0 auto; }
-
-.progress-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.card {
-    background: var(--card-bg);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    border: 1px solid var(--border-color);
-    transition: all var(--transition-fast) ease-out;
-    animation: fadeInUp 0.6s ease forwards;
-    opacity: 0; 
-}
-
-.card:hover {
-    background: var(--card-hover);
-    transform: translateY(-4px);
-    border-color: rgba(255, 59, 92, 0.2);
-}
-
-/* --- ГРАФИК ИСТОРИИ ВЕСА (СТОЛБИКИ) --- */
-.bar-chart {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
-    height: 160px; /* Увеличено, чтобы влезли цифры */
-    margin: 20px 0 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.bar-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    height: 100%;
-    flex: 1;
-}
-
-.bar-value {
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 6px;
-    font-weight: 600;
-}
-
-.bar {
-    width: 35px;
-    background: var(--icon-bg);
-    border-radius: 6px 6px 0 0;
- transition: height 0.4s ease-in-out;
-    min-height: 3px;
-}
-
-.bar {
-    transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-/* Активный и последний столбец */
-.bar.active {
-    background: var(--accent-color);
-    animation: pulseGlow 2s infinite ease-in-out;
-}
-
-.bar-wrapper:last-child .bar-value {
-    color: var(--accent-color);
-    font-weight: 800;
-    font-size: 12px;
-}
-
-.bar-labels {
-    display: flex;
-    justify-content: space-between;
-    color: var(--text-dim);
-    font-size: 10px;
-    margin-top: 10px;
-    padding: 0 5px;
-}
-
-/* --- ЭЛЕМЕНТЫ УПРАВЛЕНИЯ --- */
-.btn-primary {
-    width: 100%;
-    background: var(--accent-color);
-    color: white;
-    border: none;
-    padding: 16px;
-    border-radius: var(--radius-md);
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 4px 15px var(--accent-glow);
-    transition: all var(--transition-fast);
-}
-
-.btn-primary:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 6px 20px var(--accent-glow);
-}
-
-.settings-btn {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: var(--accent-color);
-    color: white;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.settings-btn:hover { transform: scale(1.1) rotate(-10deg); }
-
-/* --- АНИМАЦИИ --- */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 5px var(--accent-glow); }
-    50% { box-shadow: 0 0 15px var(--accent-glow); }
-}
-
-/* Задержки появления */
-.main-chart-card { animation-delay: 0.1s; }
-.weight-card     { animation-delay: 0.2s; }
-.history-card    { animation-delay: 0.3s; }
 .exercise-card-new {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -538,7 +400,7 @@ body {
     text-align: left;
 }
 
-.stat-value {
+.stat-box .stat-value {
     font-size: 28px;
     font-weight: 800;
     color: #fff;
@@ -546,7 +408,7 @@ body {
 
 .btn-confirm {
     width: 100%;
-    background: #ff2d55; /* Розовый из твоего дизайна */
+    background: #ff2d55;
     color: white;
     border: none;
     padding: 18px;
@@ -555,10 +417,10 @@ body {
     font-size: 16px;
     cursor: pointer;
     box-shadow: 0 10px 20px rgba(255, 45, 85, 0.3);
-    transition: 0.3s;
+    transition: var(--transition-smooth);
 }
 
-.btn-confirm:hover {
+.btn-confirm:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 15px 25px rgba(255, 45, 85, 0.4);
 }
@@ -567,42 +429,126 @@ body {
     background: #2c2c2e;
     box-shadow: none;
     opacity: 0.6;
-}
-.bar {
-    width: 35px;
-    background: var(--icon-bg);
-    border-radius: 6px 6px 0 0;
-    /* transition для высоты должен быть плавным */
-    transition: height 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-    min-height: 3px;
-    will-change: height; /* Подсказка браузеру для оптимизации */
-}
-.chart-wrapper {
-    width: 100%;
-    height: 260px; /* Фиксируем высоту для стабильности */
-    overflow: hidden;
-}
-/* 1. Гарантируем, что футер ВСЕГДА сверху и кликабелен */
-.bottom-nav {
-    z-index: 999999 !important;
-    pointer-events: auto !important;
-    position: fixed !important;
-    /* Убираем любые трансформации, которые могут сбить контекст */
-    transform: none !important; 
+    cursor: not-allowed;
 }
 
-/* 2. Если анимация карточек глючит — делаем их видимыми */
-.card {
-    opacity: 1 !important; /* Убираем риск невидимости */
-    pointer-events: auto !important;
-    position: relative;
-    z-index: 10;
+/* =================================== */
+/* === АНИМАЦИИ ===================== */
+/* =================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* 3. Защита от "невидимых" модалок */
+@keyframes pulseGlow {
+    0%, 100% { 
+        box-shadow: 0 0 5px var(--accent-glow); 
+    }
+    50% { 
+        box-shadow: 0 0 15px var(--accent-glow); 
+    }
+}
+
+/* Анимации для карточек */
+.main-chart-card { 
+    animation: fadeInUp 0.6s ease 0.1s forwards; 
+}
+.weight-card { 
+    animation: fadeInUp 0.6s ease 0.2s forwards; 
+}
+.history-card { 
+    animation: fadeInUp 0.6s ease 0.3s forwards; 
+}
+
+/* =================================== */
+/* === МОДАЛЬНЫЕ ОКНА =============== */
+/* =================================== */
+
 .modal-overlay:not(.active) {
     display: none !important;
     visibility: hidden !important;
     pointer-events: none !important;
     z-index: -1 !important;
+}
+
+.modal-overlay.active {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* =================================== */
+/* === АДАПТИВНОСТЬ ================= */
+/* =================================== */
+
+@media (max-width: 768px) {
+    .progress-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        gap: 15px;
+        height: auto;
+    }
+    
+    .card-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .bar {
+        width: 25px;
+    }
+    
+    .weight-value {
+        font-size: 36px;
+    }
+    
+    .stats-grid {
+        gap: 10px;
+    }
+    
+    .stat-box .stat-value {
+        font-size: 24px;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+    .card {
+        padding: 18px;
+    }
+    
+    .bar {
+        width: 20px;
+    }
+    
+    .bar-value {
+        font-size: 9px;
+    }
+    
+    .card-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .custom-select {
+        width: 100%;
+    }
 }
